@@ -1,0 +1,45 @@
+/* ProductList.css */
+.product-list {
+    margin-top: 40px;
+
+    display: flex;
+    /* Sử dụng Flexbox để sắp xếp các phần tử con theo hàng ngang */
+    overflow-x: scroll;
+    /* Cho phép cuộn ngang khi nội dung vượt quá chiều rộng */
+    white-space: nowrap;
+    /* Ngăn các phần tử con xuống dòng */
+    -ms-overflow-style: none;
+    /* Ẩn thanh cuộn trên Internet Explorer và Edge */
+    scrollbar-width: none;
+    /* Ẩn thanh cuộn trên Firefox */
+    align-items: center;
+}
+
+.product-list::-webkit-scrollbar {
+    display: none;
+    /* Ẩn thanh cuộn trên Chrome, Safari và Opera */
+}
+
+.product-item {
+    flex: 0 0 auto;
+    /* Không co giãn, giữ nguyên kích thước ban đầu */
+    margin-right: 10px;
+    /* Khoảng cách 10px bên phải giữa các phần tử */
+    padding: 20px;
+    /* Khoảng cách 20px bên trong phần tử */
+    background-color: #f0f0f0;
+    /* Màu nền xám nhạt */
+    border: 1px solid #ccc;
+    /* Viền 1px màu xám nhạt */
+    border-radius: 5px;
+    /* Bo tròn các góc với bán kính 5px */
+    text-align: center;
+    /* Căn giữa nội dung */
+}
+
+.product-item img {
+    max-width: 100%;
+    /* Đảm bảo hình ảnh không vượt quá chiều rộng của container */
+    height: auto;
+    /* Giữ tỷ lệ hình ảnh */
+}

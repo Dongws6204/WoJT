@@ -1,10 +1,10 @@
-import { Component } from "react";
+import { Component, useState } from "react";
 import { ROUTERS } from "./utils/router";
 import HomePage from "./page/user/homePage";
 import ProfilePage from "./page/user/profilePage";
+import Login from "./page/user/login";
 import Body from "./page/user/layout/body";
 import { Route, Routes } from 'react-router-dom'
-
 const renderUserRouter = () => {
     const userRouters = [
         {
@@ -16,7 +16,13 @@ const renderUserRouter = () => {
             path: ROUTERS.USER.PROFILE,
             component: <ProfilePage />,
         },
+
+        {
+            path: ROUTERS.GUEST.LOGIN,
+            component: <Login />
+        }
     ]
+
 
     return (
         <Body>

@@ -1,14 +1,14 @@
 export const ROUTERS = {
-    USER:{
-        HOME:"",
-        PROFILE:"profile",
-        CART:"cart",
-        WISHLIST:"wislist",//DANH SACH YEU THICH
-        ODERD_HISTORY:"oderd_history",//LICH SU DON HANG
-        PRODUCT_DETAIL:"product",//SAN PHAM
+    USER: {
+        HOME: "",
+        PROFILE: "profile",
+        CART: "cart",
+        WISHLIST: "wislist",//DANH SACH YEU THICH
+        ODERD_HISTORY: "oderd_history",//LICH SU DON HANG
+        PRODUCT_DETAIL: "product",//SAN PHAM
         CATEGORY: "category",//
-        CHECKOUT:"checkout",//Trang thanh toan
-            },
+        CHECKOUT: "checkout",//Trang thanh toan
+    },
     ADMIN: {
         DASHBOARD: "admin/dashboard", // Trang quản trị tổng quan
         USERS: "admin/users", // Quản lý người dùng
@@ -18,6 +18,11 @@ export const ROUTERS = {
         EDIT_PRODUCT: "admin/product/edit/:id", // Sửa thông tin sản phẩm (dùng tham số id)
         CATEGORIES: "admin/categories", // Quản lý danh mục sản phẩm
         REPORTS: "admin/reports", // Báo cáo doanh thu, thống kê
+    },
+
+    GUEST: {
+        LOGIN: "login",
+        REGISTER: "register",
     }
 };
 

@@ -1,14 +1,21 @@
-import { memo } from "react";
+import { memo, useState } from "react";
 import Header from "../header"
 import Footer from "../footer";
+import './body.css'
+
+
+
 const Body = ({ children, ...props }) => {
     return (
-        <div {...props}>
+        <div className="body-container" {...props}>
             <Header />
-            {children}
+            <main className="main-content">
+                {children}
+            </main>
             <Footer />
         </div>
-    )
-}
+    );
+};
+
 
 export default memo(Body);

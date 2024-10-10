@@ -1,6 +1,7 @@
 import { memo } from "react";
 import { Link } from "react-router-dom";
 import '../../../../style/user/header.css';
+import { ROUTERS } from '../../../../utils/router.js';
 
 const Logo = () => {
     return <img className="logo"
@@ -28,10 +29,9 @@ const SearchBar = () => {
 const NavLink = ({ userRole }) => {
     return (
         <nav className="nav">
-            <Link to="/">Home</Link>
-            <Link to="/products">Products</Link>
-            <Link to="/login">Login</Link>
-            <Link to="/register">Register</Link>
+            <Link to={ROUTERS.USER.HOME}>Trang chủ</Link>
+            <Link to={ROUTERS.USER.PROFILE}>Sản phẩm</Link>
+            <Link to={ROUTERS.GUEST.LOGIN}>Tài khoản</Link>
 
             {/* Nếu là khách */}
             {userRole === 'guest' && (
