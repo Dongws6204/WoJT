@@ -142,6 +142,22 @@ const ListHome = () => {
             </div>
 
 
+            <h1>
+                Deal sốc
+            </h1>
+
+            <div className="product-list">
+
+
+                {visibleProducts.map(product => (
+                    <div key={product.id} className="product-item">
+                        <img src={product.images[0]} alt={product.name} />
+                        <h3>{product.name}</h3>
+                        <p>{product.description}</p>
+                        <p>Giá: {product.price} VND</p>
+                    </div>
+                ))}
+            </div>
         </div>
 
     );

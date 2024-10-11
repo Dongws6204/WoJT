@@ -1,25 +1,33 @@
 import { memo } from "react";
 
-const Login = ({ onLogin }) => {
-    // const handleLogin = () => {
-    //     // Xử lý đăng nhập
-    //     onLogin();
-    // };
 
-    // return (
-    //     <div>
-    //         <h2>Đăng nhập</h2>
-    //         <button onClick={handleLogin}>Đăng nhập</button>
-    //     </div>
-    // );
+import React from 'react';
+import './Login.css';
+import { FaUser, FaLock } from 'react-icons/fa';
+
+const Login = () => {
     return (
-        <div>
-            <h1>xxx</h1>
+        <div className="login-container">
+            <h2>Đăng Nhập</h2>
+            <form>
+                <div className="input-group">
+                    <FaUser className="icon" />
+                    <input type="text" placeholder="Tên đăng nhập" />
+                </div>
+                <div className="input-group">
+                    <FaLock className="icon" />
+                    <input type="password" placeholder="Mật khẩu" />
+                </div>
+                <div className="forgot-password">
+                    <a href="/forgot-password">Quên mật khẩu?</a>
+                </div>
+                <button type="submit">Đăng Nhập</button>
+                <div className="register-link">
+                    <p>Chưa có tài khoản? <a href="/register">Đăng ký</a></p>
+                </div>
+            </form>
         </div>
     );
-}
-
-
-
+};
 
 export default memo(Login);

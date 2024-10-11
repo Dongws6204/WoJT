@@ -2,6 +2,8 @@ export const ROUTERS = {
     USER: {
         HOME: "",
         PROFILE: "profile",
+        FORGOTPASSWORD: "forgot-password",
+        REGISTER: "register",
         CART: "cart",
         WISHLIST: "wislist",//DANH SACH YEU THICH
         ODERD_HISTORY: "oderd_history",//LICH SU DON HANG
