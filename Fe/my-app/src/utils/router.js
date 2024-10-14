@@ -2,7 +2,6 @@ export const ROUTERS = {
     USER: {
         HOME: "",
         PROFILE: "profile",
-        FORGOTPASSWORD: "forgot-password",
         REGISTER: "register",
         CART: "cart",
         WISHLIST: "wislist",//DANH SACH YEU THICH
@@ -23,8 +22,9 @@ export const ROUTERS = {
     },
 
     GUEST: {
-        LOGIN: "login",
+        LOGIN: "",
         REGISTER: "register",
+        FORGOTPASSWORD: "forgot-password",
     }
 };
 
