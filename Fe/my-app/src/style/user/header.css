@@ -1,6 +1,6 @@
 .nav {
     left: 10px;
-    background-color: #89cff0;
+    /* background-color: #89cff0; */
     /* Màu nền cho menu */
     padding: 25px;
     text-align: center;
@@ -27,27 +27,26 @@
     border: 3px solid transparent;
     /* Ẩn viền mặc định, chỉ hiện khi hover */
 
-    color: #89cff0;
+    color: #000;
     /* Màu chữ */
     font-size: 20px;
     text-decoration: none;
     /* Không gạch chân */
-    background-color: #fff;
+    /* background-color: #fff; */
 
 
-    -webkit-transition: all 0.3s ease 0s;
+    /* -webkit-transition: all 0.3s ease 0s;
     -moz-transition: all 0.3s ease 0s;
     -o-transition: all 0.3s ease 0s;
-    transition: all 0.3s ease 0s;
+    transition: all 0.3s ease 0s; */
 }
 
 .nav a:hover {
-    background-color: #89cff0;
+    /* background-color: #89cff0; */
     /* Màu nền khi hover */
-    color: #fff;
+    color: #000;
     /* Màu chữ khi hover */
     border: 1px solid #007bff;
-    clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
     /* Hiện viền xanh khi hover */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     /* Hiệu ứng đổ bóng nhẹ khi hover */

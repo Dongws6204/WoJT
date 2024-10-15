@@ -1,30 +1,23 @@
 .table-container {
-    margin-left: 50px;
-    /* Khoảng cách bên trái (tuỳ chọn) */
 
-    /* Giới hạn chiều rộng container */
-    width: 75%;
-    /* max-width: 1200px; */
-    /* Giới hạn chiều rộng tối đa */
-    margin: 0 auto;
-    /* Canh giữa bảng */
-
-    left: 50%;
-    /* Đặt vị trí bên trái ở giữa màn hình */
-    transform: translateX(-50%);
     /* Dịch chuyển bảng về giữa */
 
     /* Định vị bảng cố định dưới đáy trang */
-    position: fixed;
-    bottom: 0;
+    /* position: fixed; */
+    width: 90%;
+
+    background-color: #f1f1f1;
+    padding: 20px;
+    text-align: center;
+    /* bottom: 0; */
 
     /* Tùy chỉnh giao diện */
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
-    z-index: 1000;
-    /* Đảm bảo bảng nằm trên các thành phần khác */
+    /*z-index: 1000;
+    Đảm bảo bảng nằm trên các thành phần khác */
 }
 
 

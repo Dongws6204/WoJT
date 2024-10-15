@@ -1,19 +1,19 @@
-/* styles.css */
 .body-container {
     display: flex;
-    /* Sử dụng Flexbox để sắp xếp các phần tử con */
     flex-direction: column;
-    /* Sắp xếp các phần tử con theo chiều dọc */
     min-height: 100vh;
-    /* Chiều cao tối thiểu bằng chiều cao của cửa sổ trình duyệt */
 }
 
 .main-content {
-    margin-top: 150px;
     flex: 1;
-    /* Chiếm không gian còn lại trong container cha */
+    margin-top: 150px;
     display: flex;
-    /* Sử dụng Flexbox để sắp xếp các phần tử con */
     flex-direction: column;
-    /* Sắp xếp các phần tử con theo chiều dọc */
+}
+
+/* Đảm bảo footer nằm dưới cùng và cuộn theo nội dung */
+footer {
+    background-color: #f1f1f1;
+    padding: 20px;
+    text-align: center;
 }
