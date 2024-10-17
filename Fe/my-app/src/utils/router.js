@@ -1,6 +1,7 @@
 export const ROUTERS = {
     USER: {
         HOME: "",
+        LOGOUT: "",
         PROFILE: "profile",
         REGISTER: "register",
         CART: "cart",
@@ -22,7 +23,8 @@ export const ROUTERS = {
     },
 
     GUEST: {
-        LOGIN: "",
+        PAGE: "",
+        LOGIN: "login",
         REGISTER: "register",
         FORGOTPASSWORD: "forgot-password",
     }

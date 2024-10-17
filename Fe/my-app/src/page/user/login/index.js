@@ -1,6 +1,4 @@
 import { memo, useContext, useState } from "react";
-
-
 import React from 'react';
 import './Login.css';
 import { FaUser, FaLock } from 'react-icons/fa';
@@ -8,6 +6,7 @@ import { ContextCheckLogin } from "../../../router";
 
 const Login = () => {
     const { checkLogin, setCheckLogin } = useContext(ContextCheckLogin);
+    const { role, setRole } = useContext(ContextCheckLogin);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -15,7 +14,7 @@ const Login = () => {
         event.preventDefault();
         // Kiểm tra tài khoản và mật khẩu ở đây
         if (username === 'abcxyz' && password === '2004') {
-
+            setRole('customer')
             setCheckLogin(true);
             alert('Đăng nhập thành công!');
         } else {

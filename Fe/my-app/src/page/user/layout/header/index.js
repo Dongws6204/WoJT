@@ -1,6 +1,7 @@
-import React, { memo, useState } from "react";
+import React, { memo, useState, useContext } from "react";
+import { ContextCheckLogin } from "../../../../router";
 import PropTypes from 'prop-types';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import '../../../../style/user/header.css';
 import { ROUTERS } from '../../../../utils/router.js';
 import './option.css';
@@ -18,26 +19,32 @@ const SearchBar = () => {
     );
 };
 
-const NavLink = ({ userRole }) => {
+const NavLink = () => {
+    const { checkLogin, setCheckLogin, role, setRole } = useContext(ContextCheckLogin);
+    const navigate = useNavigate();
+    const handleLogout = () => {
+        setRole('guest');
+    };
+
     return (
         <nav className="nav">
             <Link to={ROUTERS.USER.HOME}>Trang chủ</Link>
-            <Link to={ROUTERS.GUEST.LOGIN}>Tài khoản</Link>
-            {userRole === 'guest' && (
+            {role === 'guest' && (
                 <>
-                    <Link to="/login">Login</Link>
+                    <Link to={ROUTERS.GUEST.LOGIN}>Tài khoản</Link>
                 </>
             )}
-            {userRole === 'customer' && (
+            {role === 'customer' && (
                 <>
                     <Link to="/profile">Profile</Link>
                     <Link to="/cart">Cart</Link>
                     <Link to="/wishlist">Wishlist</Link>
                     <Link to="/order-history">Order History</Link>
-                    <Link to="/logout">Logout</Link>
+                    <Link to={ROUTERS.GUEST.PAGE} onClick={handleLogout}>Đăng Xuất</Link>
+
                 </>
             )}
-            {userRole === 'admin' && (
+            {role === 'admin' && (
                 <>
                     <Link to="/admin/dashboard">Dashboard</Link>
                     <Link to="/admin/products">Manage Products</Link>
@@ -54,6 +61,37 @@ NavLink.propTypes = {
     userRole: PropTypes.string.isRequired,
 };
 
+
+const OptionProducts = (options) => {
+    return (
+        <div className="option-products-container">
+
+            <table className="custom-table">
+                <thead>
+                    <tr>
+                        <th>Title 1</th>
+                        <th>Title 2</th>
+                        <th>Title 3</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Data 1</td>
+                        <td>Data 2</td>
+                        <td>Data 3</td>
+                    </tr>
+                    <tr>
+                        <td>Data 4</td>
+                        <td>Data 5</td>
+                        <td>Data 6</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    );
+};
+
+
 const CreateListMenu = ({ label, options }) => {
     const [isOpen, setIsOpen] = useState(false);
 
@@ -61,17 +99,19 @@ const CreateListMenu = ({ label, options }) => {
     const handleMouseLeave = () => setIsOpen(false);
 
     return (
-        <div className="dropdown" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-            <button className="dropdown-button">{label}</button>
+        <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+            <button className="button">{label}</button>
             {isOpen && (
-                <ul className="dropdown-menu">
-                    {options.map((option, index) => (
-                        // Thay thế <li> bằng <Link> để điều hướng
-                        <li key={index}>
-                            <Link className="custom-link" to={option.link}>{option.label}</Link>
-                        </li>
-                    ))}
-                </ul>
+
+                // <ul className="dropdown-menu">
+                //     {options.map((option, index) => (
+                //         // Thay thế <li> bằng <Link> để điều hướng
+                //         <li key={index}>
+                //             <Link className="custom-link" to={option.link}>{option.label}</Link>
+                //         </li>
+                //     ))}
+                // </ul>
+                <OptionProducts options={options} />
             )}
         </div>
     );
@@ -100,13 +140,15 @@ const ListMenu = () => {
         { label: 'Option Z', link: '/optionZ' }
     ];
 
+    const nullx = [];
+
     return (
         <div className="menu-container">
-            <CreateListMenu label="Menu 1" options={options} />
-            <CreateListMenu label="Menu 2" options={options} />
-            <CreateListMenu label="Menu 3" options={options} />
-            <CreateListMenu label="Menu 3" options={options} />
-            <CreateListMenu label="Menu 3" options={options} />
+            <CreateListMenu label="Sản phẩm mới" />
+            <CreateListMenu label="Nữ" />
+            <CreateListMenu label="Nam" />
+            <CreateListMenu label="Bé gái" />
+            <CreateListMenu label="Bé nam" />
         </div>
     );
 };
@@ -119,7 +161,7 @@ const Header = () => {
             <div className="item">
                 <Logo />
                 <SearchBar />
-                <NavLink userRole="guest" />
+                <NavLink />
             </div>
             <ListMenu />
         </div>

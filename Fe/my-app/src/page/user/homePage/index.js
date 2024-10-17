@@ -1,4 +1,7 @@
-import { memo, useState, useEffect } from "react";
+import { memo, useState, useEffect, useContext } from "react";
+import { ContextCheckLogin } from "../../../router";
+
+import Body from "../layout/body";
 
 import './homePage.css'
 
@@ -165,11 +168,24 @@ const ListHome = () => {
 
 
 const HomePage = () => {
-    return (
-        <div>
-            <ListHome />
-        </div>
-    );
+    const { checkLogin, setCheckLogin } = useContext(ContextCheckLogin);
+    if (checkLogin) {
+        return (
+            <div>
+                <ListHome />
+            </div>
+        );
+    }
+    else {
+        return (
+            <div>
+                <Body>
+                    <ListHome />
+                </Body>
+            </div>
+        )
+    }
+
 }
 
 export default memo(HomePage);
