@@ -1,4 +1,5 @@
 import { memo, useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { ContextCheckLogin } from "../../../router";
 
 import Body from "../layout/body";
@@ -109,6 +110,12 @@ const ListHome = () => {
         return () => clearInterval(interval);
     }, []);
 
+    const navigate = useNavigate();
+
+    const handleProduct = () => {
+        navigate('/product/');
+    };
+
     return (
         <div>
             <h1>
@@ -119,7 +126,7 @@ const ListHome = () => {
 
                 {visibleProducts.map(product => (
                     <div key={product.id} className="product-item">
-                        <img src={product.images[0]} alt={product.name} />
+                        <img src={product.images[0]} alt={product.name} onClick={handleProduct} />
                         <h3>{product.name}</h3>
                         <p>{product.description}</p>
                         <p>Giá: {product.price} VND</p>

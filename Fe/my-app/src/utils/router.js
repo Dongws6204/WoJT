@@ -27,6 +27,7 @@ export const ROUTERS = {
         LOGIN: "login",
         REGISTER: "register",
         FORGOTPASSWORD: "forgot-password",
+
     }
 };
 

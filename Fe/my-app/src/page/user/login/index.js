@@ -15,7 +15,6 @@ const Login = () => {
         // Kiểm tra tài khoản và mật khẩu ở đây
         if (username === 'abcxyz' && password === '2004') {
             setRole('customer')
-            setCheckLogin(true);
             alert('Đăng nhập thành công!');
         } else {
             alert('Tên đăng nhập hoặc mật khẩu không đúng!');

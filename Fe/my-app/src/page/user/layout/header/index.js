@@ -1,4 +1,5 @@
 import React, { memo, useState, useContext } from "react";
+import { FaUser, FaShoppingCart, FaSignOutAlt } from 'react-icons/fa';
 import { ContextCheckLogin } from "../../../../router";
 import PropTypes from 'prop-types';
 import { Link, useNavigate } from "react-router-dom";
@@ -36,12 +37,17 @@ const NavLink = () => {
             )}
             {role === 'customer' && (
                 <>
-                    <Link to="/profile">Profile</Link>
-                    <Link to="/cart">Cart</Link>
-                    <Link to="/wishlist">Wishlist</Link>
-                    <Link to="/order-history">Order History</Link>
-                    <Link to={ROUTERS.GUEST.PAGE} onClick={handleLogout}>Đăng Xuất</Link>
-
+                    <Link to="/profile">
+                        <FaUser /> Profile
+                    </Link>
+                    <Link to="/cart">
+                        <FaShoppingCart /> Cart
+                    </Link>
+                    {/* <Link to="/product">Wishlist</Link>
+      <Link to="/order-history">Order History</Link> */}
+                    <Link to={ROUTERS.GUEST.PAGE} onClick={handleLogout}>
+                        <FaSignOutAlt /> Đăng Xuất
+                    </Link>
                 </>
             )}
             {role === 'admin' && (
@@ -61,30 +67,82 @@ NavLink.propTypes = {
     userRole: PropTypes.string.isRequired,
 };
 
+const getLinkPath = (label) => {
+    switch (label) {
+        case 'Nam':
+            return '/man';
+        case 'Nữ':
+            return '/woman';
+        case 'Bé trai':
+            return '/boy';
+        case 'Bé gái':
+            return '/girl';
+        default:
+            return '/';
+    }
+}
 
-const OptionProducts = (options) => {
+
+
+const OptionProducts = ({ label }) => {
+    const linkPath = getLinkPath(label);
     return (
         <div className="option-products-container">
 
             <table className="custom-table">
+
                 <thead>
                     <tr>
-                        <th>Title 1</th>
-                        <th>Title 2</th>
-                        <th>Title 3</th>
+                        <th><Link to={`${linkPath}/newArrivals`}> Hàng mới </Link> </th>
+                        <th><Link to={`${linkPath}/productCategories`} > Danh mục sản phẩm</Link></th>
+                        <th></th>
+                        <th><Link to={`${linkPath}/accessories`}> Phụ kiện </Link></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Data 1</td>
-                        <td>Data 2</td>
-                        <td>Data 3</td>
+                        <td><Link to={`${linkPath}/newArrivals`} >Hàng mới về</Link> </td>
+                        <td><Link to={`${linkPath}/T-Shirts`}>Áo phông/ Áo thun </Link></td>
+                        <td><Link to={`${linkPath}/homeWear`}> Quần áo mặc nhà/ đồ ngủ</Link></td>
+                        <td><Link to={`${linkPath}/blankets`}> Chăn </Link></td>
+                        <img src="" alt="xxx"></img>
                     </tr>
+
                     <tr>
-                        <td>Data 4</td>
-                        <td>Data 5</td>
-                        <td>Data 6</td>
+                        <td></td>
+                        <td><Link to={`${linkPath}/poloShirts`}> Áo polo</Link></td>
+                        <td><Link to={`${linkPath}/thermalJackets`}> Áo khoác giữ nhiệt</Link></td>
+                        <td><Link to={`${linkPath}/faceTowels`}>Khăn mặt</Link></td>
                     </tr>
+
+                    <tr>
+                        <th> <Link to={`${linkPath}/highlights`} >Nổi bật</Link></th>
+                        <td><Link to={`${linkPath}/dressShirts`}> Áo sơ mi</Link></td>
+                        <td><Link to={`${linkPath}/sweaters`}> Áo len</Link></td>
+                        <td><Link to={`${linkPath}/bathTowels`}> Khăn tắm</Link></td>
+                    </tr>
+
+                    <tr>
+                        <td><Link to={`${linkPath}/thanks`}>SC cảm ơn</Link></td>
+                        <td><Link to={`${linkPath}/sunProtectionClothing`}>Áo chống nắng</Link></td>
+                        <td><Link to={`${linkPath}/underWear`}>Đồ lót</Link></td>
+                        <td><Link to={`${linkPath}/shoes`}>Giày</Link></td>
+                    </tr>
+
+                    <tr>
+                        <td><Link to={`${linkPath}/bestPrice`}>Giá tốt</Link></td>
+                        <td><Link to={`${linkPath}/sprotswear`}>Quần áo thể thao</Link></td>
+                        <td><Link to={`${linkPath}/socks`}>Tất, vớ</Link></td>
+                        <td><Link to={`${linkPath}/slippers`}>Dép</Link></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><Link to={`${linkPath}/pantAndJeans`}>Quần dài & Quần Jeans</Link></td>
+                        <td><Link to={`${linkPath}/outfits`}>Bộ quần áo</Link></td>
+                        <td></td>
+                    </tr>
+
                 </tbody>
             </table>
         </div>
@@ -92,26 +150,28 @@ const OptionProducts = (options) => {
 };
 
 
-const CreateListMenu = ({ label, options }) => {
+const CreateListMenu = ({ label }) => {
     const [isOpen, setIsOpen] = useState(false);
 
-    const handleMouseEnter = () => setIsOpen(true);
-    const handleMouseLeave = () => setIsOpen(false);
+    const [currentLabel, setCurrentLabel] = useState('');
+    const handleMouseEnter = () => {
+        setIsOpen(true);
+        setCurrentLabel(label);
+    }
+    const handleMouseLeave = () => {
+        setIsOpen(false);
+        setCurrentLabel('');
+    }
 
     return (
         <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
             <button className="button">{label}</button>
             {isOpen && (
+                <div>
+                    <OptionProducts label={currentLabel} />
+                </div>
 
-                // <ul className="dropdown-menu">
-                //     {options.map((option, index) => (
-                //         // Thay thế <li> bằng <Link> để điều hướng
-                //         <li key={index}>
-                //             <Link className="custom-link" to={option.link}>{option.label}</Link>
-                //         </li>
-                //     ))}
-                // </ul>
-                <OptionProducts options={options} />
+
             )}
         </div>
     );
@@ -128,27 +188,13 @@ CreateListMenu.propTypes = {
 
 
 const ListMenu = () => {
-    const options = [
-        { label: 'Option 1', link: '/option1' },
-        { label: 'Option 2', link: '/option2' },
-        { label: 'Option 3', link: '/option3' },
-        { label: 'Option A', link: '/optionA' },
-        { label: 'Option B', link: '/optionB' },
-        { label: 'Option C', link: '/optionC' },
-        { label: 'Option X', link: '/optionX' },
-        { label: 'Option Y', link: '/optionY' },
-        { label: 'Option Z', link: '/optionZ' }
-    ];
-
-    const nullx = [];
-
     return (
         <div className="menu-container">
             <CreateListMenu label="Sản phẩm mới" />
             <CreateListMenu label="Nữ" />
             <CreateListMenu label="Nam" />
             <CreateListMenu label="Bé gái" />
-            <CreateListMenu label="Bé nam" />
+            <CreateListMenu label="Bé trai" />
         </div>
     );
 };

@@ -1,9 +1,10 @@
 import { Component, useState, createContext, useContext, useEffect } from "react";
 import { ROUTERS } from "./utils/router";
 import HomePage from "./page/user/homePage";
-import PageGuest from "./page/user/homePage";
 import ProfilePage from "./page/user/profilePage";
 import Login from "./page/user/login";
+import Cart from "./page/user/cart";
+import Products from "./page/user/product";
 import ForgotPassword from "./page/user/fogotPassword";
 import Register from "./page/user/register";
 import Body from "./page/user/layout/body";
@@ -43,6 +44,14 @@ const renderUserRouter = (checkLogin) => {
             path: ROUTERS.USER.PROFILE,
             component: <ProfilePage />,
         },
+        {
+            path: ROUTERS.USER.CART,
+            component: <Cart />,
+        },
+        {
+            path: ROUTERS.USER.PRODUCT_DETAIL,
+            component: <Products />,
+        }
 
     ];
 
@@ -74,6 +83,9 @@ const RouterUserX = () => {
     useEffect(() => {
         if (role === 'guest') {
             setCheckLogin(false);
+        }
+        else {
+            setCheckLogin(true);
         }
     }, [role]);
     return (

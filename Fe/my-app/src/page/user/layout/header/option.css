@@ -29,7 +29,9 @@
 
 
 
-.custom-table {
+.custom-table a {
+    border-bottom: none;
+    text-decoration: none;
     width: 95%;
     /* Chiều rộng của bảng chiếm 95% chiều rộng của phần tử chứa nó. */
 
@@ -50,13 +52,24 @@
 }
 
 .custom-table th {
+    font-size: 18px;
+    font-weight: bolder;
     border-bottom: 2px solid black;
     /* Đường viền dưới của các ô tiêu đề có màu đen và dày hơn. */
 }
 
-.custom-table td {
+
+.custom-table td a {
     border-bottom: none;
-    /* Không có đường viền dưới giữa các ô dữ liệu. */
+    text-decoration: none;
+    color: #000
+        /* Không có đường viền dưới giữa các ô dữ liệu. */
+}
+
+
+.custom-table td a:hover {
+    color: #89cff0;
+    text-decoration: none;
 }
 
 .button {
