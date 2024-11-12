@@ -1,0 +1,108 @@
+.forgetpass-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: rgb(255, 255, 255);
+}
+
+.forgetpass-container h1 {
+    font-size: 32px;
+    margin-bottom: 16px;
+    line-height: 1;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    color: rgb(91, 91, 91);
+}
+
+.forgetpass{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: rgb(255, 255, 255);
+    height: auto;
+    width: 508px;
+    padding: 66px;
+    border-radius: 5%;
+    box-shadow: 0px 4px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pass-old-input , .pass-new-input , .confirm-input , .email-input{
+    display: block;
+    height: 32px;
+    background: transparent;
+    border: 1px solid #444445;
+    border-radius: 12px;
+    padding: 5px;
+}
+
+.pass-new , .pass-old , .confirm , .email{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+}
+
+.pass-new p , .pass-old p , .confirm p , .email p{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+}
+
+.forgetpass-btn {
+    display: inline;
+    border: 1px solid black;
+    padding: 10px 36px;
+    background: #2c3652;
+    border-radius: 16px;
+    color: rgb(251, 251, 251);
+    font-weight: bold;
+    font-size: 20px;
+    width: 56%;
+    font-family: 'Montserrat', sans-serif;
+    margin: 10px 0px;
+}
+
+.confirm-btn {
+    display: inline;
+    border: 1px solid black;
+    padding: 5px;
+    background: #2c3652;
+    border-radius: 12px;
+    color: rgb(251, 251, 251);
+    font-weight: bold;
+    font-size: 14px;
+    width: 72px;
+    height: 32px;
+    font-family: 'Montserrat', sans-serif;
+    margin-left: 5px;
+}
+
+.pass-old p {
+    margin-right: 66px;
+}
+
+.pass-new p {
+    margin-right: 6px;
+}
+
+.confirm-input {
+    width: 128px;
+}
+
+.confirm p{
+    margin-right: 77px;
+}
+
+.email p {
+    margin-right: 121px;
+}
+
+.forgetpass-btn:hover , .confirm-btn:hover {
+    background-color: rgb(79, 84, 118);
+    cursor: pointer;
+}

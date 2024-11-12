@@ -1,0 +1,63 @@
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.register {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: rgb(255, 255, 255);
+    /* height: 586px;  */
+    width: 360px;
+    height: auto;
+    padding: 36px;
+    border-radius: 5%;
+    box-shadow: 0px 4px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.register h1 {
+    font-size: 32px;
+    margin-bottom: 16px;
+    line-height: 1;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+}
+
+.register-name , .register-email , .register-date , .register-phone , .register-address , .register-username , .register-pass , .register-repass{
+    height: 40px;
+    background: transparent;
+    border: 1px solid #444445;
+    border-radius: 16px;
+    margin: 8px 0px;
+    width: 100%;
+}
+
+.register-btn {
+    display: inline;
+    border: 1px solid black;
+    padding: 12px 36px;
+    background: #2c3652;
+    border-radius: 16px;
+    color: rgb(251, 251, 251);
+    font-weight: bold;
+    font-size: 20px;
+    width: 100%;
+    font-family: 'Montserrat', sans-serif;
+    margin-top: 8px;
+}
+
+.register-btn:hover{
+    background-color: rgb(78, 84, 133);
+}
+
+.error-feedback {
+    display: flex;
+    color: red;
+    font-size: 12px;
+}
+
+
