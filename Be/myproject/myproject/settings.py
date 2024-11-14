@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'myproject',
     'corsheaders',
+    'rest_framework_simplejwt',
     
 ]
 
@@ -78,6 +79,10 @@ REST_FRAMEWORK = {
         # Uncomment this if you want to add browsable API renderer
         # 'rest_framework.renderers.BrowsableAPIRenderer',
     ],
+    'DEFAULT_AUTHENTICATION_CLASS':(
+            'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+
 }
 
 CORS_ALLOWED_ORIGINS = [

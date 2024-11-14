@@ -49,8 +49,9 @@ class Customers(models.Model):
 
 
 class Evaluate(models.Model):
+    id = models.AutoField(primary_key=True)
     customer = models.ForeignKey(Customers, models.DO_NOTHING, blank=True, null=True)
-    product = models.ForeignKey('Products', models.DO_NOTHING, blank=True, null=True)
+    product = models.ForeignKey('Products', models.DO_NOTHING, blank=True, null=True, related_name='evaluates')
     comments = models.CharField(max_length=200, blank=True, null=True)
     star = models.IntegerField(blank=True, null=True)
     date_posted = models.DateField(blank=True, null=True)
@@ -70,7 +71,7 @@ class Object(models.Model):
 
 
 class Orderdetail(models.Model):
-    order = models.ForeignKey('Orders', models.DO_NOTHING, blank=True, null=True)
+    order = models.ForeignKey('Orders', models.DO_NOTHING, blank=True, null=True, related_name='orderdetails')
     quantity = models.IntegerField(blank=True, null=True)
     total_amout = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     product = models.ForeignKey('Products', models.DO_NOTHING, blank=True, null=True)
@@ -96,7 +97,7 @@ class Orders(models.Model):
 class Portfolio(models.Model):
     id_port = models.AutoField(primary_key=True)
     port_name = models.CharField(max_length=200, blank=True, null=True)
-    object = models.ForeignKey(Object, models.DO_NOTHING, blank=True, null=True)
+    object = models.ForeignKey(Object, models.DO_NOTHING, blank=True, null=True, related_name='portfolios')
 
     class Meta:
         managed = False
@@ -105,7 +106,7 @@ class Portfolio(models.Model):
 
 class ProductDetail(models.Model):
     id_prod = models.AutoField(primary_key=True)
-    product = models.ForeignKey('Products', models.DO_NOTHING, blank=True, null=True)
+    product = models.ForeignKey('Products', models.DO_NOTHING, blank=True, null=True, related_name='product_details')
     size = models.IntegerField(blank=True, null=True)
     quantity_of_size = models.PositiveIntegerField(blank=True, null=True)
 
