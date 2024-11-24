@@ -1,62 +1,10 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Customers, Products, ProductDetail, Portfolio, Evaluate, ClothesEvaluate, Object, Orders
-from .serializers import (CustomerSerializer, IsLoggedInSerializer, 
-                        ProductSerializer, GetCardSerializer, 
-                        GetAllObjectSerializers, GetOrderSerializer)
-from django.shortcuts import get_object_or_404
-from datetime import timedelta
-
-# SIMPLE_JWT = {
-#     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
-#     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-#     'AUTH_HEADER_TYPES': ('Bearer',),
-# }
-
-
-class CustomerAPIView(APIView): 
-    def get(self, request, id): 
-        try: 
-            customer = Customers.objects.get(customer_id=id) 
-            customer.role = 1
-            serializer = CustomerSerializer(customer) 
-
-            return Response(serializer.data, status=status.HTTP_200_OK) 
-        except Customers.DoesNotExist: 
-            return Response({"message": "Người dùng không tồn tại"}, status=status.HTTP_404_NOT_FOUND)
-    
-
-
-
-
-class LoginAPIView(APIView):
-   def post(self, request):
-        username = request.data.get('user_name')
-        password = request.data.get('pass_word')
-
-        if not username or not password:
-            # Trả về lỗi nếu thiếu username hoặc password
-            return Response({'success': False, 'customerId': None},
-                            status=status.HTTP_400_BAD_REQUEST)
-
-        try:
-            # Tìm đối tượng `customer` trong model `Customers`
-            customer = Customers.objects.get(user_name=username, pass_word=password)
-            response_data = {
-                'success': True,
-                'customerId': customer.customer_id,
-            }
-            serializer = IsLoggedInSerializer(response_data)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        except Customers.DoesNotExist:
-            # Trường hợp không tìm thấy user
-            response_data = {
-                'success': False,
-                'customerId': None,
-            }
-            return Response(response_data, status=status.HTTP_401_UNAUTHORIZED)
+from ...models import Products,Object
+from .serializers import (ProductSerializer, GetCardSerializer, GetAllObjectSerializers)
         
+#Lấy thông tin sản phẩm theo id.
 class ProductAPIView(APIView):
     def get(self, request, id):
         try:
@@ -69,6 +17,7 @@ class ProductAPIView(APIView):
             return Response({"message": "Sản phẩm không tồn tại"}, status=status.HTTP_404_NOT_FOUND)
 
 
+#Lấy sản phẩm theo theo id danh mục
 class GetPortFolioProductAPIView(APIView):
     def get(self, request, id):
         try:
@@ -83,7 +32,7 @@ class GetPortFolioProductAPIView(APIView):
         except Products.DoesNotExist:
             return Response({"message": "Sản phẩm không tồn tại"}, status=status.HTTP_404_NOT_FOUND)
 
-
+#Lấy toàn bộ sản phẩm theo Đối tượng và danh mục
 class GetAllProductAPIView(APIView):
     def get(self, request):
         try:
@@ -99,6 +48,7 @@ class GetAllProductAPIView(APIView):
             return Response({"message": "Sản phẩm không tồn tại"}, status=status.HTTP_404_NOT_FOUND)
         
 
+#Lấy sản phẩm theo đối tượng
 class GetObjectProductAPIView(APIView):
     def get(self, request, id):
         try:
@@ -115,10 +65,10 @@ class GetObjectProductAPIView(APIView):
             return Response({"message": "Sản phẩm không tồn tại"}, status=status.HTTP_404_NOT_FOUND)
 
 
+#Lấy toàn bộ sản phẩm theo các đối tượng.
 class GetAllObjectAPIView(APIView):
     def get(self, request):
         try:
-
             object = Object.objects.all() # Dùng '__' để truy cập các thuộc tính của các quan hệ khóa ngoại
             if object.exists():  # Kiểm tra nếu có sản phẩm nào khớp
                 object_serializer = GetAllObjectSerializers(object, many=True)  
@@ -127,21 +77,19 @@ class GetAllObjectAPIView(APIView):
             else:
                 return Response({"message": "Sản phẩm không tồn tại"}, status=status.HTTP_404_NOT_FOUND)
         
-        except Products.DoesNotExist:
+        except Object.DoesNotExist:
             return Response({"message": "Sản phẩm không tồn tại"}, status=status.HTTP_404_NOT_FOUND)
 
-
-class GetOrdersAPIView(APIView):
+#Lấy danh sách sản phẩm bán chạy.
+class GetHighlightProductsAPIView(APIView):
     def get(self, request):
         try:
-
-            order = Orders.objects.all() # Dùng '__' để truy cập các thuộc tính của các quan hệ khóa ngoại
-            if order.exists():  # Kiểm tra nếu có sản phẩm nào khớp
-                order_serializer = GetAllObjectSerializers(order, many=True)  
-                response_data = {"order": order_serializer.data}
+            products = Products.objects.filter(quantity__gt=100)
+            if products.exists():
+                products_serializer = GetCardSerializer(products, many =True)
+                response_data = {"products": products_serializer.data}
                 return Response(response_data, status=status.HTTP_200_OK)
             else:
-                return Response({"message": "Thông tin không tồn tại"}, status=status.HTTP_404_NOT_FOUND)
-        
+                return Response({"message": "Sản phẩm không tồn tại"}, status=status.HTTP_404_NOT_FOUND)
         except Products.DoesNotExist:
-            return Response({"message": "Thông tin không tồn tại"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"message": "Sản phẩm không tồn tại"}, status=status.HTTP_404_NOT_FOUND)

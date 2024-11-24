@@ -1,5 +1,5 @@
 from django.urls import path
-from ...apiview import ProductAPIView, GetPortFolioProductAPIView, GetAllProductAPIView, GetObjectProductAPIView, GetAllObjectAPIView
+from .apiview import ProductAPIView, GetPortFolioProductAPIView, GetAllProductAPIView, GetObjectProductAPIView, GetAllObjectAPIView
 
 urlpatterns = [
 

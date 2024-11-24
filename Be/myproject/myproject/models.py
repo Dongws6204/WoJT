@@ -8,6 +8,18 @@
 from django.db import models
 
 
+class Analytics(models.Model):
+    analytics_id = models.AutoField(primary_key=True)
+    product = models.ForeignKey('Products', models.DO_NOTHING)
+    views = models.PositiveIntegerField(blank=True, null=True)
+    purchases = models.PositiveIntegerField(blank=True, null=True)
+    last_updated = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'analytics'
+
+
 class Cart(models.Model):
     cart_id = models.AutoField(primary_key=True)
     customer = models.ForeignKey('Customers', models.DO_NOTHING, blank=True, null=True)
@@ -19,6 +31,18 @@ class Cart(models.Model):
     class Meta:
         managed = False
         db_table = 'cart'
+
+
+class ChatLogs(models.Model):
+    chat_id = models.AutoField(primary_key=True)
+    customer = models.ForeignKey('Customers', models.DO_NOTHING)
+    bot_message = models.TextField()
+    user_message = models.TextField()
+    timestamp = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'chat_logs'
 
 
 class ClothesEvaluate(models.Model):
@@ -39,7 +63,7 @@ class Customers(models.Model):
     phone = models.CharField(max_length=20)
     address = models.CharField(max_length=255, blank=True, null=True)
     birthday = models.DateField()
-    role = models.IntegerField(blank=True, null=True, default=1)
+    role = models.IntegerField(blank=True, null=True)
     pass_word = models.CharField(max_length=500)
     user_name = models.CharField(max_length=50)
 
@@ -49,9 +73,8 @@ class Customers(models.Model):
 
 
 class Evaluate(models.Model):
-    id = models.AutoField(primary_key=True)
     customer = models.ForeignKey(Customers, models.DO_NOTHING, blank=True, null=True)
-    product = models.ForeignKey('Products', models.DO_NOTHING, blank=True, null=True, related_name='evaluates')
+    product = models.ForeignKey('Products', models.DO_NOTHING, blank=True, null=True)
     comments = models.CharField(max_length=200, blank=True, null=True)
     star = models.IntegerField(blank=True, null=True)
     date_posted = models.DateField(blank=True, null=True)
@@ -59,6 +82,17 @@ class Evaluate(models.Model):
     class Meta:
         managed = False
         db_table = 'evaluate'
+
+
+class Inventory(models.Model):
+    inventory_id = models.AutoField(primary_key=True)
+    product = models.ForeignKey('Products', models.DO_NOTHING)
+    stock_quantity = models.PositiveIntegerField()
+    last_updated = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'inventory'
 
 
 class Object(models.Model):
@@ -71,11 +105,12 @@ class Object(models.Model):
 
 
 class Orderdetail(models.Model):
-    order = models.ForeignKey('Orders', models.DO_NOTHING, blank=True, null=True, related_name='orderdetails')
+    order = models.ForeignKey('Orders', models.DO_NOTHING, blank=True, null=True)
     quantity = models.IntegerField(blank=True, null=True)
     total_amout = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     product = models.ForeignKey('Products', models.DO_NOTHING, blank=True, null=True)
     id_prod = models.ForeignKey('ProductDetail', models.DO_NOTHING, db_column='id_prod', blank=True, null=True)
+    order_status = models.CharField(max_length=10, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -94,10 +129,23 @@ class Orders(models.Model):
         db_table = 'orders'
 
 
+class Payments(models.Model):
+    payment_id = models.AutoField(primary_key=True)
+    order = models.ForeignKey(Orders, models.DO_NOTHING)
+    payment_method = models.CharField(max_length=13)
+    payment_status = models.CharField(max_length=9)
+    payment_date = models.DateTimeField(blank=True, null=True)
+    transaction_id = models.CharField(max_length=100, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'payments'
+
+
 class Portfolio(models.Model):
     id_port = models.AutoField(primary_key=True)
     port_name = models.CharField(max_length=200, blank=True, null=True)
-    object = models.ForeignKey(Object, models.DO_NOTHING, blank=True, null=True, related_name='portfolios')
+    object = models.ForeignKey(Object, models.DO_NOTHING, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -106,8 +154,8 @@ class Portfolio(models.Model):
 
 class ProductDetail(models.Model):
     id_prod = models.AutoField(primary_key=True)
-    product = models.ForeignKey('Products', models.DO_NOTHING, blank=True, null=True, related_name='product_details')
-    size = models.IntegerField(blank=True, null=True)
+    product = models.ForeignKey('Products', models.DO_NOTHING, blank=True, null=True)
+    size = models.CharField(max_length=5, blank=True, null=True)
     quantity_of_size = models.PositiveIntegerField(blank=True, null=True)
 
     class Meta:
@@ -138,3 +186,30 @@ class Sales(models.Model):
     class Meta:
         managed = False
         db_table = 'sales'
+
+
+class ShippingInfo(models.Model):
+    shipping_id = models.AutoField(primary_key=True)
+    order = models.ForeignKey(Orders, models.DO_NOTHING)
+    address = models.CharField(max_length=255)
+    city = models.CharField(max_length=100)
+    postal_code = models.CharField(max_length=20)
+    country = models.CharField(max_length=100)
+    shipping_status = models.CharField(max_length=10, blank=True, null=True)
+    shipping_cost = models.DecimalField(max_digits=10, decimal_places=2)
+
+    class Meta:
+        managed = False
+        db_table = 'shipping_info'
+
+
+class ViewHistory(models.Model):
+    view_id = models.AutoField(primary_key=True)
+    customer = models.ForeignKey(Customers, models.DO_NOTHING)
+    product = models.ForeignKey(Products, models.DO_NOTHING)
+    action = models.CharField(max_length=9)
+    action_date = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'view_history'

@@ -1,5 +1,5 @@
 from django.urls import path
-from ...apiview import CustomerAPIView
+from .apiview import CustomerAPIView
 
 urlpatterns = [
     #http://127.0.0.1:8000/api/customers/13(id là số)

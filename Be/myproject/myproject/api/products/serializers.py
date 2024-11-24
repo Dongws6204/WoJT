@@ -1,18 +1,6 @@
 from rest_framework import serializers
-from .models import Customers, Products, ProductDetail, Evaluate, Portfolio, Object, Orders, Orderdetail
+from ...models import Customers, Products, ProductDetail, Evaluate, Portfolio, Object
 from django.db.models import Avg  # Import Avg từ Django
-
-
-class CustomerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Customers
-        fields = ['customer_id', 'name', 'email', 'phone', 'address', 'birthday','user_name', 'role']  # Default fields for POST
-
-
-class  IsLoggedInSerializer(serializers.Serializer):
-    success = serializers.BooleanField()
-    customerId = serializers.IntegerField(allow_null=True)
-
 
 
 class ProductDetailSerializer(serializers.ModelSerializer):
@@ -29,12 +17,6 @@ class PortfolioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Portfolio
         fields =['id_port', 'port_name']
-
-
-class OrderDetailSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Orderdetail
-        fields = '__all__'
 
 class ProductSerializer(serializers.ModelSerializer):
     product_id = serializers.IntegerField()
@@ -60,7 +42,7 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = [
             'product_id', 'product_name', 'price', 'img', 'description',
             'product_rate', 'quantity_sold', 'quantity_stock', 'object',
-            'portpolio', 'product_detail', 
+            'portfolio', 'product_detail', 
             'rate',
         ]
     def get_product_rate(self, obj):
@@ -90,14 +72,4 @@ class GetAllObjectSerializers(serializers.ModelSerializer):
         model = Object
         fields =[
             'object_id', 'object_name', 'portfolio',
-        ]
-
-
-
-class GetOrderSerializer(serializers.ModelSerializer):
-    order_detail= OrderDetailSerializer(many=True, read_only=True, source='orderdetails')
-    class Meta:
-        model = Orders
-        fields =[
-            'order_id','customer', 'order_date', 'total_amount','status', 'order_detail'
         ]
