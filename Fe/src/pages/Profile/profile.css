@@ -1,0 +1,61 @@
+.profile-container {
+    padding: 8px;
+    height: auto;
+    width: 100%;
+    display: block;
+}
+
+.profile-container h1{
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;
+    color: #525252;
+    margin-bottom: 26px;
+}
+
+.proflie_list p , .proflie_list_date p{
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;
+    color: #525252;
+    margin-bottom: 8px;
+}
+
+.proflie_list input , .proflie_list_date .input {
+    display: block;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #cbd5e1;
+    border-radius: 1px;
+    height: 36px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    padding: 13px 16px;
+    margin-bottom: 8px;
+    color: #424242;
+    font-family: 'Montserrat', sans-serif;
+}
+
+
+.profile_btn.active {
+    background-color: #da291c;
+    border: 1px solid #da291c;
+    color: #fff;
+    cursor: pointer;
+}
+
+.profile_btn {
+    background-color: #edf1f5;
+    border-color: #cbd5e1;
+    color: #a6b3c2;
+    width: 100%;
+    height: 36px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    cursor: not-allowed;
+}
+
+.react-datepicker-wrapper{
+    width: 100%;
+}

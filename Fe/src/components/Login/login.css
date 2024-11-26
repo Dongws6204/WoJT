@@ -1,0 +1,106 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: rgb(255, 255, 255);
+}
+
+.login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: rgb(255, 255, 255);
+    /* height: 360px; */
+    height: auto;
+    width: 360px;
+    padding: 36px;
+    border-radius: 5%;
+    box-shadow: 0px 4px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.login h2 {
+    font-size: 32px;
+    margin-bottom: 16px;
+    line-height: 1;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+}
+
+.pass , .name {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px;
+    background: transparent;
+    border: 1px solid #444445;
+    border-radius: 16px;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.input {
+    border: none;
+    padding: 8px 8px;
+    width: 100%;
+    border-radius: 16px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    margin-top: 2px;
+}
+
+.icon-login {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+}
+
+.login-btn {
+    display: inline;
+    border: 1px solid black;
+    padding: 12px 36px;
+    background: #2c3652;
+    border-radius: 16px;
+    color: rgb(251, 251, 251);
+    font-weight: bold;
+    font-size: 20px;
+    width: 100%;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.forgot-pass{
+    margin-left: 168px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: rgb(134, 137, 142);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+}
+
+.forgot-pass:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.login-btn:hover{
+    background-color: rgb(78, 84, 133);
+}
+
+.register-option {
+    display: flex;
+    justify-content: center;
+}
+
+.register-option p{
+    padding: 10px 2px;
+    color: rgb(134, 137, 142);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+}
+
+.register-option_1:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+

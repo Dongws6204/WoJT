@@ -1,0 +1,204 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #e5e5e5;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color:#fff;
+}
+
+.search-input {
+    display: block;
+    width: 100%;
+    font-weight: 400;
+    font-size: 14px;
+    outline: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    width: 320px;
+    border: none;
+    padding: 0 16px;
+}
+
+.icon {
+    width: 26px;
+    height: 26px;
+}
+
+.object_list {
+    display: flex;
+    margin-left: 120px;
+    cursor: pointer;
+}
+
+.function_list {
+    display: flex;
+    margin-right: 120px;
+    cursor: pointer;
+}
+
+.search {
+    display: flex;
+    height: 40px;
+    background-color: #fff;
+    border: 1px solid #bbbbbb;
+    border-radius: 40px;
+    margin-top: 10px;
+}
+
+.logo-shop {
+    height: 68px;
+    width: 68px;
+    cursor: pointer;
+}
+
+.look {
+    margin-right: 15px;
+    color: #757575;
+    width: 22px;
+    height: 22px;
+
+}
+
+.icon_search {
+    margin-right: 16px;
+}
+
+
+.ob_list {
+    margin-top: 22px;
+    margin-left: 22px;
+    cursor: pointer;
+    position: relative;
+}
+
+.ob_list p{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    color: #585858;
+}
+
+/* Hiệu ứng di chuột: thanh màu đỏ bên dưới thẻ p */
+.ob_list:hover p::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: red;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.ob_list.active p::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: red;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin-left: 12px;
+    margin-top: 10px;
+}
+
+.ic1{
+    margin-top: -15px;
+    color: #5b5b5b;
+    width: 23px;
+    height: 23px;
+    margin-bottom: 3px;
+}
+
+.ic2 {
+    margin-left: 16px;
+    color: #5b5b5b;
+}
+
+.account {
+    position: relative;
+}
+.account-options {
+    position: absolute;
+    top: 100%;
+    left: 50%; /* Căn giữa theo chiều ngang */
+    transform: translateX(-50%);/* Điều chỉnh để căn giữa khối con */
+    width: 95px;
+    background-color: white;
+    border: 1px solid #fafafa;
+    border-radius:0 0 3px 3px;
+    margin-top: 0px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.account-options ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.account-options li {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.account-options li:hover {
+    background-color: #f0f0f0;
+}
+
+.cart {
+    position: relative;
+    display: inline-block;
+}
+
+
+.badge {
+    position: absolute;
+    top: -3px;
+    right: 4px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 8px;
+    font-size: 12px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.portfolio_list {
+    position: fixed; 
+    left: 13%;
+    top: 69px;
+    z-index: 100; 
+    background-color: rgb(255, 255, 255); 
+    padding: 8px;
+    width: 38%; 
+    height: auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Tạo 4 cột đều */ 
+}
+
+.portfolio_item p{
+    font-size: 12px;
+    font-family: 'Montserrat', sans-serif;
+    margin: 8px;
+    color: #0e0e0ec5;
+}
+
+.portfolio_item p:hover{
+    color: red;
+    cursor: pointer;
+}

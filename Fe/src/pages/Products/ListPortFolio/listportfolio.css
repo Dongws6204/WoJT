@@ -1,0 +1,20 @@
+.list-product-portfolio {
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    gap: 14px;
+    margin: 24px 68px;
+}
+
+
+.link_content {
+    margin: 2% 5%;
+    display: flex;
+    align-items: center;
+}
+
+.link_content h1{
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+    color: rgb(21, 21, 21);
+    margin-left: 2px;
+}

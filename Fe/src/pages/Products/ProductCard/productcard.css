@@ -1,0 +1,52 @@
+.product-card{
+    height: 392px;
+    width: 245px;
+    display: flex;
+    flex-direction: column;
+    background-color: #fdfdfd;
+    margin: 10px 10px;
+    transition: 0.3s ease;
+}
+
+.product-card_image {
+    height: 100%;
+    width: 100%;
+}
+
+.product-card_image img {
+    border-radius: 3px;
+}
+
+.prodduct-card_content {
+    display: block;
+    margin: 8px 0px;
+}
+
+.prodduct-card_content h3 {
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+    color: #585a58;
+    margin: 8px 0px;
+    white-space: nowrap;             
+    text-overflow: ellipsis;
+    overflow: hidden;
+    line-height: 1.2;
+}
+
+.prodduct-card_content h4 {
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+    color: #2d2d2d;
+    margin: 2px 0px;
+    font-weight: bold
+}
+
+.product-card:hover{
+    cursor: pointer;
+    transform: scale(1.08); /* Phóng to 8% */
+}
+
+.product-discount {
+    display: flex;
+    gap: 8px;
+}

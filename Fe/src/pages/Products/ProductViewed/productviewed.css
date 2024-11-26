@@ -1,0 +1,22 @@
+.viewed-product{
+    display: flex;
+    gap: 13px;
+    width: 100%;
+}
+
+.viewed-btn {
+    display: flex;
+    align-items: center;
+}
+
+.viewed-btn button{
+    margin: 0 8px;
+    height: 26px;
+    border: 1px solid rgb(255, 255, 255);
+    background-color: rgba(211, 211, 211, 0.286);
+    border-radius: 12px;
+    width: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

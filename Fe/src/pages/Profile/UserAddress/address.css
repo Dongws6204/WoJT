@@ -1,0 +1,64 @@
+.address-btn {
+    border-radius: 2px;
+    min-height: 32px;
+    min-width: 100px;
+    outline: 0;
+    overflow: hidden;
+    padding: 8px 20px;
+    text-overflow: ellipsis;
+    text-transform: capitalize;
+    background-color: #ee4d2d;
+    color: white;
+    font-family: 'Montserrat',sans-serif;
+}
+
+.lineee{
+    border: none;
+    border-top: 1px solid #aeaeae;
+    margin: 8px 0;
+}
+
+.address-insert{
+    top: 126px;
+    position: absolute;
+    z-index: 20;
+    animation:  0.3s ease-out;
+    transition: linear;
+    display: block;
+    width: 36%;
+    height: 36%;
+    background-color: white;
+    border-radius: 8px;
+    padding: 22px;
+}
+
+.addressss{
+    background-color: initial;
+    border: 1px solid #aeaeae;
+    box-sizing: border-box;
+    color: #222;
+    flex: 1;
+    font-size: 14px;
+    min-width: 0;
+    outline: none;
+    padding: 10px;
+    resize: none;
+    width: 100%;
+    font-family: 'Montserrat',sans-serif;
+    font-size: 14px;
+}
+
+.addresss-btn{
+    border-radius: 2px;
+    min-height: 32px;
+    width: 100%;
+    outline: 0;
+    overflow: hidden;
+    padding: 8px 20px;
+    text-overflow: ellipsis;
+    text-transform: capitalize;
+    background-color: #ee4d2d;
+    color: white;
+    font-family: 'Montserrat',sans-serif;
+    margin-top: 8px;
+}
