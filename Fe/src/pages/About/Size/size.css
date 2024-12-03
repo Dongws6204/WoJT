@@ -105,7 +105,7 @@
 }
 
 /* Định dạng tổng quan */
-table {
+.main-content table {
     border-collapse: collapse;
     width: 100%;
     margin: 20px 0;
@@ -115,7 +115,7 @@ table {
 }
 
 /* Tiêu đề bảng */
-table tr:first-child {
+.main-content table tr:first-child {
     background-color: #f4f4f4;
     color: #000;
     font-weight: bold;
@@ -123,16 +123,16 @@ table tr:first-child {
 }
 
 /* Các dòng nội dung */
-table td,
-table th {
+.main-content table td,
+.main-content table th {
     border: 1px solid #ddd;
     padding: 10px;
     text-align: center;
 }
 
 /* Dòng tiêu đề */
-table tr:first-child th,
-table tr:first-child td {
+.main-content table tr:first-child th,
+.main-content table tr:first-child td {
     font-size: 15px;
 }
 
@@ -142,30 +142,30 @@ table tr:not(:first-child):hover {
 }
 
 /* Thẻ văn bản */
-h3 {
+.main-content h3 {
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 10px;
     color: #333;
 }
 
-p {
+.main-content p {
     font-size: 13px;
     color: #666;
     margin-bottom: 15px;
 }
 
 /* Định dạng kích thước */
-table colgroup col:first-child {
+.main-content table colgroup col:first-child {
     width: 20%;
 }
 
-table colgroup col:nth-child(n+2) {
+.main-content table colgroup col:nth-child(n+2) {
     width: 15%;
 }
 
 /* Định dạng riêng cho các dòng có nội dung span */
-table td[colspan] {
+.main-content table td[colspan] {
     font-style: italic;
     color: #555;
     text-align: center;
@@ -174,17 +174,17 @@ table td[colspan] {
 /* Responsive Design */
 @media (max-width: 768px) {
 
-    table td,
-    table th {
+    .main-content table td,
+    .main-content table th {
         font-size: 12px;
         padding: 8px;
     }
 
-    h3 {
+    .main-content h3 {
         font-size: 16px;
     }
 
-    p {
+    .main-content p {
         font-size: 12px;
     }
 }

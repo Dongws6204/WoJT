@@ -1,0 +1,72 @@
+.product-add-form {
+    top: 46px;
+    left: 32%;
+    position: absolute;
+    z-index: 20;
+    animation:  0.3s ease-out;
+    transition: linear;
+    width: 100%;
+    width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Montserrat', sans-serif;
+}
+
+.product-add-form h2,
+.product-add-form h3 {
+    margin-bottom: 15px;
+    color: #333;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.product-add-form input,
+.product-add-form textarea {
+    width: calc(100% - 1px);
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.product-add-form textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.size-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.size-item input {
+    flex: 1;
+}
+
+.product-add-form button {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 15px;
+    background-color: #ee4d2d;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: 0.3s ease;
+}
+
+.product-add-form .button-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}

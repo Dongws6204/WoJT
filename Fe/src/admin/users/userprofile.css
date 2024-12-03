@@ -1,0 +1,41 @@
+.proflie__container{
+    top: 96px;
+    left: 32%;
+    position: absolute;
+    z-index: 20;
+    animation:  0.3s ease-out;
+    transition: linear;
+    display: flex;
+    flex-direction: column;
+    width: 36%;
+    height: 75%;
+    background-color: white;
+    border-radius: 8px;
+    padding: 16px 68px;
+}
+
+.proflie__container h1{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 22px;
+    margin: 16px 0px;
+    font-weight: bold;
+    color: #525252;
+}
+
+.delete-btn-admin{
+    border-radius: 3px;
+    min-height: 32px;
+    width: 100%;
+    outline: 0;
+    overflow: hidden;
+    padding: 8px 12px;
+    text-overflow: ellipsis;
+    text-transform: capitalize;
+    background-color: #ee4d2d;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    gap: 3px;
+    justify-content: center;
+    margin-top: 8px;
+}

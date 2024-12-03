@@ -9,7 +9,7 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const [authState, setAuthState] = useState(() => {
         const savedAuth = localStorage.getItem("authState");
-        return savedAuth ? JSON.parse(savedAuth) : { isAuthenticated: true, userId: null };
+        return savedAuth ? JSON.parse(savedAuth) : { isAuthenticated: false, userId: null };
     });
 
     const dispatch = useDispatch();

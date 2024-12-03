@@ -1,0 +1,20 @@
+.admin-list-option p{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    color: rgb(56, 56, 56);
+    cursor: pointer;
+}
+
+.admin-list-option p:hover{
+    color: #da291c;
+}
+
+.admin-list-option div{
+    display: flex;
+    align-items: center;
+    margin: 26px 10px;
+}
+
+.admin-list-option{
+    padding: 0px 16px;
+}

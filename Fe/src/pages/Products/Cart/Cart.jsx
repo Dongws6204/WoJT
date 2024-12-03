@@ -9,6 +9,7 @@ import { AuthContext } from "../../../ContextAPI/AuthContext";
 const Cart = () => {
 
     const CartProduct = useSelector(state => state.cart.CartArr);
+    console.log(CartProduct)
     const [dataCart, setDataCart] = useState(null);
     const dispatch = useDispatch();
     const { authState } = useContext(AuthContext);

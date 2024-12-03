@@ -13,6 +13,10 @@ import ChangePassword from '../pages/Profile/ChangePassword/ChangePassword';
 import User_order from '../pages/Profile/UserOrder/User_order';
 import UserAddress from '../pages/Profile/UserAddress/UserAddress';
 import Size from '../pages/About/Size/Size';
+import AdminLayout from '../components/Layout/AdminLayout/AdminLayout';
+import AdminDashboard from '../admin/dashboard/AdminDashboard';
+import AdminUsers from '../admin/users/AdminUsers';
+import AdminProduct from '../admin/products/AdminProduct';
 
 const router = [
     {path: '/' , component: HomePage},
@@ -28,6 +32,9 @@ const router = [
     {path: '/search/:searchContent', component: Search, layout: HeaFootOnly},
     {path: '/profile/dia_chi_giao_hang' , component: UserAddress, layout: UserLayout},
     {path: '/bang_size', component: Size, layout: HeaFootOnly},
+    {path: '/admin', component: AdminDashboard, layout: AdminLayout},
+    {path: '/admin/users', component: AdminUsers, layout: AdminLayout},
+    {path: '/admin/products', component: AdminProduct, layout: AdminLayout},
 ]
 
 export {router};
