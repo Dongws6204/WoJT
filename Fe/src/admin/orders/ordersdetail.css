@@ -1,0 +1,68 @@
+.admin-orderdetail {
+    top: 96px;
+    left: 26%;
+    position: absolute;
+    z-index: 20;
+    animation:  0.3s ease-out;
+    transition: linear;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: auto;
+    background-color: white;
+    border-radius: 8px;
+    padding: 36px 36px;
+}
+
+.admin-orderdetail h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 22px;
+    margin: 16px 0px;
+    font-weight: bold;
+    color: #525252;
+}
+
+.admin-orderdetail h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 22px;
+    margin: 16px 0px;
+    font-weight: bold;
+    color: #525252;
+}
+
+.admin-orderdetail label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.admin-orderdetail select {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.admin-orderdetail p {
+    margin: 8px 0;
+    font-size: 16px;
+}
+
+
+.admin-orderdetail table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+
+.admin-orderdetail td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+    font-size: 14px;
+}
+
+.admin-orderdetail th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+    color: #555;
+}

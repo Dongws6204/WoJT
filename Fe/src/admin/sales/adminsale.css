@@ -1,0 +1,44 @@
+.admin-sales table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Montserrat', sans-serif;
+    position: relative; 
+}
+
+.admin-sales th{
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+    color: #525252;
+    font-weight: bold;
+    font-size: 16px;
+
+}
+
+.admin-sales td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+    color: #818181;
+    font-size: 14px;
+}
+
+.admin-sales th {
+    background-color: #f4f4f4;
+    text-align: center;
+}
+
+.admin-sales td img {
+    display: block;
+    margin: 0 auto;
+}
+
+.admin-sales h2{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 22px;
+    margin: 0px 0px 26px 0px;
+    font-weight: bold;
+    color: #525252;
+}
+
+

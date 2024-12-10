@@ -1,0 +1,96 @@
+.dashboard-container {
+    padding: 20px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.recent-orders h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    margin: 0px 0px 16px 0px;
+    font-weight: bold;
+    color: #767676;
+}
+
+.stats-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    flex: 1;
+    background-color: #fff;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card h2 {
+    font-size: 24px;
+    color: #ee4d2d;
+    margin: 5px 0px;
+}
+
+.stat-card p {
+    font-size: 16px;
+    color: #555;
+}
+
+.recent-orders,
+.top-products {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 36px;
+}
+
+.recent-orders table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.recent-orders th{
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.recent-orders td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+    color: #818181;
+    font-size: 14px;
+}
+
+.recent-orders th {
+    background-color: #ee4d2d;
+}
+
+.top-products h2{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    margin: 0px 0px 16px 0px;
+    font-weight: bold;
+    color: #767676;
+}
+
+.top-products ul {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0px;
+}
+
+.top-products li {
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #8e8e8e;
+    font-size: 16px;
+}
