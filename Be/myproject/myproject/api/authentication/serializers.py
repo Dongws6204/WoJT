@@ -23,3 +23,24 @@ class CreateSuccessSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customers
         fields = ['name', 'email', 'phone', 'address', 'birthday', 'pass_word', 'user_name']
+
+
+class ChangeInfoCustomerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Customers
+        fields = ['name','phone', 'address', 'birthday']
+
+
+class CheckForgotPasswordSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(required=True)
+    
+    class Meta:
+        model = Customers
+        fields = ['email']
+
+    def validate_email(self, value):
+        if Customers.objects.filter(email=value).exists():
+            return value
+        raise serializers.ValidationError('Email không tồn tại trong hệ thống')
+
+        

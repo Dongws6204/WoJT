@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from ...models import Orders, Orderdetail
-from django.db.models import Avg  # Import Avg từ Django
 
 class OrderDetailSerializer(serializers.ModelSerializer):
     class Meta:
@@ -14,3 +13,20 @@ class GetOrderSerializers(serializers.ModelSerializer):
         fields =[
             'order_id','customer', 'order_date', 'total_amount','status', 'order_detail'
         ]
+
+
+class CreateOrderSerializer(serializers.ModelSerializer):
+    order_detail = OrderDetailSerializer(many=True, write_only=True)
+
+    class Meta:
+        model = Orders
+        fields = [
+            'customer', 'order_date', 'total_amount', 'status', 'order_detail'
+        ]
+
+    def create(self, validated_data):
+        order_details_data = validated_data.pop('order_detail')
+        order = Orders.objects.create(**validated_data)
+        for order_detail_data in order_details_data:
+            Orderdetail.objects.create(order=order, **order_detail_data)
+        return order

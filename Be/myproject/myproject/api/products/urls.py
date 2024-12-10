@@ -1,5 +1,7 @@
 from django.urls import path
-from .apiview import ProductAPIView, GetPortFolioProductAPIView, GetAllProductAPIView, GetObjectProductAPIView, GetAllObjectAPIView
+from .apiview import (ProductAPIView, GetPortFolioProductAPIView, GetAllProductAPIView, 
+                      GetObjectProductAPIView, GetAllObjectAPIView,
+                      GetProductSearchAPIView)
 
 urlpatterns = [
 
@@ -17,4 +19,5 @@ urlpatterns = [
 
     #Tra ve toan bo object va pofolio
     path('list-object', GetAllObjectAPIView.as_view(), name='list-object'),
+    path('search', GetProductSearchAPIView.as_view(), name='search'),
 ]

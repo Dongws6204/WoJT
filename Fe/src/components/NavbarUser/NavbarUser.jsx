@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import './navbar.css'
 import User_img from '../../assets/user.png'
 import { BsBag, BsPersonVcard } from "react-icons/bs";
@@ -15,24 +15,24 @@ const NavbarUser = () => {
 
     const handleLogout = () => {
         logout();
-        navigate('/') 
+        navigate('/')
     };
 
-    const Customers = {
-        customer_id: 1,
-        name: 'Vo Quang Sang',
-        email: 'sangv6548@gmail.com',
-        phone: '0974583072',
-        address: 'nghi xuan , ha tinh',
-        birthday: '2004-12-15',
-        user_name: 'Sann525'
-    }
+    // const Customers = {
+    //     customer_id: 1,
+    //     name: 'Vo Quang Sang',
+    //     email: 'sangv6548@gmail.com',
+    //     phone: '0974583072',
+    //     address: 'nghi xuan , ha tinh',
+    //     birthday: '2004-12-15',
+    //     user_name: 'Sann525'
+    // }
 
     return (
         <div className='nav-container'>
             <div className='nav-header'>
                 <img src={User_img} />
-                <p>{Customers.name}</p>
+                {/* <p>{Customers.name}</p> */}
             </div>
             <div className='nav-content'>
                 <div className='nav-list'>
@@ -55,7 +55,7 @@ const NavbarUser = () => {
                 </div>
                 <div className='nav-list'>
                     <div className='list_img'>
-                    <RiHome2Line className='icon_svg'/>
+                        <RiHome2Line className='icon_svg' />
                     </div>
                     <p style={{ marginLeft: '9px' }} onClick={() => { navigate('/profile/dia_chi_giao_hang') }}>Địa chỉ</p>
                 </div>

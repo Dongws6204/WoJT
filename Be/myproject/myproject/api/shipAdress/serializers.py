@@ -1,7 +1,8 @@
 from rest_framework import serializers
-from ...models import ShippingInfo
+from ...models import Address
 
-class ShippingAddressSerializer(serializers.ModelSerializer):
+class AddressSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ShippingInfo
-        fields = '__all__'  # Hoặc bạn có thể liệt kê các trường cụ thể
+        model = Address
+        fields = ['address_id', 'address', 'postal_code', 'customer']
+

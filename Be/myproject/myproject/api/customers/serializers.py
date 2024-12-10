@@ -6,3 +6,7 @@ class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customers
         fields = ['customer_id', 'name', 'email', 'phone', 'address', 'birthday','user_name', 'role']  # Default fields for POST
+# class UpdateCustomer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Customers
+#         fields = []

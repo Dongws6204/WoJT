@@ -1,17 +1,13 @@
 from rest_framework import serializers
-from ...models import Customers, Products, ProductDetail, Evaluate, Portfolio, Object
+from ...models import  Products, ProductDetail, Portfolio, Object
 from django.db.models import Avg  # Import Avg từ Django
+from ..review.serializers import EvaluateSerializer
 
 
 class ProductDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductDetail
         fields = ['id_prod', 'size']
-
-class EvaluateSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Evaluate
-        fields = ['customer', 'date_posted', 'star', 'comments']
 
 class PortfolioSerializer(serializers.ModelSerializer):
     class Meta:
@@ -21,8 +17,8 @@ class PortfolioSerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     product_id = serializers.IntegerField()
     product_name = serializers.CharField()
-    price = serializers.DecimalField(max_digits=10, decimal_places=2)
     img = serializers.CharField(source='img_1')
+    price = serializers.DecimalField(max_digits=10, decimal_places=2)
     description = serializers.CharField(allow_null=True)
     product_rate = serializers.SerializerMethodField()
     quantity_sold = serializers.IntegerField()
@@ -40,11 +36,12 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Products
         fields = [
-            'product_id', 'product_name', 'price', 'img', 'description',
+            'product_id', 'product_name', 'img', 'price', 'description',
             'product_rate', 'quantity_sold', 'quantity_stock', 'object',
             'portfolio', 'product_detail', 
             'rate',
         ]
+    
     def get_product_rate(self, obj):
         # Sử dụng evaluate_set để lấy tất cả đánh giá của sản phẩm
         reviews = obj.evaluates.all()

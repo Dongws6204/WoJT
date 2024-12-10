@@ -117,7 +117,7 @@ class Object(models.Model):
 class Orderdetail(models.Model):
     order = models.ForeignKey('Orders', models.DO_NOTHING, blank=True, null=True)
     quantity = models.IntegerField(blank=True, null=True)
-    total_amout = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     product = models.ForeignKey('Products', models.DO_NOTHING, blank=True, null=True)
     id_prod = models.ForeignKey('ProductDetail', models.DO_NOTHING, db_column='id_prod', blank=True, null=True)
     order_status = models.CharField(max_length=10, blank=True, null=True)
@@ -132,7 +132,7 @@ class Orders(models.Model):
     customer = models.ForeignKey(Customers, models.DO_NOTHING, blank=True, null=True)
     order_date = models.DateField(blank=True, null=True)
     total_amount = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-    status = models.IntegerField(blank=True, null=True)
+    status = models.CharField(max_length=10, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -155,7 +155,7 @@ class Payments(models.Model):
 class Portfolio(models.Model):
     id_port = models.AutoField(primary_key=True)
     port_name = models.CharField(max_length=200, blank=True, null=True)
-    object = models.ForeignKey(Object, models.DO_NOTHING, blank=True, null=True,related_name='portfolios')
+    object = models.ForeignKey(Object, models.DO_NOTHING, blank=True, null=True, related_name='portfolios')
 
     class Meta:
         managed = False
@@ -164,7 +164,7 @@ class Portfolio(models.Model):
 
 class ProductDetail(models.Model):
     id_prod = models.AutoField(primary_key=True)
-    product = models.ForeignKey('Products', models.DO_NOTHING, blank=True, null=True,related_name='product_details')
+    product = models.ForeignKey('Products', models.DO_NOTHING, blank=True, null=True, related_name='product_details')
     size = models.CharField(max_length=5, blank=True, null=True)
     quantity_of_size = models.PositiveIntegerField(blank=True, null=True)
 
@@ -198,19 +198,29 @@ class Sales(models.Model):
         db_table = 'sales'
 
 
+class Address(models.Model):
+    address_id = models.AutoField(primary_key=True)
+    address = models.CharField(max_length=255)
+    city = models.CharField(max_length=100, null=True)
+    postal_code = models.CharField(max_length=20, null=True)
+    country = models.CharField(max_length=100, null=True)
+    customer = models.ForeignKey(Customers, models.DO_NOTHING, null=True, blank=True, related_name='customer_addresses')
+
+    class Meta:
+        managed = False
+        db_table = 'address'
+
+
 class ShippingInfo(models.Model):
     shipping_id = models.AutoField(primary_key=True)
-    order = models.ForeignKey(Orders, models.DO_NOTHING)
-    address = models.CharField(max_length=255)
-    city = models.CharField(max_length=100)
-    postal_code = models.CharField(max_length=20)
-    country = models.CharField(max_length=100)
+    address = models.ForeignKey(Address, models.DO_NOTHING, null=True, blank=True)
     shipping_status = models.CharField(max_length=10, blank=True, null=True)
     shipping_cost = models.DecimalField(max_digits=10, decimal_places=2)
 
     class Meta:
         managed = False
         db_table = 'shipping_info'
+
 
 
 class ViewHistory(models.Model):

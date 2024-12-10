@@ -93,3 +93,22 @@ class GetHighlightProductsAPIView(APIView):
                 return Response({"message": "Sản phẩm không tồn tại"}, status=status.HTTP_404_NOT_FOUND)
         except Products.DoesNotExist:
             return Response({"message": "Sản phẩm không tồn tại"}, status=status.HTTP_404_NOT_FOUND)
+        
+
+class GetProductSearchAPIView(APIView):
+    def post(self, request):
+        search = request.data.get('search', '')
+
+        try:
+            # Trả về 12 sản phẩm đầu tiên có tên chứa từ khóa tìm kiếm
+            products = Products.objects.filter(product_name__icontains=search)[:12]
+            if products.exists():
+                res = GetCardSerializer(products, many=True)
+                return Response(res.data, status=status.HTTP_200_OK)
+            else:
+                return Response({"error": "Không tìm thấy sản phẩm nào"}, status=status.HTTP_404_NOT_FOUND)
+        except Products.DoesNotExist:
+            return Response({"error": "Lỗi khi tìm kiếm sản phẩm"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+#Xem chi tiết thông tin sản phẩm 

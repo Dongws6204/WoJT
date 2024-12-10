@@ -6,6 +6,7 @@ const HomePage = () => {
             <ProductList></ProductList>
         </>
     );
+
 };
 
 export default HomePage;

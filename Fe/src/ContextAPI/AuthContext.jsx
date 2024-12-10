@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
-import { useDispatch } from 'react-redux'; 
-import { initializeCart } from '../redux/Slice/cartSlice'; 
+import { useDispatch } from 'react-redux';
+import { initializeCart } from '../redux/Slice/cartSlice';
+
 
 // Tạo AuthContext
 export const AuthContext = createContext();
@@ -39,7 +40,7 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         dispatch(initializeCart({ userId: authState.userId }));
-     }, [authState.userId, dispatch]);
+    }, [authState.userId, dispatch]);
 
     return (
         <AuthContext.Provider value={{ authState, login, logout }}>

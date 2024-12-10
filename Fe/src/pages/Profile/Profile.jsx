@@ -1,69 +1,84 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import DatePicker from 'react-datepicker';
 import './profile.css'
 import VerifyUser from '../../components/VerifyUsers/VerifyUser';
-
+import axios from 'axios';
+import { AuthContext } from '../../ContextAPI/AuthContext';
 
 const Profile = () => {
-
-    const value = {
-        name: 'Vo Quang Sang',
-        email: 'sangv6548@gmail.com',
-        date: '2003-12-15',
-        phone: '0974583072',
-        address: 'nghi xuan ha tinh',
-        username: 'Sann525'
-    }
-
-    const [isVerify, setIsVerify] = useState(false);
-    const [selectedDate, setSelectedDate] = useState(new Date(value.date));
-    const [active, setActive] = useState(false);
-    const [formError, setFormError] = useState({})
+    const { authState } = useContext(AuthContext);
     const [dataProfile, setdataProfile] = useState({
         name: '',
         email: '',
-        date: '',
+        birthday: '',
         phone: '',
         address: '',
-        username: '',
+        user_name: '',
     });
-    useEffect(() => {
-        setdataProfile(value);
-    }, []);
 
-    const closeOtp = () => {
-        setIsVerify(false);
-    }
+    // const [isVerify, setIsVerify] = useState(false);
+
+    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [active, setActive] = useState(false);
+    const [formError, setFormError] = useState({});
+
+    // Fetch user data
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const res = await axios.get(`http://127.0.0.1:8000/api/customers/${authState.userId}`);
+                setdataProfile({
+                    name: res.data.name,
+                    email: res.data.email,
+                    birthday: res.data.birthday,
+                    phone: res.data.phone,
+                    address: res.data.address,
+                    user_name: res.data.user_name,
+                });
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+            }
+        };
+        if (authState.userId) fetchUserData();
+    }, [authState.userId]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setActive(true);
         setdataProfile((data) => ({
             ...data,
-            [name]: value
+            [name]: value,
         }));
     };
 
     const handleDateChange = (date) => {
-        setSelectedDate(date); // Cập nhật selectedDate
+        setSelectedDate(date);
         setActive(true);
         setdataProfile((data) => ({
             ...data,
-            date: date ? date.toLocaleDateString('en-GB') : '' // Chuyển định dạng ngày thành chuỗi (dd/MM/yyyy)
+            date: date ? format(date, 'dd/MM/yyyy') : '',
         }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (validateData() && active) {
-            setActive(false);
-            setIsVerify(true);
-            console.log("formdata", dataProfile);
+            try {
+                setActive(false);
+                // setIsVerify(true);
+
+                await axios.post(`http://127.0.0.1:8000/api/customers/${authState.userId}`, dataProfile);
+                console.log("Profile updated successfully!");
+                window.location.reload();
+
+            } catch (error) {
+                console.error("Error updating profile:", error);
+            }
+        } else {
+            console.log("Validation failed:", formError);
         }
-        else {
-            console.log(formError)
-        }
-    }
+    };
+
 
     const validateData = () => {
         const error = {};
@@ -80,8 +95,8 @@ const Profile = () => {
         }
 
         // Kiểm tra độ dài username
-        if (!dataProfile.username || dataProfile.username.length < 6 || dataProfile.username.length > 9) {
-            error.username = 'Tên đăng nhập phải có từ 6 đến 9 ký tự';
+        if (!dataProfile.user_name || dataProfile.user_name.length < 6 || dataProfile.user_name.length > 9) {
+            error.user_name = 'Tên đăng nhập phải có từ 6 đến 9 ký tự';
         }
 
         setFormError(error)
@@ -98,24 +113,24 @@ const Profile = () => {
             </div>
             <div className='proflie_list'>
                 <p>Tên đăng nhập</p>
-                <input type="text" value={dataProfile.username} onChange={handleChange} name='username' />
+                <input type="text" value={dataProfile.user_name} onChange={handleChange} name='username' readOnly />
             </div>
-            {formError.username && (
-                <p className='error-feedback' style={{ fontSize:'12px',marginBottom:'8px',fontFamily:'Montserrat' }}>{formError.username}</p>
+            {formError.user_name && (
+                <p className='error-feedback' style={{ fontSize: '12px', marginBottom: '8px', fontFamily: 'Montserrat' }}>{formError.user_name}</p>
             )}
             <div className='proflie_list'>
                 <p>Số điện thoại</p>
                 <input type="text" value={dataProfile.phone} onChange={handleChange} name='phone' />
             </div>
             {formError.phone && (
-                <p className='error-feedback' style={{ fontSize:'12px',marginBottom:'8px',fontFamily:'Montserrat' }}>{formError.phone}</p>
+                <p className='error-feedback' style={{ fontSize: '12px', marginBottom: '8px', fontFamily: 'Montserrat' }}>{formError.phone}</p>
             )}
             <div className='proflie_list'>
                 <p>Email</p>
-                <input type="text" value={dataProfile.email} onChange={handleChange} name='email' />
+                <input type="text" value={dataProfile.email} onChange={handleChange} name='email' readOnly />
             </div>
             {formError.email && (
-                <p className='error-feedback' style={{ fontSize:'12px',marginBottom:'8px',fontFamily:'Montserrat' }}>{formError.email}</p>
+                <p className='error-feedback' style={{ fontSize: '12px', marginBottom: '8px', fontFamily: 'Montserrat' }}>{formError.email}</p>
             )}
             <div className='proflie_list'>
                 <p>Địa chỉ</p>
@@ -124,7 +139,7 @@ const Profile = () => {
             <div className='proflie_list_date'>
                 <p>Sinh nhật</p>
                 <DatePicker
-                    placeholder={dataProfile.date}
+                    placeholder={dataProfile.birthday}
                     selected={selectedDate}
                     className='input'
                     dateFormat="dd/MM/yyyy" // Format ngày tùy chỉnh
@@ -133,25 +148,25 @@ const Profile = () => {
 
             </div>
             <button className={`profile_btn ${active ? 'active' : ''}`} onClick={handleSubmit}>Lưu thay đổi</button>
-            {isVerify && (
+            {/* {isVerify && (
                 <>
-                <div
-                    onClick={closeOtp}
-                    style={{
-                        position: "absolute",
-                        zIndex: "10",
-                        width: '100vw',
-                        height: '100vh',
-                        backgroundColor: 'rgba(76, 79, 77, 0.5)',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        top: 0,
-                        left: 0
-                    }}>
-                </div>
-                <VerifyUser />
+                    <div
+                        onClick={closeOtp}
+                        style={{
+                            position: "absolute",
+                            zIndex: "10",
+                            width: '100vw',
+                            height: '100vh',
+                            backgroundColor: 'rgba(76, 79, 77, 0.5)',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            top: 0,
+                            left: 0
+                        }}>
+                    </div>
+                    <VerifyUser />
                 </>
-            )}
+            )} */}
         </div>
     );
 };

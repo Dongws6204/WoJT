@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './forget.css'
-import VerifyUser from '../VerifyUsers/VerifyUser';
-
+import { VerifyUserForgot } from '../VerifyUsers/VerifyUser';
+import axios from 'axios';
 const ForgetPassword = () => {
 
     const [errorMessage, setErrorMessage] = useState('');
@@ -26,8 +26,18 @@ const ForgetPassword = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (validateData()) {
-            setIsVerify(true);
-            console.log("data", dataForgetPass);
+
+            try {
+                const res = axios.post('http://127.0.0.1:8000/api/authentication/forgot-password', {
+                    email: dataForgetPass.email,
+                });
+
+                setIsVerify(true);
+                console.log("data", dataForgetPass);
+            } catch (error) {
+                console.error(error);
+            }
+
         }
         else {
             console.log(formError)
@@ -101,21 +111,21 @@ const ForgetPassword = () => {
             </div>
             {isVerify && (
                 <>
-                <div
-                    onClick={closeOtp}
-                    style={{
-                        position: "absolute",
-                        zIndex: "10",
-                        width: '100vw',
-                        height: '100vh',
-                        backgroundColor: 'rgba(76, 79, 77, 0.5)',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        top: 0,
-                        left: 0
-                    }}>
-                </div>
-                <VerifyUser />
+                    <div
+                        onClick={closeOtp}
+                        style={{
+                            position: "absolute",
+                            zIndex: "10",
+                            width: '100vw',
+                            height: '100vh',
+                            backgroundColor: 'rgba(76, 79, 77, 0.5)',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            top: 0,
+                            left: 0
+                        }}>
+                    </div>
+                    <VerifyUserForgot dataForgot={dataForgetPass} />
                 </>
             )}
         </div>

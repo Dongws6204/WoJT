@@ -27,6 +27,15 @@ urlpatterns = [
     path('api/authentication/', include('myproject.api.authentication.urls')),
     path('api/products/', include('myproject.api.products.urls')),
     path('api/orders/', include('myproject.api.orders.urls')),
-     path('api/ship/', include('myproject.api.shipAdress.urls')),
+    path('api/ship/', include('myproject.api.shipAdress.urls')),
+    path('api/admin/', include('myproject.api.admin.urls')),
+    # path('api/cart/', include('myproject.api.cart')),
+    # path('api/iventory/', include('myproject.api.iventory')),
+    # path('api/notifications/', include('myproject.api.notification')),
+    # path('api/payment/', include('myproject.api.payment')),
+    # path('api/recommendations/', include('myproject.api.recommend')),
+    path('api/reviews/', include('myproject.api.review.urls')),
+    # path('api/support/', include('myproject.api.support')),
+    # path('api/analysis/', include('myproject.api.analysis')),
 
 ]
