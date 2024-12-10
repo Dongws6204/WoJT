@@ -19,7 +19,6 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("formdata", dataLogin);
         try {
             const res = await axios.post('http://127.0.0.1:8000/api/authentication/login', {
                 user_name: dataLogin.username,
@@ -27,10 +26,9 @@ const Login = () => {
 
             });
             setMessage(res.data.success);
-            console.log(res.data)
             if (res.data.success) {
                 window.alert('Đăng nhập thành công');
-                login(res.data.customerId, 2);
+                login(res.data.customerId, res.data.role);
                 navigate('/');
             } else {
                 window.alert('Đăng nhập thất bại');

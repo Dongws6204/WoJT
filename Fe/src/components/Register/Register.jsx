@@ -89,7 +89,11 @@ const Register = () => {
         setSelectedDate(date); // Cập nhật selectedDate
         setDataRegister((data) => ({
             ...data,
-            date: date ? date.toISOString().split('T')[0] : '' // Chuyển định dạng ngày thành chuỗi (yyyy-mm-dd)
+            date: date
+                ? new Date(date.getTime() - date.getTimezoneOffset() * 60000)
+                    .toISOString()
+                    .split('T')[0] // Chuẩn hóa múi giờ trước khi chuyển sang chuỗi
+                : ''
         }));
     };
 

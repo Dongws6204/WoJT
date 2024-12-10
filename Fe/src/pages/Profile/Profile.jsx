@@ -31,7 +31,6 @@ const Profile = () => {
         try {
             const res = await axios.get(`http://127.0.0.1:8000/api/customers/${userId}`);
             setDataProfile(res.data);
-            console.log(res.birthday)
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -56,11 +55,15 @@ const Profile = () => {
 
     const handleDateChange = (date) => {
         setSelectedDate(date); // Cập nhật selectedDate
-        setActive(true);
         setDataProfile((data) => ({
             ...data,
-            date: date ? date.toLocaleDateString('en-GB') : '' // Chuyển định dạng ngày thành chuỗi (dd/MM/yyyy)
+            birthday: date
+                ? new Date(date.getTime() - date.getTimezoneOffset() * 60000)
+                    .toISOString()
+                    .split('T')[0] 
+                : ''
         }));
+        setActive(true);
     };
 
 
@@ -73,7 +76,6 @@ const Profile = () => {
                 name: dataProfile.name,
                 birthday: dataProfile.birthday,
                 address: dataProfile.address,
-
             });
 
             console.log(res.data)
@@ -116,7 +118,7 @@ const Profile = () => {
         }
 
         // Kiểm tra độ dài username
-        if (!dataProfile.user_name || dataProfile.user_name.length < 6 || dataProfile.username.length > 9) {
+        if (!dataProfile.user_name || dataProfile.user_name.length < 6 || dataProfile.user_name.length > 9) {
             error.username = 'Tên đăng nhập phải có từ 6 đến 9 ký tự';
         }
 
@@ -160,10 +162,10 @@ const Profile = () => {
             <div className='proflie_list_date'>
                 <p>Sinh nhật</p>
                 <DatePicker
-                    placeholder={dataProfile.birthday}
+                    value={dataProfile.birthday}
                     selected={selectedDate}
                     className='input'
-                    dateFormat="dd/MM/yyyy" // Format ngày tùy chỉnh
+                    dateFormat="dd/mm/yyyy" // Format ngày tùy chỉnh
                     onChange={handleDateChange}
                 />
 
