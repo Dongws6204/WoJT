@@ -5,12 +5,14 @@ import cartNull from '../../../assets/cart_null.png'
 import Bin from '../../../assets/bin.png'
 import {addBtn, DeleteFromCart,DeleteBtn} from '../../../redux/Slice/cartSlice'
 import { AuthContext } from "../../../ContextAPI/AuthContext";
+import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
 
     const CartProduct = useSelector(state => state.cart.CartArr);
     const [dataCart, setDataCart] = useState(null);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { authState } = useContext(AuthContext);
     
     const TotalPrice = (products) => {
@@ -31,6 +33,9 @@ const Cart = () => {
                 cart : CartProduct,
                 user_id : authState.userId
             });
+            alert('Đặt hàng thành công');
+            navigate('/profile/don_hang')
+            navi
         } else{
             alert('hãy Đăng nhập để tiếp tục mua hàng');
         }

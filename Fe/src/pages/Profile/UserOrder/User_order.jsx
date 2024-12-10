@@ -83,7 +83,7 @@ const User_order = () => {
         } else if(active===2) {
             setData(dang_van_chuyen);
         } else {
-            setData('');
+            setData([]);
         }
     }, [active]);
 

@@ -118,7 +118,7 @@ const Size = () => {
                             </tbody>
                         </table>
                     </div>
-                    <h3>Quần Jeans - Khaki</h3>
+                    <h3>Quần Jeans - Kaki</h3>
                     <table border={1} cellPadding={0} cellSpacing={0} style={{ width: '100%' }}><colgroup><col width="20%" /> <col span={4} width="15%" /> </colgroup>
                         <tbody style={{ textAlign: 'center' }}>
                             <tr style={{ fontWeight: 700 }}>
@@ -215,7 +215,7 @@ const Size = () => {
                             </tr>
                         </tbody>
                     </table>
-                    <h3>Quần Jeans - Khaki</h3>
+                    <h3>Quần Jeans - Kaki</h3>
                     <table border={1} cellPadding={0} cellSpacing={0} style={{ width: '100%' }}><colgroup><col width="20%" /> <col span={4} width="15%" /> </colgroup>
                         <tbody style={{ textAlign: 'center' }}>
                             <tr style={{ fontWeight: 700 }}>

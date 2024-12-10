@@ -10,7 +10,7 @@ const UserAddress = () => {
         {
             name: 'Vo quang sang',
             phone: '0974583072',
-            address: 'nghi xuan ha tinh',
+            address: 'Nghi Xuân, Hà Tĩnh',
             status: 1,
             address_id: 1,
         },
@@ -44,35 +44,62 @@ const UserAddress = () => {
         }
     };
 
-    const handleSetDefault = async (id) => {
-        try {
-            await axios.put(`http://127.0.0.1:8000/api/addresses/${id}/set-default`);
+    // const handleSetDefault = async (id) => {
+    //     try {
+    //         await axios.put(`http://127.0.0.1:8000/api/addresses/${id}/set-default`);
 
-            fetchAddresses();
-        } catch (error) {
-            console.error('Error setting default address:', error);
-        }
+    //         fetchAddresses();
+    //     } catch (error) {
+    //         console.error('Error setting default address:', error);
+    //     }
+    // };
+
+    const handleSetDefault = (id) => {
+        setDataAddress((prevAddresses) =>
+            prevAddresses.map((item) =>
+                item.address_id === id
+                    ? { ...item, status: 1 }
+                    : { ...item, status: 0 }
+            )
+        );
     };
 
-    const handleSetUnDefault = async (id) => {
-        try {
-            await axios.put(`http://127.0.0.1:8000/api/addresses/${id}/set-undefault`);
+    // const handleSetUnDefault = async (id) => {
+    //     try {
+    //         await axios.put(`http://127.0.0.1:8000/api/addresses/${id}/set-undefault`);
 
-            fetchAddresses();
-        } catch (error) {
-            console.error('Error setting default address:', error);
-        }
+    //         fetchAddresses();
+    //     } catch (error) {
+    //         console.error('Error setting default address:', error);
+    //     }
+    // };
+
+    const handleSetUnDefault = (id) => {
+        setDataAddress((prevAddresses) =>
+            prevAddresses.map((item) =>
+                item.address_id === id
+                    ? { ...item, status: 0 }
+                    : item 
+            )
+        );
     };
+    
 
-    const handleDelete = async (id) => {
-        try {
-            await axios.delete(`http://127.0.0.1:8000/api/addresses/${id}/delete`); 
-            fetchAddresses();
-        } catch (error) {
-            console.error('Error deleting address:', error);
-        }
+    // const handleDelete = async (id) => {
+    //     try {
+    //         await axios.delete(`http://127.0.0.1:8000/api/addresses/${id}/delete`); 
+    //         fetchAddresses();
+    //     } catch (error) {
+    //         console.error('Error deleting address:', error);
+    //     }
+    // };
+
+    const handleDelete = (id) => {
+        setDataAddress((prevAddresses) =>
+            prevAddresses.filter((item) => item.address_id !== id)
+        );
     };
-
+    
 
     useEffect(() => {
         fetchAddresses(); 
@@ -88,10 +115,16 @@ const UserAddress = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (authState.isAuthenticated) {
-            setAddress({
-                ...address,
-                user_id : authState.userId
-            });
+            setDataAddress([
+                ...dataAddress,
+                {
+                    ...address,
+                    address_id: dataAddress.length + 1,
+                    status: 0
+                }
+            ]);
+            alert('Thêm địa chỉ thành công')
+            setIsAddressInsert(false)
         } else{
             alert('hãy Đăng nhập để tiếp tục');
         }
