@@ -9,14 +9,14 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const [authState, setAuthState] = useState(() => {
         const savedAuth = localStorage.getItem("authState");
-        return savedAuth ? JSON.parse(savedAuth) : { isAuthenticated: false, userId: null };
+        return savedAuth ? JSON.parse(savedAuth) : { isAuthenticated: false, userId: null,roll:0 };
     });
 
     const dispatch = useDispatch();
 
     // Hàm cập nhật trạng thái đăng nhập
-    const login = (userId) => {
-        const newState = { isAuthenticated: true, userId };
+    const login = (userId,role) => {
+        const newState = { isAuthenticated: true, userId , role};
         setAuthState(newState);
         localStorage.setItem("authState", JSON.stringify(newState));
     };
@@ -26,6 +26,7 @@ export const AuthProvider = ({ children }) => {
         setAuthState({
             isAuthenticated: false,
             userId: null,
+            role:0
         });
         localStorage.removeItem("authState");
     };

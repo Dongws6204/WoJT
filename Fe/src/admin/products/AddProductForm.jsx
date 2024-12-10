@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import './addproduct.css'
 import { CiCirclePlus } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
@@ -33,12 +33,13 @@ const AddProductForm = () => {
     ]);
 
     const [selectedObject, setSelectedObject] = useState(null);
-    const [portfolios, setPortfolios] = useState(dataFake);
+    const [portfolios, setPortfolios] = useState([]);
 
 
     const handleObjectChange = async (e) => {
         const objectId = e.target.value;
         setSelectedObject(objectId);
+        setPortfolios(dataFake);
     };
 
 
@@ -80,7 +81,7 @@ const AddProductForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(sizes)
+        console.log({ product, sizes })
         try {
             const response = await fetch("/api/addproduct", {
                 method: "POST",
@@ -109,7 +110,7 @@ const AddProductForm = () => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(
-                    `http://127.0.0.1:8000/api/products/${selectedObject}`
+                    `http://127.0.0.1:8000/api/productsss/${selectedObject}`
                 );
                 //kiem tra neu response goi thanh cong
                 if (response.status === 200) {
@@ -157,7 +158,7 @@ const AddProductForm = () => {
                 />
             </div>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <div style={{ display: 'flex', gap: '8px',alignItems:'center',margin: '12px 0px' }}>
+                <div style={{ display: 'flex', gap: '8px', alignItems: 'center', margin: '12px 0px' }}>
                     <p style={{ fontSize: '16px', color: '#727272' }}>Đối tượng:</p>
                     <select id="object" onChange={handleObjectChange} value={selectedObject || ""}>
                         <option value="" disabled>---------</option>
@@ -168,25 +169,25 @@ const AddProductForm = () => {
                         ))}
                     </select>
                 </div>
-
-                {/* Dropdown chọn Portfolio */}
+                
                 {portfolios.length > 0 && (
-                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center', margin: '12px 0px' }}>
-                        <label style={{ fontSize: '16px', color: '#727272' }}>Danh mục sản phẩm:</label>
-                        <select
-                            id="portfolio"
-                            onChange={handlePortfolioChange}
-                            value={product.id_port || ""}
-                        >
-                            <option value="" disabled>---------------------------</option>
-                            {portfolios.map((port) => (
-                                <option key={port.id_port} value={port.id_port}>
-                                    {port.port_name}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
+                <div style={{ display: 'flex', gap: '8px', alignItems: 'center', margin: '12px 0px' }}>
+                    <label style={{ fontSize: '16px', color: '#727272' }}>Danh mục sản phẩm:</label>
+                    <select
+                        id="portfolio"
+                        onChange={handlePortfolioChange}
+                        value={product.id_port || ""}
+                    >
+                        <option value="" disabled>---------------------------</option>
+                        {portfolios.map((port) => (
+                            <option key={port.id_port} value={port.id_port}>
+                                {port.port_name}
+                            </option>
+                        ))}
+                    </select>
+                </div>
                 )}
+                
             </div>
             <textarea
                 name="description"

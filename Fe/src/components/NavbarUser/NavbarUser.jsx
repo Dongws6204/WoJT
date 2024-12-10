@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import './navbar.css'
 import User_img from '../../assets/user.png'
 import { BsBag, BsPersonVcard } from "react-icons/bs";
@@ -6,16 +6,17 @@ import { IoExitOutline } from "react-icons/io5";
 import { FiUnlock } from "react-icons/fi";
 import { useNavigate } from 'react-router-dom';
 import { RiHome2Line } from "react-icons/ri";
+import { MdOutlineAdminPanelSettings } from "react-icons/md";
 import { AuthContext } from "../../ContextAPI/AuthContext";
 
 const NavbarUser = () => {
 
     const navigate = useNavigate();
-    const { logout } = useContext(AuthContext);
+    const { logout, authState } = useContext(AuthContext);
 
     const handleLogout = () => {
         logout();
-        navigate('/') 
+        navigate('/')
     };
 
     const Customers = {
@@ -55,10 +56,18 @@ const NavbarUser = () => {
                 </div>
                 <div className='nav-list'>
                     <div className='list_img'>
-                    <RiHome2Line className='icon_svg'/>
+                        <RiHome2Line className='icon_svg' />
                     </div>
                     <p style={{ marginLeft: '9px' }} onClick={() => { navigate('/profile/dia_chi_giao_hang') }}>Địa chỉ</p>
                 </div>
+                {authState.role === 2 && (
+                    <div className='nav-list'>
+                        <div className='list_img'>
+                            <MdOutlineAdminPanelSettings className='icon_svg' />
+                        </div>
+                        <p style={{ marginLeft: '9px' }} onClick={() => { navigate('/admin') }}>Admin</p>
+                    </div>
+                )}
                 <div className='nav-list'>
                     <div className='list_img'>
                         <IoExitOutline className='icon_svg_1' />

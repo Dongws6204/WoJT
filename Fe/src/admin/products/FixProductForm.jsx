@@ -11,7 +11,7 @@ const FixProductForm = ({ productID }) => {
             "product_name": "Áo phông nữ cổ tim",
             "price": "149000.00",
             "img": "https://canifa.com/img/500/750/resize/6/t/6ts25a002-sg425-m-1-u.webp",
-            "description": null,
+            "description": 'ao dep',
             "id_port": 1,
             "portfolio": "Áo phông & Áo thun",//chỉ thêm vào để hiển thị lúc cập nhật data trong sql k cần quan tâm
             "object_id": 2,//chỉ thêm vào để hiển thị lúc cập nhật data trong sql k cần quan tâm
@@ -19,7 +19,7 @@ const FixProductForm = ({ productID }) => {
                 {
                     "id_prod": 1,
                     "size": "S",
-                    "quantity_of_size": 50
+                    "quantity_of_size": 150
                 },
                 {
                     "id_prod": 2,
@@ -45,6 +45,31 @@ const FixProductForm = ({ productID }) => {
         }
     ]
 
+    const [dataProduct, setDataProduct] = useState([])
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(
+                    `http://127.0.0.1:8000/api/productss/${productID}`
+                );
+                //kiem tra neu response goi thanh cong
+                if (response.status === 200) {
+
+                    setDataProduct(response.data);
+                } else {
+                    console.error("Lỗi khi truy cập:", response.status);
+                }
+            } catch (error) {
+                console.error("Lỗi khi lấy dữ liệu:", error);
+            }
+        };
+
+        if (productID) {
+            fetchData();
+        }
+    }, [productID]);
+
 
     const [product, setProduct] = useState(dataFake[0]);
 
@@ -56,7 +81,24 @@ const FixProductForm = ({ productID }) => {
     ]);
 
     const [selectedObject, setSelectedObject] = useState(product.object_id);
-    const [portfolios, setPortfolios] = useState([]);
+    const [portfolios, setPortfolios] = useState([
+        {
+            "id_port": 1,
+            "port_name": "Áo phông & Áo thun"
+        },
+        {
+            "id_port": 2,
+            "port_name": "Áo nỉ & Áo Hoodie"
+        },
+        {
+            "id_port": 3,
+            "port_name": "Áo khoác"
+        },
+        {
+            "id_port": 4,
+            "port_name": "Áo & Quần giữ nhiệt"
+        }
+    ]);
 
 
     const handleObjectChange = async (e) => {
@@ -133,6 +175,7 @@ const FixProductForm = ({ productID }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log({ ...product, sizes })
         try {
             const response = await fetch("/api/addproduct", {
                 method: "POST",
@@ -159,7 +202,7 @@ const FixProductForm = ({ productID }) => {
                 );
                 //kiem tra neu response goi thanh cong
                 if (response.status === 200) {
-                    setPortfolios(response.data)
+                    // setPortfolios(response.data)
                 } else {
                     console.error("Lỗi khi truy cập:", response.status);
                 }
@@ -214,24 +257,24 @@ const FixProductForm = ({ productID }) => {
                     </select>
                 </div>
 
-                {/* Dropdown chọn Portfolio */}
                 {portfolios.length > 0 && (
-                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center', margin: '12px 0px' }}>
-                        <label style={{ fontSize: '16px', color: '#727272' }}>Danh mục sản phẩm:</label>
-                        <select
-                            id="portfolio"
-                            onChange={handlePortfolioChange}
-                            value={product.id_port || ""}
-                        >
-                            <option value="" disabled>{product.port_name}</option>
-                            {portfolios.map((port) => (
-                                <option key={port.id_port} value={port.id_port}>
-                                    {port.port_name}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
+                <div style={{ display: 'flex', gap: '8px', alignItems: 'center', margin: '12px 0px' }}>
+                    <label style={{ fontSize: '16px', color: '#727272' }}>Danh mục sản phẩm:</label>
+                    <select
+                        id="portfolio"
+                        onChange={handlePortfolioChange}
+                        value={product.id_port || ""}
+                    >
+                        <option value="" disabled>{product.port_name}</option>
+                        {portfolios.map((port) => (
+                            <option key={port.id_port} value={port.id_port}>
+                                {port.port_name}
+                            </option>
+                        ))}
+                    </select>
+                </div>
                 )}
+
             </div>
             <textarea
                 name="description"

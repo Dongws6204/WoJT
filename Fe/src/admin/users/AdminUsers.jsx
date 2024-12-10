@@ -52,7 +52,7 @@ const AdminUsers = () => {
         console.log(search);
         if (search) {
             try {
-                const response = await axios.get(
+                const response = await axios.post(
                     `http://127.0.0.1:8000/api/search/cutomers`
                 );
                 //kiem tra neu response goi thanh cong

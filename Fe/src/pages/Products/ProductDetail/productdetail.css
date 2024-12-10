@@ -373,6 +373,7 @@
     width: 98%;
     resize: vertical;
     min-height: 86px;
+    padding: 3px;
 }
 
 .send {

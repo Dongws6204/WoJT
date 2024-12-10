@@ -19,7 +19,6 @@ const Header = () => {
     const CartProduct = useSelector((state) => state.cart.CartArr);
     const navigate = useNavigate();
     const { authState } = useContext(AuthContext);
-
     const Customers = {
         customer_id: 1,
         name: "Vo Quang Sang",

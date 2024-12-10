@@ -17,6 +17,9 @@ import AdminLayout from '../components/Layout/AdminLayout/AdminLayout';
 import AdminDashboard from '../admin/dashboard/AdminDashboard';
 import AdminUsers from '../admin/users/AdminUsers';
 import AdminProduct from '../admin/products/AdminProduct';
+import AdminPortfolio from '../admin/portfolio/AdminPortfolio';
+import AdminSales from '../admin/sales/AdminSale';
+import AdminOrder from '../admin/orders/AdminOrder';
 
 const router = [
     {path: '/' , component: HomePage},
@@ -35,6 +38,9 @@ const router = [
     {path: '/admin', component: AdminDashboard, layout: AdminLayout},
     {path: '/admin/users', component: AdminUsers, layout: AdminLayout},
     {path: '/admin/products', component: AdminProduct, layout: AdminLayout},
+    {path: '/admin/portfolio', component: AdminPortfolio, layout: AdminLayout},
+    {path: '/admin/sales', component: AdminSales, layout: AdminLayout},
+    {path: '/admin/orders', component: AdminOrder, layout: AdminLayout},
 ]
 
 export {router};

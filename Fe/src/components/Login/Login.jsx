@@ -11,7 +11,6 @@ const Login = () => {
     const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = useState('');
     const [message, setMessage] = useState('');
-    const [customerId, setCustomerId] = useState('');
     const { login } = useContext(AuthContext);
     const [dataLogin, setDataLogin] = useState({
         username: '',
@@ -30,8 +29,7 @@ const Login = () => {
             setMessage(res.data.success);
             if (res.data.success) {
                 window.alert('Đăng nhập thành công');
-                setCustomerId(res.data.customerId);
-                login(customerId);
+                login(res.data.customerId,2);
                 navigate('/');
             } else {
                 window.alert('Đăng nhập thất bại');

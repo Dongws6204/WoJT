@@ -44,7 +44,7 @@ const AdminProduct = () => {
             price: 149000.00,
             quantity_stock: 250,
             quantity_sold: 0,
-            description: null,
+            description: 'ao rat dep',
             product_detail: [
                 {
                     size: 'S',
@@ -99,7 +99,7 @@ const AdminProduct = () => {
         if (search) {
             try {
                 const response = await axios.get(
-                    `http://127.0.0.1:8000/api/search/cutomers`
+                    `http://127.0.0.1:8000/api/search/products`
                 );
                 //kiem tra neu response goi thanh cong
                 if (response.status === 200) {

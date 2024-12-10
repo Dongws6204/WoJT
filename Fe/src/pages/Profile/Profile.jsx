@@ -98,7 +98,7 @@ const Profile = () => {
             </div>
             <div className='proflie_list'>
                 <p>Tên đăng nhập</p>
-                <input type="text" value={dataProfile.username} onChange={handleChange} name='username' />
+                <input type="text" value={dataProfile.username} onChange={handleChange} name='username' readOnly/>
             </div>
             {formError.username && (
                 <p className='error-feedback' style={{ fontSize:'12px',marginBottom:'8px',fontFamily:'Montserrat' }}>{formError.username}</p>
@@ -112,7 +112,7 @@ const Profile = () => {
             )}
             <div className='proflie_list'>
                 <p>Email</p>
-                <input type="text" value={dataProfile.email} onChange={handleChange} name='email' />
+                <input type="text" value={dataProfile.email} onChange={handleChange} name='email' readOnly/>
             </div>
             {formError.email && (
                 <p className='error-feedback' style={{ fontSize:'12px',marginBottom:'8px',fontFamily:'Montserrat' }}>{formError.email}</p>
@@ -133,7 +133,7 @@ const Profile = () => {
 
             </div>
             <button className={`profile_btn ${active ? 'active' : ''}`} onClick={handleSubmit}>Lưu thay đổi</button>
-            {isVerify && (
+            {/* {isVerify && (
                 <>
                 <div
                     onClick={closeOtp}
@@ -151,7 +151,7 @@ const Profile = () => {
                 </div>
                 <VerifyUser />
                 </>
-            )}
+            )} */}
         </div>
     );
 };
