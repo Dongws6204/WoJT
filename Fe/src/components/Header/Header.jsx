@@ -11,26 +11,37 @@ import { AuthContext } from "../../ContextAPI/AuthContext";
 import "./Header.css";
 
 const Header = () => {
+
+
     const [showOptions, setShowOptions] = useState(false);
     const [activeId, setActiveId] = useState(null);
     const [portfolios, setPortfolios] = useState([]);
     const [objects, setObjects] = useState([]);
-    const [search,setSearch] = useState(null);
+    const [search, setSearch] = useState(null);
     const CartProduct = useSelector((state) => state.cart.CartArr);
     const navigate = useNavigate();
     const { authState } = useContext(AuthContext);
-    const Customers = {
-        customer_id: 1,
-        name: "Vo Quang Sang",
-        email: "sangv6548@gmail.com",
-        phone: "0974583072",
-        address: "nghi xuan , ha tinh",
-        birthday: "2004-12-15",
-        user_name: "Sann525",
-    };
+    const userId = authState?.userId;
+    const [customer, setCustomer] = useState({
+        customer_id: '',
+        name: "",
+        email: "",
+        phone: "",
+        address: "",
+        birthday: "",
+        user_name: "",
+    });
+
 
     useEffect(() => {
         const fetchData = async () => {
+            try {
+                const res = await axios.get(`http://127.0.0.1:8000/api/customers/${userId}`);
+                setCustomer(res.data);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+
             try {
                 const response = await axios.get(
                     `http://127.0.0.1:8000/api/products/list-object`
@@ -64,14 +75,14 @@ const Header = () => {
             .replace(/-+/g, '_'); // Thay thế nhiều dấu gạch ngang liên tiếp bằng một dấu gạch ngang
     }
 
-    const handleClickSearch = ()=>{
-        navigate(`/search/${search}`,{
-            state:{search}
+    const handleClickSearch = () => {
+        navigate(`/search/${search}`, {
+            state: { search }
         });
         scrollToTop();
     }
 
-    const handleClickCart = ()=> {
+    const handleClickCart = () => {
         navigate("/cart")
         scrollToTop();
     }
@@ -85,9 +96,9 @@ const Header = () => {
         }
     };
 
-    const onClickObject = (objectId,objectName) => {
+    const onClickObject = (objectId, objectName) => {
         setActiveId(objectId);
-        localStorage.setItem('object_name',objectName);
+        localStorage.setItem('object_name', objectName);
         if (objectId === 0) {
             // setPortfolios([]);
             navigate("/");
@@ -103,12 +114,12 @@ const Header = () => {
         }
     };
 
-    const onClickPortfolio = (portId,portName) => {
-        localStorage.setItem('port_name',portName);
+    const onClickPortfolio = (portId, portName) => {
+        localStorage.setItem('port_name', portName);
         setPortfolios([]);
         setActiveId(null);
-        navigate(`/products/${createSlug(localStorage.getItem('object_name'))}/${createSlug(portName)}`,{
-            state: {portId}
+        navigate(`/products/${createSlug(localStorage.getItem('object_name'))}/${createSlug(portName)}`, {
+            state: { portId }
         });
         scrollToTop();
     }
@@ -130,7 +141,7 @@ const Header = () => {
                         <div
                             key={item.object_id}
                             className={`ob_list ${activeId === item.object_id ? "active" : ""}`}
-                            onMouseEnter={() => onClickObject(item.object_id,item.object_name)}
+                            onMouseEnter={() => onClickObject(item.object_id, item.object_name)}
                         >
                             <p>{item.object_name}</p>
                         </div>
@@ -139,7 +150,7 @@ const Header = () => {
 
                 <div className="function_list">
                     <div className="search">
-                        <input type="text" className="search-input" placeholder="Search..." onChange={(e)=>{setSearch(e.target.value)}}/>
+                        <input type="text" className="search-input" placeholder="Search..." onChange={(e) => { setSearch(e.target.value) }} />
                         <button>
                             <PiMagnifyingGlass className="look" onClick={handleClickSearch} />
                         </button>
@@ -153,7 +164,7 @@ const Header = () => {
                                 color: "#323232",
                             }}
                         >
-                            {authState.isAuthenticated ? Customers.user_name : "Tài Khoản"}
+                            {authState.isAuthenticated ? customer.user_name : "Tài Khoản"}
                         </span>
                         {!authState.isAuthenticated && showOptions && (
                             <div className="account-options">

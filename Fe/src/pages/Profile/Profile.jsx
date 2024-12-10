@@ -1,36 +1,46 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import DatePicker from 'react-datepicker';
 import './profile.css'
 import VerifyUser from '../../components/VerifyUsers/VerifyUser';
+import { AuthContext } from '../../ContextAPI/AuthContext';
+import axios from 'axios';
 
+//  Lấys ID người dùng.
 
 const Profile = () => {
 
-    const value = {
-        name: 'Vo Quang Sang',
-        email: 'sangv6548@gmail.com',
-        date: '2003-12-15',
-        phone: '0974583072',
-        address: 'nghi xuan ha tinh',
-        username: 'Sann525'
-    }
 
+    const { authState } = useContext(AuthContext);
+    const userId = authState?.userId;
     const [isVerify, setIsVerify] = useState(false);
-    const [selectedDate, setSelectedDate] = useState(new Date(value.date));
+    const [selectedDate, setSelectedDate] = useState();
     const [active, setActive] = useState(false);
     const [formError, setFormError] = useState({})
-    const [dataProfile, setdataProfile] = useState({
+
+    const [dataProfile, setDataProfile] = useState({
         name: '',
         email: '',
-        date: '',
+        birthday: '',
         phone: '',
         address: '',
-        username: '',
+        user_name: '',
     });
-    useEffect(() => {
-        setdataProfile(value);
-    }, []);
 
+
+    const getDataProfile = async () => {
+        try {
+            const res = await axios.get(`http://127.0.0.1:8000/api/customers/${userId}`);
+            setDataProfile(res.data);
+            console.log(res.birthday)
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
+
+
+    useEffect(() => {
+        getDataProfile(); // Gọi hàm lấy dữ liệu
+    }, [userId]); // Theo dõi sự thay đổi của userID
     const closeOtp = () => {
         setIsVerify(false);
     }
@@ -38,7 +48,7 @@ const Profile = () => {
     const handleChange = (e) => {
         const { name, value } = e.target;
         setActive(true);
-        setdataProfile((data) => ({
+        setDataProfile((data) => ({
             ...data,
             [name]: value
         }));
@@ -47,14 +57,40 @@ const Profile = () => {
     const handleDateChange = (date) => {
         setSelectedDate(date); // Cập nhật selectedDate
         setActive(true);
-        setdataProfile((data) => ({
+        setDataProfile((data) => ({
             ...data,
             date: date ? date.toLocaleDateString('en-GB') : '' // Chuyển định dạng ngày thành chuỗi (dd/MM/yyyy)
         }));
     };
 
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        try {
+            const res = await axios.post(`http://127.0.0.1:8000/api/customers/${userId}`, {
+                phone: dataProfile.phone,
+                name: dataProfile.name,
+                birthday: dataProfile.birthday,
+                address: dataProfile.address,
+
+            });
+
+            console.log(res.data)
+            if (res.data.success) {
+                window.alert('Cập nhật thành công');
+                setActive(false);
+
+            } else {
+                window.alert('Cập nhật thành công');
+                setActive(false);
+            }
+        } catch (error) {
+            console.error("Error", error);
+            window.alert('Đã có lỗi xảy ra. Vui lòng thử lại.');
+        }
+
+
         if (validateData() && active) {
             setActive(false);
             setIsVerify(true);
@@ -80,7 +116,7 @@ const Profile = () => {
         }
 
         // Kiểm tra độ dài username
-        if (!dataProfile.username || dataProfile.username.length < 6 || dataProfile.username.length > 9) {
+        if (!dataProfile.user_name || dataProfile.user_name.length < 6 || dataProfile.username.length > 9) {
             error.username = 'Tên đăng nhập phải có từ 6 đến 9 ký tự';
         }
 
@@ -98,24 +134,24 @@ const Profile = () => {
             </div>
             <div className='proflie_list'>
                 <p>Tên đăng nhập</p>
-                <input type="text" value={dataProfile.username} onChange={handleChange} name='username' readOnly/>
+                <input type="text" value={dataProfile.user_name} onChange={handleChange} name='username' readOnly />
             </div>
             {formError.username && (
-                <p className='error-feedback' style={{ fontSize:'12px',marginBottom:'8px',fontFamily:'Montserrat' }}>{formError.username}</p>
+                <p className='error-feedback' style={{ fontSize: '12px', marginBottom: '8px', fontFamily: 'Montserrat' }}>{formError.username}</p>
             )}
             <div className='proflie_list'>
                 <p>Số điện thoại</p>
                 <input type="text" value={dataProfile.phone} onChange={handleChange} name='phone' />
             </div>
             {formError.phone && (
-                <p className='error-feedback' style={{ fontSize:'12px',marginBottom:'8px',fontFamily:'Montserrat' }}>{formError.phone}</p>
+                <p className='error-feedback' style={{ fontSize: '12px', marginBottom: '8px', fontFamily: 'Montserrat' }}>{formError.phone}</p>
             )}
             <div className='proflie_list'>
                 <p>Email</p>
-                <input type="text" value={dataProfile.email} onChange={handleChange} name='email' readOnly/>
+                <input type="text" value={dataProfile.email} onChange={handleChange} name='email' readOnly />
             </div>
             {formError.email && (
-                <p className='error-feedback' style={{ fontSize:'12px',marginBottom:'8px',fontFamily:'Montserrat' }}>{formError.email}</p>
+                <p className='error-feedback' style={{ fontSize: '12px', marginBottom: '8px', fontFamily: 'Montserrat' }}>{formError.email}</p>
             )}
             <div className='proflie_list'>
                 <p>Địa chỉ</p>
@@ -124,7 +160,7 @@ const Profile = () => {
             <div className='proflie_list_date'>
                 <p>Sinh nhật</p>
                 <DatePicker
-                    placeholder={dataProfile.date}
+                    placeholder={dataProfile.birthday}
                     selected={selectedDate}
                     className='input'
                     dateFormat="dd/MM/yyyy" // Format ngày tùy chỉnh

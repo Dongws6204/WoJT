@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 import axios from "axios";
 import './verrify.css'
 
 
 const VerifyUser = ({ dataRegisterArr }) => {
 
+    const navigate = useNavigate();
     const [timeLeft, setTimeLeft] = useState(120); // 180 giây = 3 phút
     const [code, setCode] = useState(["", "", "", ""]);
     const [resendDisabled, setResendDisabled] = useState(false);
@@ -101,6 +104,8 @@ const VerifyUser = ({ dataRegisterArr }) => {
 
                 if (isAccountSaved) {
                     console.log("Tài khoản đã được lưu thành công!");
+
+                    navigate('/');
                 } else {
                     setStatusMessage("Xác thực thành công nhưng lưu tài khoản thất bại. Vui lòng thử lại.");
                 }

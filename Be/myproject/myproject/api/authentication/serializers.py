@@ -4,6 +4,7 @@ from ...models import Customers
 class  IsLoggedInSerializer(serializers.Serializer):
     success = serializers.BooleanField()
     customerId = serializers.IntegerField(allow_null=True)
+    role = serializers.IntegerField()
 
 class CheckAccountSerializer(serializers.Serializer):
     user_name = serializers.CharField(max_length=50, required=True)

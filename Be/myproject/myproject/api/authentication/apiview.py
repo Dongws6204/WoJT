@@ -35,6 +35,7 @@ class LoginAPIView(APIView):
                 response_data = {
                     'success': True,
                     'customerId': customer.customer_id,
+                    'role':customer.role,
                 }
                 serializer = IsLoggedInSerializer(response_data)
                 return Response(serializer.data, status=status.HTTP_200_OK)

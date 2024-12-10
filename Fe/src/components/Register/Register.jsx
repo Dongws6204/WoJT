@@ -107,7 +107,7 @@ const Register = () => {
                     email: dataRegister.email,
                 });
 
-                console.log("API response:", response.data);
+                console.log("API response:", dataRegister.username, dataRegister.email);
 
                 setMessage('Gửi thành công!');
                 setIsVerify(true); // Hiện modal OTP hoặc xác minh nếu cần

@@ -19,21 +19,13 @@ const NavbarUser = () => {
         navigate('/')
     };
 
-    const Customers = {
-        customer_id: 1,
-        name: 'Vo Quang Sang',
-        email: 'sangv6548@gmail.com',
-        phone: '0974583072',
-        address: 'nghi xuan , ha tinh',
-        birthday: '2004-12-15',
-        user_name: 'Sann525'
-    }
+
 
     return (
         <div className='nav-container'>
             <div className='nav-header'>
                 <img src={User_img} />
-                <p>{Customers.name}</p>
+                {/* <p>{Customers.name}</p> */}
             </div>
             <div className='nav-content'>
                 <div className='nav-list'>

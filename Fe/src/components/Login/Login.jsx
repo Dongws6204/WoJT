@@ -27,9 +27,10 @@ const Login = () => {
 
             });
             setMessage(res.data.success);
+            console.log(res.data)
             if (res.data.success) {
                 window.alert('Đăng nhập thành công');
-                login(res.data.customerId,2);
+                login(res.data.customerId, 2);
                 navigate('/');
             } else {
                 window.alert('Đăng nhập thất bại');

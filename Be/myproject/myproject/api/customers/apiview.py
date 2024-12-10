@@ -1,4 +1,5 @@
 from rest_framework.views import APIView
+from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework import status
 from ...models import Customers
@@ -17,3 +18,18 @@ class CustomerAPIView(APIView):
             return Response({"message": "Người dùng không tồn tại"}, status=status.HTTP_404_NOT_FOUND)
     
 
+    def post(self, request, id):
+            try:
+                # Lấy dữ liệu từ request
+                data = request.data
+
+                # Cập nhật thông tin khách hàng dựa trên ID
+                updated_count = Customers.objects.filter(customer_id=id).update(**data)
+
+                # Kiểm tra xem có bản ghi nào được cập nhật không
+                if updated_count > 0:
+                    return JsonResponse({'message': 'Customer updated successfully'}, status=200)
+                else:
+                    return JsonResponse({'error': 'Customer not found or no changes made'}, status=404)
+            except Exception as e:
+                return JsonResponse({'error': str(e)}, status=500)

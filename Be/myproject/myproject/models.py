@@ -59,6 +59,7 @@ class ClothesEvaluate(models.Model):
         db_table = 'clothes_evaluate'
 
 
+# Thêm status.
 class Customers(models.Model):
     customer_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
@@ -115,12 +116,12 @@ class Object(models.Model):
 
 
 class Orderdetail(models.Model):
-    order = models.ForeignKey('Orders', models.DO_NOTHING, blank=True, null=True)
+    order = models.ForeignKey('Orders', models.DO_NOTHING, blank=True, null=True,related_name='orderdetails')
     quantity = models.IntegerField(blank=True, null=True)
     total_amout = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     product = models.ForeignKey('Products', models.DO_NOTHING, blank=True, null=True)
     id_prod = models.ForeignKey('ProductDetail', models.DO_NOTHING, db_column='id_prod', blank=True, null=True)
-    order_status = models.CharField(max_length=10, blank=True, null=True)
+    # order_status = models.CharField(max_length=10, blank=True, null=True)
 
     class Meta:
         managed = False

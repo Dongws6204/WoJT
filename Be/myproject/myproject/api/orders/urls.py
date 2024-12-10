@@ -1,8 +1,8 @@
 from django.urls import path
-from .apiview import (GetOrdersAPIView)
+from .apiview import (OrderAPIView)
 
 urlpatterns = [
     #lấy toàn bộ đơn đặt hàng
-    path('', GetOrdersAPIView.as_view(), name='order'),
+    path('<int:id>/', OrderAPIView.as_view(), name='order'),  # id là primary key của Orders
 
 ]
