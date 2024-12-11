@@ -11,6 +11,19 @@ from django.utils.dateparse import parse_date
 from django.contrib.auth.hashers import make_password
 
 
+class Address(models.Model):
+    address_id = models.AutoField(primary_key=True)
+    customer = models.ForeignKey('Customers', models.DO_NOTHING, blank=True, null=True, related_name="customer_address")
+    name = models.CharField(max_length=50, blank=True, null=True)
+    address_name = models.TextField(blank=True, null=True)
+    phone = models.CharField(max_length=20, blank=True, null=True)
+    status = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'address'
+
+
 class Analytics(models.Model):
     analytics_id = models.AutoField(primary_key=True)
     product = models.ForeignKey('Products', models.DO_NOTHING)
@@ -118,8 +131,7 @@ class Object(models.Model):
 class Orderdetail(models.Model):
     order = models.ForeignKey('Orders', models.DO_NOTHING, blank=True, null=True,related_name='orderdetails')
     quantity = models.IntegerField(blank=True, null=True)
-    total_amout = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-    product = models.ForeignKey('Products', models.DO_NOTHING, blank=True, null=True)
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     id_prod = models.ForeignKey('ProductDetail', models.DO_NOTHING, db_column='id_prod', blank=True, null=True)
     # order_status = models.CharField(max_length=10, blank=True, null=True)
 

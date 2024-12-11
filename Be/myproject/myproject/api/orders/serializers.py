@@ -4,14 +4,14 @@ from ...models import Orders, Orderdetail
 class OrderDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Orderdetail
-        fields = ['order', 'quantity', 'total_amout', 'product', 'id_prod']
+        fields = ['order', 'quantity', 'total_amount', 'id_prod']
 
 class OrderSerializer(serializers.ModelSerializer):
     order_details = OrderDetailSerializer(many=True, read_only=True, source='orderdetails')
     
     class Meta:
         model = Orders
-        fields = ['order_id', 'customer', 'order_date', 'total_amount', 'status', 'order_details']
+        fields = ['order_id', 'customer_id', 'order_date', 'total_amount', 'status', 'order_details']
 
     def create(self, validated_data):
         # Tách dữ liệu order_details
