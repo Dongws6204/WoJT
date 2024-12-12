@@ -12,14 +12,16 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Orders
         fields = ['order_id', 'customer_id', 'order_date', 'total_amount', 'status', 'order_details']
+#order
+class CreateOrder(serializers.ModelSerializer):
+    class Meta:
+        model = Orders 
+        fields = '__all__'
 
-    def create(self, validated_data):
-        # Tách dữ liệu order_details
-        order_details_data = validated_data.pop('order_details')
-        order = Orders.objects.create(**validated_data)
-        
-        # Tạo các chi tiết đơn hàng
-        for detail_data in order_details_data:
-            Orderdetail.objects.create(order=order, **detail_data)
-        
-        return order
+
+
+#order_details
+class CreateOrderDetails(serializers.ModelSerializer):
+    class Meta:
+        model = Orderdetail
+        fields = '__all__'

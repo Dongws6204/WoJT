@@ -142,7 +142,7 @@ class Orderdetail(models.Model):
 
 class Orders(models.Model):
     order_id = models.AutoField(primary_key=True)
-    customer = models.ForeignKey(Customers, models.DO_NOTHING, blank=True, null=True)
+    customer_id = models.ForeignKey(Customers, models.DO_NOTHING, blank=True, null=True, db_column='customer_id')
     order_date = models.DateField(blank=True, null=True)
     total_amount = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     status = models.IntegerField(blank=True, null=True)
