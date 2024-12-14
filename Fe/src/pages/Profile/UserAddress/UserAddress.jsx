@@ -1,4 +1,4 @@
-import { useState, useEffect,useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import React from 'react';
 import { AuthContext } from "../../../ContextAPI/AuthContext";
 import './address.css'
@@ -25,7 +25,7 @@ const UserAddress = () => {
 
     const [isAddressInsert, setIsAddressInsert] = useState(false);
     const { authState } = useContext(AuthContext);
-    const [dataAddress,setDataAddress] = useState(data_address);
+    const [dataAddress, setDataAddress] = useState(data_address);
 
     const handleClickInsert = () => {
         setIsAddressInsert(true);
@@ -37,8 +37,9 @@ const UserAddress = () => {
 
     const fetchAddresses = async () => {
         try {
-            const response = await axios.get(`http://127.0.0.1:8000/api/addresses/${authState.userId}`); 
+            const response = await axios.get(`http://127.0.0.1:8000/api/ship/address`);
             setDataAddress(response.data);
+            console.log('hihi')
         } catch (error) {
             console.error('Error fetching addresses:', error);
         }
@@ -79,11 +80,11 @@ const UserAddress = () => {
             prevAddresses.map((item) =>
                 item.address_id === id
                     ? { ...item, status: 0 }
-                    : item 
+                    : item
             )
         );
     };
-    
+
 
     // const handleDelete = async (id) => {
     //     try {
@@ -99,17 +100,17 @@ const UserAddress = () => {
             prevAddresses.filter((item) => item.address_id !== id)
         );
     };
-    
+
 
     useEffect(() => {
-        fetchAddresses(); 
+        fetchAddresses();
     }, []);
 
 
     const [address, setAddress] = useState({
-        name:'',
-        phone:'',
-        address:'',
+        name: '',
+        phone: '',
+        address: '',
     })
 
     const handleSubmit = (e) => {
@@ -125,7 +126,7 @@ const UserAddress = () => {
             ]);
             alert('Thêm địa chỉ thành công')
             setIsAddressInsert(false)
-        } else{
+        } else {
             alert('hãy Đăng nhập để tiếp tục');
         }
     };
@@ -190,11 +191,11 @@ const UserAddress = () => {
                     <div className='address-insert'>
                         <h1 style={{ fontFamily: 'Montserrat', fontSize: '18px', marginBottom: '16px' }}>Địa chỉ mới</h1>
                         <div style={{ display: 'flex', gap: '12px' }}>
-                            <input name='name' type="text" style={{ width: '49%', border: '1px solid black', margin: '5px 0px', minHeight: '36px', padding: '10px', fontFamily: 'Montserrat', borderColor: '#aeaeae', fontSize: '14px' }} placeholder='Họ và tên' onChange={handleChange}/>
-                            <input name='phone' type="text" style={{ width: '49%', border: '1px solid black', margin: '5px 0px', minHeight: '36px', padding: '10px', fontFamily: 'Montserrat', borderColor: '#aeaeae' }} placeholder='Số điện thoại' onChange={handleChange}/>
+                            <input name='name' type="text" style={{ width: '49%', border: '1px solid black', margin: '5px 0px', minHeight: '36px', padding: '10px', fontFamily: 'Montserrat', borderColor: '#aeaeae', fontSize: '14px' }} placeholder='Họ và tên' onChange={handleChange} />
+                            <input name='phone' type="text" style={{ width: '49%', border: '1px solid black', margin: '5px 0px', minHeight: '36px', padding: '10px', fontFamily: 'Montserrat', borderColor: '#aeaeae' }} placeholder='Số điện thoại' onChange={handleChange} />
                         </div>
                         <div style={{ marginTop: '8px' }}>
-                            <textarea name='address' className='addressss' placeholder='Địa chỉ cụ thể' onChange={handleChange}/>
+                            <textarea name='address' className='addressss' placeholder='Địa chỉ cụ thể' onChange={handleChange} />
                         </div>
                         <button className='addresss-btn' onClick={handleSubmit}>Hoàn thành</button>
                     </div>

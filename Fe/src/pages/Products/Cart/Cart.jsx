@@ -35,51 +35,46 @@ const Cart = () => {
         return `${year}-${month}-${day}`;
     };
 
-    // const orderDetails = CartProduct.map(product => {
-    //     const detail = {
-    //         // order: res.data.order_id,
-    //         quantity: product.quantity,
-    //         total_amount: product.price * product.quantity,
-    //         id_prod: product.id_prod
-    //     };
-    //     console.log(detail); // In ra từng đối tượng trong mảng orderDetails
-    //     return detail;
-    // });
-
 
     const handleClickOrder = async (e) => {
         e.preventDefault();
-        try {
-            // Gửi yêu cầu tạo đơn hàng
-            const res = await axios.post('http://127.0.0.1:8000/api/orders/create', {
-                customer_id: authState.userId,
-                order_date: getCurrentDate(),
-                total_amount: TotalPrice(CartProduct),
-                status: 1,
-            });
+        if (!CartProduct || CartProduct.length === 0) {
+            alert('Vui lòng thêm sản phẩm vào giỏ hàng');
+        } else {
+            try {
+                // Gửi yêu cầu tạo đơn hàng
+                const res = await axios.post('http://127.0.0.1:8000/api/orders/create', {
+                    customer_id: authState.userId,
+                    order_date: getCurrentDate(),
+                    total_amount: TotalPrice(CartProduct),
+                    status: 1,
+                });
 
-            if (res.status === 201) {
-                console.log(res.data); // In ra toàn bộ phản hồi
-                const order_id = res.data.order_id; // Lấy order_id từ phản hồi
-                console.log(order_id); // In ra order_id
+                if (res.status === 201) {
+                    console.log(res.data); // In ra toàn bộ phản hồi
+                    const order_id = res.data.order_id; // Lấy order_id từ phản hồi
+                    console.log(order_id); // In ra order_id
 
-                // Gửi yêu cầu tạo chi tiết đơn hàng
-                const orderDetails = CartProduct.map(product => ({
-                    order: order_id,
-                    quantity: product.quantity,
-                    total_amount: product.price * product.quantity,
-                    id_prod: product.id_prod
-                }));
+                    // Gửi yêu cầu tạo chi tiết đơn hàng
+                    const orderDetails = CartProduct.map(product => ({
+                        order: order_id,
+                        quantity: product.quantity,
+                        total_amount: product.price * product.quantity,
+                        id_prod: product.id_prod
+                    }));
 
-                await axios.post('http://127.0.0.1:8000/api/orders/create-detail', orderDetails);
+                    await axios.post('http://127.0.0.1:8000/api/orders/create-detail', orderDetails);
 
-                alert('Đơn hàng đã được tạo thành công');
+                    alert('Đơn hàng đã được tạo thành công');
+                    navigate('/profile/don_hang')
+                }
+            } catch (error) {
+                // In ra lỗi chi tiết
+                console.error('Đã có lỗi xảy ra:', error.response ? error.response.data : error.message);
+                alert(`Đã có lỗi xảy ra: ${error.response ? JSON.stringify(error.response.data) : error.message}`);
             }
-        } catch (error) {
-            // In ra lỗi chi tiết
-            console.error('Đã có lỗi xảy ra:', error.response ? error.response.data : error.message);
-            alert(`Đã có lỗi xảy ra: ${error.response ? JSON.stringify(error.response.data) : error.message}`);
         }
+
     };
 
 

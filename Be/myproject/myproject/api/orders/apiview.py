@@ -1,9 +1,10 @@
+from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from ...models import Orders, Orderdetail
+from ...models import Orders, Orderdetail, ProductDetail
 from .serializers import (OrderSerializer, OrderDetailSerializer
-                          ,CreateOrder, CreateOrderDetails)
+                          ,CreateOrder, CreateOrderDetails, getOrder, ProductDetailSerializer)
 
 
 class OrderAPIView(APIView):
@@ -42,6 +43,58 @@ class OrderAPIView(APIView):
         except Orders.DoesNotExist:
             return Response({"message": "lôi khi xóa"}, status=status.HTTP_400_BAD_REQUEST)
         
+
+
+class getOrderAPIView(APIView):
+    def get(self, request, id):
+        orders = Orders.objects.filter(customer_id=id)
+        if orders.exists():
+            serializer = getOrder(orders, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response({"message": "Không có đơn đặt hàng"}, status=status.HTTP_404_NOT_FOUND)
+
+class getOrderDetailAPIView(APIView):
+    def post(self, request):
+        order_ids = request.data.get('order_id', [])
+        if not order_ids:
+            return Response({"message": "No order IDs provided"}, status=status.HTTP_400_BAD_REQUEST)
+
+        order_details = []
+        for order_id in order_ids:
+            details = Orderdetail.objects.filter(order_id=order_id)
+            serializer = OrderDetailSerializer(details, many=True)
+            order_details.extend(serializer.data)
+
+        return Response(order_details, status=status.HTTP_200_OK)
+
+
+
+class getProductDetailAPIView(APIView):
+    def post(self, request):
+        product_ids = request.data.get('id_prod', [])
+        if not product_ids:
+            return Response({"message": "No product IDs provided"}, status=status.HTTP_400_BAD_REQUEST)
+
+        product_details = []
+        for product_id in product_ids:
+            product = ProductDetail.objects.filter(id_prod=product_id)
+            if product.exists():
+                serializer = ProductDetailSerializer(product, many=True)
+                product_details.extend(serializer.data)
+
+        return Response(product_details, status=status.HTTP_200_OK)
+
+
+class deleteOrderAPIView(APIView):
+    def delete(self, request, id):
+        try:
+            order = get_object_or_404(Orders, order_id=id)
+            order.delete()
+            return Response({"message": "Order deleted successfully"}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
 
 
 class CreateOrderAPIView(APIView):

@@ -1,8 +1,8 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from ...models import ShippingInfo
-from .serializers import ShippingAddressSerializer
+from ...models import ShippingInfo, Address
+from .serializers import ShippingAddressSerializer,AddressSerializer
 
 # Lấy thông tin sản phẩm theo id.
 class ShippingAddressAPIView(APIView):
@@ -16,3 +16,9 @@ class ShippingAddressAPIView(APIView):
         
         except ShippingInfo.DoesNotExist:
             return Response({"message": "Địa chỉ giao hàng không tồn tại"}, status=status.HTTP_404_NOT_FOUND)
+
+class AddressAPIView(APIView):
+    def get(self, request, *args, **kwargs):
+        address = Address.objects.all()
+        res = AddressSerializer(address, many=True)  # Thêm many=True
+        return Response(res.data, status=status.HTTP_200_OK)
