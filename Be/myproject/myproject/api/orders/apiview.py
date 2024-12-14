@@ -86,13 +86,18 @@ class getProductDetailAPIView(APIView):
 
 
 class deleteOrderAPIView(APIView):
-    def delete(self, request, id):
+    def post(self, request, id):
         try:
             order = get_object_or_404(Orders, order_id=id)
+            # Xóa các chi tiết đơn hàng liên quan
+            order.orderdetails.all().delete()
+            # Xóa đơn hàng
             order.delete()
             return Response({"message": "Order deleted successfully"}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
 
 
 

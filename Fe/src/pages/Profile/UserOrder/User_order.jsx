@@ -66,7 +66,7 @@ const User_order = () => {
                             price: detail.total_amount, // Giá từ bảng orderDetail
                         };
                     });
-    
+
                 return {
                     order_id: order.order_id,
                     orderdetail: details,
@@ -74,6 +74,7 @@ const User_order = () => {
                     order_date: order.order_date,
                 };
             });
+
 
             // Cập nhật state
             setOrderInfo(mergedOrderInfo);
@@ -89,11 +90,9 @@ const User_order = () => {
         getOrderInfo();
 
     }, []);
-
     useEffect(() => {
         console.log('Updated OrderInfo:', orderInfo);
     }, [orderInfo]);
-    
 
     const dang_van_chuyen = [
         {
@@ -131,7 +130,7 @@ const User_order = () => {
         } else {
             setData([]);
         }
-    }, [active,orderInfo]);
+    }, [active, orderInfo]);
 
     const handleClick = (name, id) => {
         // localStorage.setItem('product_id', id);
@@ -163,10 +162,13 @@ const User_order = () => {
         try {
             console.log(`Deleting order with ID: ${orderId}`);
             // Gọi API để hủy đơn hàng
-            await axios.delete(`http://127.0.0.1:8000/api/orders/delete/${orderId}`, {
+            await axios.post(`http://127.0.0.1:8000/api/orders/delete/${orderId}`, {
                 headers: {
                     'Access-Control-Allow-Origin': 'http://localhost:3000',
                 },
+                data: {
+                    'order_id': orderId,
+                }
             });
 
             // Cập nhật danh sách đơn hàng sau khi xóa
@@ -177,6 +179,7 @@ const User_order = () => {
             alert('Failed to delete the order. Please try again.');
         }
     };
+
 
 
     return (
@@ -208,7 +211,7 @@ const User_order = () => {
                             <div className='card__left'>
                                 <p style={{ marginTop: '68px' }}>
                                     <span style={{ color: '#4b4b4b', fontWeight: '100' }}>
-                                        {formatVND(item.price * item.quantity)} ₫
+                                        {formatVND(item.product.price)} ₫
                                     </span>
                                 </p>
                             </div>

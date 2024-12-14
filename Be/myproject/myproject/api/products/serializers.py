@@ -29,7 +29,7 @@ class ProductSerializer(serializers.ModelSerializer):
     quantity_stock = serializers.IntegerField()
     object = serializers.CharField(source='id_port.object.object_name')
     portfolio = serializers.CharField(source='id_port.port_name')
-    discount = serializers.IntegerField(source='sale.discount', allow_null=True)
+
     # Truy xuất chi tiết sản phẩm thông qua `related_name` hoặc mặc định
     product_detail = ProductDetailSerializer(many=True, read_only=True, source='product_details')
     # Truy xuất đánh giá sản phẩm thông qua `related_name` hoặc mặc định
@@ -40,7 +40,7 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Products
         fields = [
-            'product_id', 'product_name', 'img','price','discount' ,'description',
+            'product_id', 'product_name', 'price', 'img', 'description',
             'product_rate', 'quantity_sold', 'quantity_stock', 'object',
             'portfolio', 'product_detail', 
             'rate',
