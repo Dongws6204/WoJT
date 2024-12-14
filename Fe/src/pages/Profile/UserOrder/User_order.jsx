@@ -10,25 +10,7 @@ const User_order = () => {
     const [data, setData] = useState([]);
     const { authState } = useContext(AuthContext);
     const userId = authState?.userId
-    const [orderInfo, setOrderInfo] = useState([
-        {
-            order_id: '',
-            orderdetail: [
-                {
-                    quantity: '',
-                    product: {
-                        product_id: '',
-                        img: '',
-                        product_name: '',
-                        size: '',
-                        price: '',
-                    }
-                }
-            ],
-            total_amount: '',
-            order_date: '',
-        }
-    ]);
+    const [orderInfo, setOrderInfo] = useState([]);
 
 
     const getOrderInfo = async () => {
@@ -73,16 +55,23 @@ const User_order = () => {
             const mergedOrderInfo = orders.map(order => {
                 const details = orderDetails
                     .filter(detail => detail.order === order.order_id)
-                    .map(detail => ({
-                        quantity: detail.quantity,
-                        product: products,
-                    }));
-
+                    .map(detail => {
+                        const product = products.find(prod => prod.id_prod === detail.id_prod);
+                        return {
+                            product_id: product.product_id,
+                            img: product ? product.img : null,
+                            product_name: product ? product.product_name : 'Unknown',
+                            quantity: detail.quantity,
+                            size: detail.size,
+                            price: detail.total_amount, // Giá từ bảng orderDetail
+                        };
+                    });
+    
                 return {
                     order_id: order.order_id,
+                    orderdetail: details,
                     total_amount: order.total_amount,
                     order_date: order.order_date,
-                    orderdetail: details,
                 };
             });
 
@@ -90,9 +79,6 @@ const User_order = () => {
             setOrderInfo(mergedOrderInfo);
             console.log('Merged Order Info:', mergedOrderInfo);
             console.log('OrderInfo:', orderInfo);
-
-
-
         } catch (error) {
             console.error('Error fetching order info:', error);
             alert('Failed to fetch order information. Please try again.');
@@ -103,6 +89,11 @@ const User_order = () => {
         getOrderInfo();
 
     }, []);
+
+    useEffect(() => {
+        console.log('Updated OrderInfo:', orderInfo);
+    }, [orderInfo]);
+    
 
     const dang_van_chuyen = [
         {
@@ -134,12 +125,13 @@ const User_order = () => {
     useEffect(() => {
         if (active === 1) {
             setData(orderInfo);
+            console.log(data)
         } else if (active === 2) {
             setData(dang_van_chuyen);
         } else {
             setData([]);
         }
-    }, [active]);
+    }, [active,orderInfo]);
 
     const handleClick = (name, id) => {
         // localStorage.setItem('product_id', id);
@@ -147,6 +139,13 @@ const User_order = () => {
             state: { id }
         })
         scrollToTop();
+    }
+
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // Cuộn mượt mà
+        });
     }
 
 
@@ -187,7 +186,7 @@ const User_order = () => {
                 <p className={`orders-header-option ${active === 2 ? "active" : ""}`} onClick={() => optionClick(2)}>Đang vận chuyển</p>
                 <p className={`orders-header-option ${active === 3 ? "active" : ""}`} onClick={() => optionClick(3)}>Đã nhận</p>
             </div>
-            {orderInfo.map(items => (
+            {data.map(items => (
                 <div key={items.order_id} className='orders-content'>
                     <div style={{ backgroundColor: '#e0e0e07a', height: '26px', display: 'flex', alignItems: 'center' }}>
                         <h1 style={{ marginLeft: '8px', fontFamily: 'Montserrat' }}>{items.order_date}</h1>
@@ -195,24 +194,21 @@ const User_order = () => {
                     {items.orderdetail.map((item, index) => (
                         <div className='orders-content_card' key={index}>
                             <div className='card__right'>
-                                {/* Truy cập img trong product */}
                                 <img
-                                    src={item.product.img}
-                                    alt={item.product.product_name}
-                                    onClick={() => handleClick(item.product.product_name, item.product.product_id)}
+                                    src={item.img}
+                                    alt={item.product_name}
+                                    onClick={() => handleClick(item.product_name, item.product_id)}
                                     style={{ cursor: 'pointer' }}
                                 />
                                 <div className='card__right-content'>
-                                    {/* Truy cập product_name và size trong product */}
-                                    <p>{item.product.product_name}</p>
-                                    <p>Size: {item.product.size} x<span>{item.quantity}</span></p>
+                                    <p>{item.product_name}</p>
+                                    <p>Size: {item.size} x<span>{item.quantity}</span></p>
                                 </div>
                             </div>
                             <div className='card__left'>
-                                {/* Tính tổng giá trị dựa trên price và quantity */}
                                 <p style={{ marginTop: '68px' }}>
                                     <span style={{ color: '#4b4b4b', fontWeight: '100' }}>
-                                        {formatVND(item.product.price * item.quantity)} ₫
+                                        {formatVND(item.price * item.quantity)} ₫
                                     </span>
                                 </p>
                             </div>

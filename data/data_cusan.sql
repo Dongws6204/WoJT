@@ -16,172 +16,61 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `auth_group`
+-- Table structure for table `address`
 --
 
-DROP TABLE IF EXISTS `auth_group`;
+DROP TABLE IF EXISTS `address`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `auth_group` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(150) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`)
+CREATE TABLE `address` (
+  `address_id` int NOT NULL AUTO_INCREMENT,
+  `customer_id` int DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `address_name` text,
+  `phone` varchar(20) DEFAULT NULL,
+  `status` int DEFAULT '0',
+  PRIMARY KEY (`address_id`),
+  KEY `fk_customer` (`customer_id`),
+  CONSTRAINT `address_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`),
+  CONSTRAINT `fk_customer` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `address`
+--
+
+LOCK TABLES `address` WRITE;
+/*!40000 ALTER TABLE `address` DISABLE KEYS */;
+/*!40000 ALTER TABLE `address` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `analytics`
+--
+
+DROP TABLE IF EXISTS `analytics`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `analytics` (
+  `analytics_id` int NOT NULL AUTO_INCREMENT,
+  `product_id` int NOT NULL,
+  `views` int unsigned DEFAULT '0',
+  `purchases` int unsigned DEFAULT '0',
+  `last_updated` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`analytics_id`),
+  KEY `product_id` (`product_id`),
+  CONSTRAINT `analytics_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `auth_group`
+-- Dumping data for table `analytics`
 --
 
-LOCK TABLES `auth_group` WRITE;
-/*!40000 ALTER TABLE `auth_group` DISABLE KEYS */;
-/*!40000 ALTER TABLE `auth_group` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `auth_group_permissions`
---
-
-DROP TABLE IF EXISTS `auth_group_permissions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `auth_group_permissions` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `group_id` int NOT NULL,
-  `permission_id` int NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `auth_group_permissions_group_id_permission_id_0cd325b0_uniq` (`group_id`,`permission_id`),
-  KEY `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` (`permission_id`),
-  CONSTRAINT `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
-  CONSTRAINT `auth_group_permissions_group_id_b120cbf9_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `auth_group_permissions`
---
-
-LOCK TABLES `auth_group_permissions` WRITE;
-/*!40000 ALTER TABLE `auth_group_permissions` DISABLE KEYS */;
-/*!40000 ALTER TABLE `auth_group_permissions` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `auth_permission`
---
-
-DROP TABLE IF EXISTS `auth_permission`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `auth_permission` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `content_type_id` int NOT NULL,
-  `codename` varchar(100) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `auth_permission_content_type_id_codename_01ab375a_uniq` (`content_type_id`,`codename`),
-  CONSTRAINT `auth_permission_content_type_id_2f476e4b_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `auth_permission`
---
-
-LOCK TABLES `auth_permission` WRITE;
-/*!40000 ALTER TABLE `auth_permission` DISABLE KEYS */;
-INSERT INTO `auth_permission` VALUES (1,'Can add log entry',1,'add_logentry'),(2,'Can change log entry',1,'change_logentry'),(3,'Can delete log entry',1,'delete_logentry'),(4,'Can view log entry',1,'view_logentry'),(5,'Can add permission',2,'add_permission'),(6,'Can change permission',2,'change_permission'),(7,'Can delete permission',2,'delete_permission'),(8,'Can view permission',2,'view_permission'),(9,'Can add group',3,'add_group'),(10,'Can change group',3,'change_group'),(11,'Can delete group',3,'delete_group'),(12,'Can view group',3,'view_group'),(13,'Can add user',4,'add_user'),(14,'Can change user',4,'change_user'),(15,'Can delete user',4,'delete_user'),(16,'Can view user',4,'view_user'),(17,'Can add content type',5,'add_contenttype'),(18,'Can change content type',5,'change_contenttype'),(19,'Can delete content type',5,'delete_contenttype'),(20,'Can view content type',5,'view_contenttype'),(21,'Can add session',6,'add_session'),(22,'Can change session',6,'change_session'),(23,'Can delete session',6,'delete_session'),(24,'Can view session',6,'view_session'),(25,'Can add cart',7,'add_cart'),(26,'Can change cart',7,'change_cart'),(27,'Can delete cart',7,'delete_cart'),(28,'Can view cart',7,'view_cart'),(29,'Can add clothes evaluate',8,'add_clothesevaluate'),(30,'Can change clothes evaluate',8,'change_clothesevaluate'),(31,'Can delete clothes evaluate',8,'delete_clothesevaluate'),(32,'Can view clothes evaluate',8,'view_clothesevaluate'),(33,'Can add customers',9,'add_customers'),(34,'Can change customers',9,'change_customers'),(35,'Can delete customers',9,'delete_customers'),(36,'Can view customers',9,'view_customers'),(37,'Can add evaluate',10,'add_evaluate'),(38,'Can change evaluate',10,'change_evaluate'),(39,'Can delete evaluate',10,'delete_evaluate'),(40,'Can view evaluate',10,'view_evaluate'),(41,'Can add object',11,'add_object'),(42,'Can change object',11,'change_object'),(43,'Can delete object',11,'delete_object'),(44,'Can view object',11,'view_object'),(45,'Can add orderdetail',12,'add_orderdetail'),(46,'Can change orderdetail',12,'change_orderdetail'),(47,'Can delete orderdetail',12,'delete_orderdetail'),(48,'Can view orderdetail',12,'view_orderdetail'),(49,'Can add orders',13,'add_orders'),(50,'Can change orders',13,'change_orders'),(51,'Can delete orders',13,'delete_orders'),(52,'Can view orders',13,'view_orders'),(53,'Can add portfolio',14,'add_portfolio'),(54,'Can change portfolio',14,'change_portfolio'),(55,'Can delete portfolio',14,'delete_portfolio'),(56,'Can view portfolio',14,'view_portfolio'),(57,'Can add product detail',15,'add_productdetail'),(58,'Can change product detail',15,'change_productdetail'),(59,'Can delete product detail',15,'delete_productdetail'),(60,'Can view product detail',15,'view_productdetail'),(61,'Can add products',16,'add_products'),(62,'Can change products',16,'change_products'),(63,'Can delete products',16,'delete_products'),(64,'Can view products',16,'view_products'),(65,'Can add sales',17,'add_sales'),(66,'Can change sales',17,'change_sales'),(67,'Can delete sales',17,'delete_sales'),(68,'Can view sales',17,'view_sales');
-/*!40000 ALTER TABLE `auth_permission` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `auth_user`
---
-
-DROP TABLE IF EXISTS `auth_user`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `auth_user` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `password` varchar(128) NOT NULL,
-  `last_login` datetime(6) DEFAULT NULL,
-  `is_superuser` tinyint(1) NOT NULL,
-  `username` varchar(150) NOT NULL,
-  `first_name` varchar(150) NOT NULL,
-  `last_name` varchar(150) NOT NULL,
-  `email` varchar(254) NOT NULL,
-  `is_staff` tinyint(1) NOT NULL,
-  `is_active` tinyint(1) NOT NULL,
-  `date_joined` datetime(6) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `auth_user`
---
-
-LOCK TABLES `auth_user` WRITE;
-/*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
-/*!40000 ALTER TABLE `auth_user` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `auth_user_groups`
---
-
-DROP TABLE IF EXISTS `auth_user_groups`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `auth_user_groups` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `user_id` int NOT NULL,
-  `group_id` int NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `auth_user_groups_user_id_group_id_94350c0c_uniq` (`user_id`,`group_id`),
-  KEY `auth_user_groups_group_id_97559544_fk_auth_group_id` (`group_id`),
-  CONSTRAINT `auth_user_groups_group_id_97559544_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`),
-  CONSTRAINT `auth_user_groups_user_id_6a12ed8b_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `auth_user_groups`
---
-
-LOCK TABLES `auth_user_groups` WRITE;
-/*!40000 ALTER TABLE `auth_user_groups` DISABLE KEYS */;
-/*!40000 ALTER TABLE `auth_user_groups` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `auth_user_user_permissions`
---
-
-DROP TABLE IF EXISTS `auth_user_user_permissions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `auth_user_user_permissions` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `user_id` int NOT NULL,
-  `permission_id` int NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `auth_user_user_permissions_user_id_permission_id_14a6b632_uniq` (`user_id`,`permission_id`),
-  KEY `auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm` (`permission_id`),
-  CONSTRAINT `auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
-  CONSTRAINT `auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `auth_user_user_permissions`
---
-
-LOCK TABLES `auth_user_user_permissions` WRITE;
-/*!40000 ALTER TABLE `auth_user_user_permissions` DISABLE KEYS */;
-/*!40000 ALTER TABLE `auth_user_user_permissions` ENABLE KEYS */;
+LOCK TABLES `analytics` WRITE;
+/*!40000 ALTER TABLE `analytics` DISABLE KEYS */;
+/*!40000 ALTER TABLE `analytics` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -205,7 +94,7 @@ CREATE TABLE `cart` (
   CONSTRAINT `cart_fk_1` FOREIGN KEY (`id_prod`) REFERENCES `product_detail` (`id_prod`),
   CONSTRAINT `customers_fk_3` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`),
   CONSTRAINT `products_fk_4` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -215,6 +104,34 @@ CREATE TABLE `cart` (
 LOCK TABLES `cart` WRITE;
 /*!40000 ALTER TABLE `cart` DISABLE KEYS */;
 /*!40000 ALTER TABLE `cart` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `chat_logs`
+--
+
+DROP TABLE IF EXISTS `chat_logs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `chat_logs` (
+  `chat_id` int NOT NULL AUTO_INCREMENT,
+  `customer_id` int NOT NULL,
+  `bot_message` text NOT NULL,
+  `user_message` text NOT NULL,
+  `timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`chat_id`),
+  KEY `customer_id` (`customer_id`),
+  CONSTRAINT `chat_logs_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `chat_logs`
+--
+
+LOCK TABLES `chat_logs` WRITE;
+/*!40000 ALTER TABLE `chat_logs` DISABLE KEYS */;
+/*!40000 ALTER TABLE `chat_logs` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -262,7 +179,7 @@ CREATE TABLE `customers` (
   `pass_word` varchar(500) NOT NULL,
   `user_name` varchar(50) NOT NULL,
   PRIMARY KEY (`customer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -271,119 +188,8 @@ CREATE TABLE `customers` (
 
 LOCK TABLES `customers` WRITE;
 /*!40000 ALTER TABLE `customers` DISABLE KEYS */;
-INSERT INTO `customers` VALUES (12,'Nguyễn Hữu Cứ','22026532@vnu.edu.vn','0342348237',NULL,'2024-11-14',NULL,'20004','abcxyz12'),(13,'sdfsdjkhfjk','dksfhsdjkhf@kgjkhsjk','239489',NULL,'2024-12-06',NULL,'2004','abcxyz');
+INSERT INTO `customers` VALUES (12,'Nguyễn Hữu Cứ','22026532@vnu.edu.vn','0342348237',NULL,'2024-11-14',2,'20004','abcxyz12'),(13,'sdfsdjkhfjk','dksfhsdjkhf@kgjkhsjk','239489',NULL,'2024-12-06',NULL,'2004','abcxyz'),(14,'Nguyễn Hữu Cứ','cucu0375726692@gmail.com','0375726692','Cầu giấy, Hà Nội','2024-12-24',1,'pbkdf2_sha256$390000$9AKWGddgfUawQ6VKx3Y3Zw$2iqW0Wka5Y6YSfygY14CyxyNYBVZFWE1TMa1LQejddo=','cuK67J204'),(15,'Vo Quang Sang','sangv6548@gmail.com','0974583072','Nghi Xuan Ha Tinh','2003-12-15',1,'pbkdf2_sha256$870000$gi26Xc4Tk03KDP3HG1IvNZ$vMYqsdPT53DVU4mtAlfz4Pj+nPnPnUFniz7hGZFl5X4=','San525');
 /*!40000 ALTER TABLE `customers` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `django_admin_log`
---
-
-DROP TABLE IF EXISTS `django_admin_log`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `django_admin_log` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `action_time` datetime(6) NOT NULL,
-  `object_id` longtext,
-  `object_repr` varchar(200) NOT NULL,
-  `action_flag` smallint unsigned NOT NULL,
-  `change_message` longtext NOT NULL,
-  `content_type_id` int DEFAULT NULL,
-  `user_id` int NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `django_admin_log_content_type_id_c4bce8eb_fk_django_co` (`content_type_id`),
-  KEY `django_admin_log_user_id_c564eba6_fk_auth_user_id` (`user_id`),
-  CONSTRAINT `django_admin_log_content_type_id_c4bce8eb_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
-  CONSTRAINT `django_admin_log_user_id_c564eba6_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`),
-  CONSTRAINT `django_admin_log_chk_1` CHECK ((`action_flag` >= 0))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `django_admin_log`
---
-
-LOCK TABLES `django_admin_log` WRITE;
-/*!40000 ALTER TABLE `django_admin_log` DISABLE KEYS */;
-/*!40000 ALTER TABLE `django_admin_log` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `django_content_type`
---
-
-DROP TABLE IF EXISTS `django_content_type`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `django_content_type` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `app_label` varchar(100) NOT NULL,
-  `model` varchar(100) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `django_content_type_app_label_model_76bd3d3b_uniq` (`app_label`,`model`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `django_content_type`
---
-
-LOCK TABLES `django_content_type` WRITE;
-/*!40000 ALTER TABLE `django_content_type` DISABLE KEYS */;
-INSERT INTO `django_content_type` VALUES (1,'admin','logentry'),(3,'auth','group'),(2,'auth','permission'),(4,'auth','user'),(5,'contenttypes','contenttype'),(7,'myproject','cart'),(8,'myproject','clothesevaluate'),(9,'myproject','customers'),(10,'myproject','evaluate'),(11,'myproject','object'),(12,'myproject','orderdetail'),(13,'myproject','orders'),(14,'myproject','portfolio'),(15,'myproject','productdetail'),(16,'myproject','products'),(17,'myproject','sales'),(6,'sessions','session');
-/*!40000 ALTER TABLE `django_content_type` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `django_migrations`
---
-
-DROP TABLE IF EXISTS `django_migrations`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `django_migrations` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `app` varchar(255) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `applied` datetime(6) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `django_migrations`
---
-
-LOCK TABLES `django_migrations` WRITE;
-/*!40000 ALTER TABLE `django_migrations` DISABLE KEYS */;
-INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2024-11-04 11:28:59.799407'),(2,'auth','0001_initial','2024-11-04 11:29:00.664306'),(3,'admin','0001_initial','2024-11-04 11:29:00.851636'),(4,'admin','0002_logentry_remove_auto_add','2024-11-04 11:29:00.863633'),(5,'admin','0003_logentry_add_action_flag_choices','2024-11-04 11:29:00.874640'),(6,'contenttypes','0002_remove_content_type_name','2024-11-04 11:29:01.155868'),(7,'auth','0002_alter_permission_name_max_length','2024-11-04 11:29:01.242312'),(8,'auth','0003_alter_user_email_max_length','2024-11-04 11:29:01.277959'),(9,'auth','0004_alter_user_username_opts','2024-11-04 11:29:01.289940'),(10,'auth','0005_alter_user_last_login_null','2024-11-04 11:29:01.374752'),(11,'auth','0006_require_contenttypes_0002','2024-11-04 11:29:01.381732'),(12,'auth','0007_alter_validators_add_error_messages','2024-11-04 11:29:01.392183'),(13,'auth','0008_alter_user_username_max_length','2024-11-04 11:29:01.483322'),(14,'auth','0009_alter_user_last_name_max_length','2024-11-04 11:29:01.567770'),(15,'auth','0010_alter_group_name_max_length','2024-11-04 11:29:01.600237'),(16,'auth','0011_update_proxy_permissions','2024-11-04 11:29:01.620405'),(17,'auth','0012_alter_user_first_name_max_length','2024-11-04 11:29:01.713087'),(18,'sessions','0001_initial','2024-11-04 11:29:01.761825');
-/*!40000 ALTER TABLE `django_migrations` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `django_session`
---
-
-DROP TABLE IF EXISTS `django_session`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `django_session` (
-  `session_key` varchar(40) NOT NULL,
-  `session_data` longtext NOT NULL,
-  `expire_date` datetime(6) NOT NULL,
-  PRIMARY KEY (`session_key`),
-  KEY `django_session_expire_date_a5c62663` (`expire_date`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `django_session`
---
-
-LOCK TABLES `django_session` WRITE;
-/*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
-/*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -405,7 +211,7 @@ CREATE TABLE `evaluate` (
   KEY `product_id` (`product_id`),
   CONSTRAINT `evaluate_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`),
   CONSTRAINT `evaluate_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -414,8 +220,35 @@ CREATE TABLE `evaluate` (
 
 LOCK TABLES `evaluate` WRITE;
 /*!40000 ALTER TABLE `evaluate` DISABLE KEYS */;
-INSERT INTO `evaluate` VALUES (13,1,'Great product!',5,'2024-10-27',1),(13,2,'Good value for money',4,'2024-10-28',2),(13,3,'Satisfactory',3,'2024-10-29',3),(12,1,'Excellent quality!',5,'2024-11-01',4),(12,2,'Very comfortable',4,'2024-11-02',5),(12,3,'Could be better',3,'2024-11-03',6);
+INSERT INTO `evaluate` VALUES (13,1,'Great product!',5,'2024-10-27',1),(13,2,'Good value for money',4,'2024-10-28',2),(13,3,'Satisfactory',3,'2024-10-29',3),(12,1,'Excellent quality!',5,'2024-11-01',4),(12,2,'Very comfortable',4,'2024-11-02',5),(12,3,'Could be better',3,'2024-11-03',6),(13,1,'Hay đấy nhá',5,'2024-10-27',7);
 /*!40000 ALTER TABLE `evaluate` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `inventory`
+--
+
+DROP TABLE IF EXISTS `inventory`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `inventory` (
+  `inventory_id` int NOT NULL AUTO_INCREMENT,
+  `product_id` int NOT NULL,
+  `stock_quantity` int unsigned NOT NULL DEFAULT '0',
+  `last_updated` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`inventory_id`),
+  KEY `product_id` (`product_id`),
+  CONSTRAINT `inventory_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `inventory`
+--
+
+LOCK TABLES `inventory` WRITE;
+/*!40000 ALTER TABLE `inventory` DISABLE KEYS */;
+/*!40000 ALTER TABLE `inventory` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -453,17 +286,14 @@ CREATE TABLE `orderdetail` (
   `id` int NOT NULL AUTO_INCREMENT,
   `order_id` int DEFAULT NULL,
   `quantity` int DEFAULT NULL,
-  `total_amout` decimal(10,2) DEFAULT NULL,
-  `product_id` int DEFAULT NULL,
+  `total_amount` decimal(10,2) DEFAULT NULL,
   `id_prod` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `orders_fk_2` (`order_id`),
-  KEY `products_fk_1` (`product_id`),
   KEY `orderdetail_fk3_id_prod` (`id_prod`),
   CONSTRAINT `orderdetail_fk3_id_prod` FOREIGN KEY (`id_prod`) REFERENCES `product_detail` (`id_prod`),
-  CONSTRAINT `orders_fk_2` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`),
-  CONSTRAINT `products_fk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `orders_fk_2` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -472,6 +302,7 @@ CREATE TABLE `orderdetail` (
 
 LOCK TABLES `orderdetail` WRITE;
 /*!40000 ALTER TABLE `orderdetail` DISABLE KEYS */;
+INSERT INTO `orderdetail` VALUES (1,3,2,100.00,1),(2,3,1,100.00,2),(3,6,1,499000.00,128),(4,7,1,299000.00,144),(5,7,1,499000.00,159),(6,8,2,498000.00,13),(7,8,1,279000.00,29);
 /*!40000 ALTER TABLE `orderdetail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -491,7 +322,7 @@ CREATE TABLE `orders` (
   PRIMARY KEY (`order_id`),
   KEY `orders_fk_1` (`customer_id`),
   CONSTRAINT `orders_fk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -500,7 +331,37 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+INSERT INTO `orders` VALUES (3,13,'2024-12-10',200.00,1),(4,13,'2024-12-10',NULL,1),(5,13,'2024-12-10',200.00,1),(6,15,'2024-12-14',499000.00,1),(7,15,'2024-12-14',798000.00,1),(8,15,'2024-12-14',777000.00,1);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `payments`
+--
+
+DROP TABLE IF EXISTS `payments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `payments` (
+  `payment_id` int NOT NULL AUTO_INCREMENT,
+  `order_id` int NOT NULL,
+  `payment_method` enum('Credit Card','Debit Card','PayPal','Bank Transfer','Cash') NOT NULL,
+  `payment_status` enum('Pending','Completed','Failed') NOT NULL DEFAULT 'Pending',
+  `payment_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `transaction_id` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`payment_id`),
+  KEY `order_id` (`order_id`),
+  CONSTRAINT `payments_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `payments`
+--
+
+LOCK TABLES `payments` WRITE;
+/*!40000 ALTER TABLE `payments` DISABLE KEYS */;
+/*!40000 ALTER TABLE `payments` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -599,12 +460,12 @@ DROP TABLE IF EXISTS `sales`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sales` (
   `sale_id` int NOT NULL AUTO_INCREMENT,
-  `product_id` int DEFAULT NULL,
+  `product` int DEFAULT NULL,
   `discount` int DEFAULT NULL,
   PRIMARY KEY (`sale_id`),
-  KEY `products_fk_3` (`product_id`),
-  CONSTRAINT `products_fk_3` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `products_fk_3` (`product`),
+  CONSTRAINT `products_fk_3` FOREIGN KEY (`product`) REFERENCES `products` (`product_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -613,58 +474,71 @@ CREATE TABLE `sales` (
 
 LOCK TABLES `sales` WRITE;
 /*!40000 ALTER TABLE `sales` DISABLE KEYS */;
+INSERT INTO `sales` VALUES (1,25,42),(2,26,38),(3,27,36),(4,28,38),(5,29,32),(6,30,38),(7,31,42),(8,32,44),(9,33,44),(10,34,39),(11,35,31),(12,36,30),(13,37,49),(14,38,40),(15,39,46),(16,40,37),(17,41,39),(18,42,34),(19,43,45),(20,44,31),(21,45,30),(22,46,30),(23,47,49),(24,48,41),(25,1,30),(26,2,38),(27,3,31),(28,4,33),(29,5,41),(30,6,35),(31,7,44),(32,8,45),(33,9,42),(34,10,44),(35,11,44),(36,12,37),(37,13,43),(38,14,35),(39,15,38),(40,16,35),(41,17,50),(42,18,34),(43,19,30),(44,20,39),(45,21,34),(46,22,43),(47,23,45),(48,24,44),(49,73,33),(50,74,47),(51,75,44),(52,76,50),(53,77,46),(54,78,31),(55,79,50),(56,80,45),(57,81,42),(58,82,48),(59,83,43),(60,84,40),(61,85,42),(62,86,37),(63,87,33),(64,88,45),(65,89,31),(66,90,35),(67,91,30),(68,92,38),(69,93,30),(70,94,46),(71,95,48),(72,96,33),(73,49,30),(74,50,45),(75,51,40),(76,52,36),(77,53,31),(78,54,36),(79,55,40),(80,56,40),(81,57,31),(82,58,47),(83,59,47),(84,60,46),(85,61,38),(86,62,44),(87,63,33),(88,64,48),(89,65,46),(90,66,35),(91,67,49),(92,68,49),(93,69,49),(94,70,47),(95,71,39),(96,72,43);
 /*!40000 ALTER TABLE `sales` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `shipping_info`
+--
+
+DROP TABLE IF EXISTS `shipping_info`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `shipping_info` (
+  `shipping_id` int NOT NULL AUTO_INCREMENT,
+  `shipping_status` enum('Pending','In Transit','Delivered','Failed') DEFAULT 'Pending',
+  `shipping_cost` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `address_id` int DEFAULT NULL,
+  PRIMARY KEY (`shipping_id`),
+  KEY `address_id` (`address_id`),
+  CONSTRAINT `shipping_info_ibfk_1` FOREIGN KEY (`address_id`) REFERENCES `address` (`address_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `shipping_info`
+--
+
+LOCK TABLES `shipping_info` WRITE;
+/*!40000 ALTER TABLE `shipping_info` DISABLE KEYS */;
+INSERT INTO `shipping_info` VALUES (1,'Pending',50.00,NULL);
+/*!40000 ALTER TABLE `shipping_info` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `view_history`
+--
+
+DROP TABLE IF EXISTS `view_history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `view_history` (
+  `view_id` int NOT NULL AUTO_INCREMENT,
+  `customer_id` int NOT NULL,
+  `product_id` int NOT NULL,
+  `action` enum('viewed','purchased') NOT NULL,
+  `action_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`view_id`),
+  KEY `customer_id` (`customer_id`),
+  KEY `product_id` (`product_id`),
+  CONSTRAINT `view_history_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`),
+  CONSTRAINT `view_history_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `view_history`
+--
+
+LOCK TABLES `view_history` WRITE;
+/*!40000 ALTER TABLE `view_history` DISABLE KEYS */;
+/*!40000 ALTER TABLE `view_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
 -- Dumping routines for database 'web_cusan'
 --
-/*!50003 DROP PROCEDURE IF EXISTS `AddSizesForProducts` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `AddSizesForProducts`()
-BEGIN
-    DECLARE prod_id INT;  -- product_id
-    DECLARE size_index INT; -- Index chạy size
-    DECLARE size_value VARCHAR(10); -- Kích cỡ (S, M, L, XL, 2XL)
-
-    SET prod_id = 1; -- Bắt đầu từ product_id = 1
-
-    WHILE prod_id <= 96 DO
-        SET size_index = 1; -- Bắt đầu từ size đầu tiên
-
-        WHILE size_index <= 5 DO
-            CASE size_index
-                WHEN 1 THEN SET size_value = 'S';
-                WHEN 2 THEN SET size_value = 'M';
-                WHEN 3 THEN SET size_value = 'L';
-                WHEN 4 THEN SET size_value = 'XL';
-                WHEN 5 THEN SET size_value = '2XL';
-            END CASE;
-
-            -- Chèn dữ liệu vào bảng product_detail
-            INSERT INTO product_detail (product_id, size, quantity_of_size)
-            VALUES (prod_id, size_value, 50);
-
-            SET size_index = size_index + 1; -- Chuyển sang size tiếp theo
-        END WHILE;
-
-        SET prod_id = prod_id + 1; -- Chuyển sang product_id tiếp theo
-    END WHILE;
-
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -675,4 +549,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-16  0:55:19
+-- Dump completed on 2024-12-14 20:55:24

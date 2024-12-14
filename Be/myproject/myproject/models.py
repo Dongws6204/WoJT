@@ -203,7 +203,7 @@ class Products(models.Model):
 
 class Sales(models.Model):
     sale_id = models.AutoField(primary_key=True)
-    product = models.ForeignKey(Products, models.DO_NOTHING, blank=True, null=True)
+    product = models.ForeignKey(Products, models.DO_NOTHING, blank=True, null=True, related_name='sale')
     discount = models.IntegerField(blank=True, null=True)
 
     class Meta:
