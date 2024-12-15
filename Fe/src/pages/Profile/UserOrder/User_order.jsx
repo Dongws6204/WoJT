@@ -82,7 +82,7 @@ const User_order = () => {
             console.log('OrderInfo:', orderInfo);
         } catch (error) {
             console.error('Error fetching order info:', error);
-            alert('Failed to fetch order information. Please try again.');
+            alert('Không có đơn hàng nào! Vui lòng thêm đơn sản phẩm');
         }
     };
 
@@ -173,10 +173,10 @@ const User_order = () => {
 
             // Cập nhật danh sách đơn hàng sau khi xóa
             setOrderInfo(prevOrders => prevOrders.filter(order => order.order_id !== orderId));
-            alert('Order has been successfully deleted.');
+            alert('Hủy đơn hàng thành công!');
         } catch (error) {
             console.error('Error deleting order:', error);
-            alert('Failed to delete the order. Please try again.');
+            alert('Lỗi khi hủy đơn hàng!');
         }
     };
 
@@ -211,7 +211,7 @@ const User_order = () => {
                             <div className='card__left'>
                                 <p style={{ marginTop: '68px' }}>
                                     <span style={{ color: '#4b4b4b', fontWeight: '100' }}>
-                                        {formatVND(item.product.price)} ₫
+                                        {formatVND(item.price)} ₫
                                     </span>
                                 </p>
                             </div>

@@ -6,26 +6,28 @@ import axios from 'axios';
 
 const UserAddress = () => {
 
-    const data_address = [
-        {
-            name: 'Vo quang sang',
-            phone: '0974583072',
-            address: 'Nghi Xuân, Hà Tĩnh',
-            status: 1,
-            address_id: 1,
-        },
-        {
-            name: 'Vo quang sang',
-            phone: '0974586892',
-            address: 'Số 18, Ngõ 63/5/36/37 Đường Lê Đức Thọ, Phường Mỹ Đình 2, Quận Nam Từ Liêm , Hà Nội',
-            status: 0,
-            address_id: 2,
-        }
-    ]
+    // const data_address = [
+    //     {
+    //         name: 'Vo quang sang',
+    //         phone: '0974583072',
+    //         address: 'Nghi Xuân, Hà Tĩnh',
+    //         status: 1,
+    //         address_id: 1,
+    //     },
+    //     {
+    //         name: 'Vo quang sang',
+    //         phone: '0974586892',
+    //         address: 'Số 18, Ngõ 63/5/36/37 Đường Lê Đức Thọ, Phường Mỹ Đình 2, Quận Nam Từ Liêm , Hà Nội',
+    //         status: 0,
+    //         address_id: 2,
+    //     }
+    // ]
 
     const [isAddressInsert, setIsAddressInsert] = useState(false);
     const { authState } = useContext(AuthContext);
-    const [dataAddress, setDataAddress] = useState(data_address);
+    const userId = authState.userId;
+    const [dataAddress, setDataAddress] = useState([]);
+
 
     const handleClickInsert = () => {
         setIsAddressInsert(true);
@@ -37,69 +39,65 @@ const UserAddress = () => {
 
     const fetchAddresses = async () => {
         try {
-            const response = await axios.get(`http://127.0.0.1:8000/api/ship/address`);
+            const response = await axios.get(`http://127.0.0.1:8000/api/ship/address/${userId}`);
+            if (response.data.length === 0) {
+                alert('Không có địa chỉ nào được tìm thấy!');
+            }
             setDataAddress(response.data);
-            console.log('hihi')
         } catch (error) {
             console.error('Error fetching addresses:', error);
+            alert('Không thể lấy dữ liệu địa chỉ. Vui lòng thử lại sau!');
         }
     };
 
-    // const handleSetDefault = async (id) => {
-    //     try {
-    //         await axios.put(`http://127.0.0.1:8000/api/addresses/${id}/set-default`);
-
-    //         fetchAddresses();
-    //     } catch (error) {
-    //         console.error('Error setting default address:', error);
-    //     }
-    // };
-
-    const handleSetDefault = (id) => {
-        setDataAddress((prevAddresses) =>
-            prevAddresses.map((item) =>
-                item.address_id === id
-                    ? { ...item, status: 1 }
-                    : { ...item, status: 0 }
-            )
-        );
-    };
-
-    // const handleSetUnDefault = async (id) => {
-    //     try {
-    //         await axios.put(`http://127.0.0.1:8000/api/addresses/${id}/set-undefault`);
-
-    //         fetchAddresses();
-    //     } catch (error) {
-    //         console.error('Error setting default address:', error);
-    //     }
-    // };
-
-    const handleSetUnDefault = (id) => {
-        setDataAddress((prevAddresses) =>
-            prevAddresses.map((item) =>
-                item.address_id === id
-                    ? { ...item, status: 0 }
-                    : item
-            )
-        );
+    const handleSetDefault = async (id) => {
+        try {
+            await axios.post(`http://127.0.0.1:8000/api/ship/address/${userId}`, {
+                address_id: id,
+                status: 1
+            });
+            setDataAddress((prevAddresses) =>
+                prevAddresses.map((item) =>
+                    item.address_id === id
+                        ? { ...item, status: 1 }
+                        : { ...item, status: 0 }
+                )
+            );
+        } catch (error) {
+            console.error('Error setting default address:', error);
+            alert('Không thể thiết lập mặc định. Vui lòng thử lại!');
+        }
     };
 
 
-    // const handleDelete = async (id) => {
-    //     try {
-    //         await axios.delete(`http://127.0.0.1:8000/api/addresses/${id}/delete`); 
-    //         fetchAddresses();
-    //     } catch (error) {
-    //         console.error('Error deleting address:', error);
-    //     }
-    // };
 
-    const handleDelete = (id) => {
-        setDataAddress((prevAddresses) =>
-            prevAddresses.filter((item) => item.address_id !== id)
-        );
+
+    // Xóa địa chỉ
+    const handleDelete = async (customer_id, address_id, status) => {
+        console.log(dataAddress.length)
+        if (status === 1) {
+            alert('Vui lòng đổi địa chỉ mặc định để xóa !')
+        }
+        if (dataAddress.length === 1) {
+            alert('Vui lòng thêm địa chỉ!')
+        }
+        try {
+            await axios.post(`http://127.0.0.1:8000/api/ship/address/delete`, {
+                address_id: address_id,
+                status: 1,
+            });
+            setDataAddress((prevAddresses) =>
+                prevAddresses.filter((item) => item.address_id !== address_id)
+            );
+            alert('Xóa địa chỉ thành công');
+        } catch (error) {
+            console.error('Error deleting address:', error);
+            alert('Không thể xóa địa chỉ. Vui lòng thử lại!');
+        }
+
+
     };
+
 
 
     useEffect(() => {
@@ -111,25 +109,36 @@ const UserAddress = () => {
         name: '',
         phone: '',
         address: '',
+
     })
 
-    const handleSubmit = (e) => {
+    // Thêm địa chỉ
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (authState.isAuthenticated) {
-            setDataAddress([
-                ...dataAddress,
-                {
-                    ...address,
-                    address_id: dataAddress.length + 1,
-                    status: 0
-                }
-            ]);
-            alert('Thêm địa chỉ thành công')
-            setIsAddressInsert(false)
+            try {
+                const response = await axios.post('http://127.0.0.1:8000/api/ship/address/add', {
+                    customer: userId,
+                    name: address.name,
+                    address_name: address.address,
+                    phone: address.phone,
+                    status: 0,
+
+                });
+                setDataAddress([...dataAddress, response.data]);
+                alert('Thêm địa chỉ thành công');
+                setIsAddressInsert(false);
+            } catch (error) {
+                console.error('Error adding address:', error);
+                console.log(userId)
+                console.log(address);
+                alert('Thêm địa chỉ thất bại. Vui lòng thử lại!');
+            }
         } else {
-            alert('hãy Đăng nhập để tiếp tục');
+            alert('Hãy đăng nhập để tiếp tục');
         }
     };
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -157,8 +166,13 @@ const UserAddress = () => {
                             <div style={{ display: 'flex', justifyContent: 'end', flexDirection: 'column' }}>
                                 {items.status === 1 ? (
                                     <div style={{ display: 'flex', gap: '3px' }}>
-                                        <button onClick={() => handleSetUnDefault(items.address_id)} style={{ border: '1px solid #ee4d2d', fontFamily: 'Montserrat', fontSize: '12px', padding: '5px', color: '#ee4d2d' }}>Mặc định</button>
-                                        <button onClick={() => handleDelete(items.address_id)} style={{ border: '1px solid rgba(0, 0, 0, .54)', fontFamily: 'Montserrat', fontSize: '12px', padding: '5px', color: 'rgba(0, 0, 0, .54)' }}>Xóa</button>
+                                        {/* onClick={() => handleSetUnDefault(items.address_id)}  */}
+                                        <button
+                                            style={{
+                                                border: '1px solid #ee4d2d', fontFamily: 'Montserrat',
+                                                fontSize: '12px', padding: '5px', color: '#ee4d2d'
+                                            }}>Mặc định</button>
+                                        <button onClick={() => handleDelete(userId, items.address_id, items.status)} style={{ border: '1px solid rgba(0, 0, 0, .54)', fontFamily: 'Montserrat', fontSize: '12px', padding: '5px', color: 'rgba(0, 0, 0, .54)' }}>Xóa</button>
                                     </div>
                                 ) : (
                                     <div style={{ display: 'flex', gap: '3px' }}>
