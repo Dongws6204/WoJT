@@ -29,11 +29,7 @@ class ProductSerializer(serializers.ModelSerializer):
     quantity_stock = serializers.IntegerField()
     object = serializers.CharField(source='id_port.object.object_name')
     portfolio = serializers.CharField(source='id_port.port_name')
-<<<<<<< Updated upstream
-
-=======
     discount = serializers.SerializerMethodField()
->>>>>>> Stashed changes
     # Truy xuất chi tiết sản phẩm thông qua `related_name` hoặc mặc định
     product_detail = ProductDetailSerializer(many=True, read_only=True, source='product_details')
     # Truy xuất đánh giá sản phẩm thông qua `related_name` hoặc mặc định
@@ -44,7 +40,7 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Products
         fields = [
-            'product_id', 'product_name', 'price', 'img', 'description',
+            'product_id', 'product_name', 'img','price', 'discount', 'description',
             'product_rate', 'quantity_sold', 'quantity_stock', 'object',
             'portfolio', 'product_detail', 
             'rate',
@@ -67,11 +63,17 @@ class ProductSerializer(serializers.ModelSerializer):
 
 class GetCardSerializer(serializers.ModelSerializer):
     img = serializers.CharField(source='img_1')
+    discount = serializers.SerializerMethodField()
     class Meta:
         model = Products
         fields = [
-            'product_id', 'img', 'product_name', 'price',
+            'product_id', 'img', 'product_name', 'price', 'discount'
         ]
+
+    def get_discount(self, obj):
+        # Lấy giá trị discount từ model 
+        sale = Sales.objects.filter(product=obj).first() 
+        return sale.discount if sale else None
 
 
 

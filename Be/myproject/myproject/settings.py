@@ -114,9 +114,9 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'woJ',  # Tên database trong SQL Workbench
+        'NAME': 'web_cusan',  # Tên database trong SQL Workbench
         'USER': 'root',       # Tên người dùng MySQL
-        'PASSWORD': 'Dongws6204@',   # Mật khẩu
+        'PASSWORD': '5ang15122003',   # Mật khẩu
         'HOST': 'localhost',           # Hoặc địa chỉ máy chủ
         'PORT': '3306',                # Port mặc định của MySQL
     }

@@ -79,10 +79,10 @@ const Cart = () => {
 
 
     useEffect(() => {
-        if (dataCart) {
-            console.log("Updated dataCart:", dataCart);
-        }
-    }, [dataCart]);
+        
+        console.log("Updated dataCart:",CartProduct );
+
+    }, []);
 
     return (
         <div className='cart-container'>

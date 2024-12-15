@@ -36,7 +36,6 @@ const ProductDetail = () => {
     const [dataProduct, setDataProduct] = useState({});
     const [data_rate, setData_rate] = useState([]);
     const [dataProductDetail, setDataProductDetail] = useState([]);
-    const discounts = 30; //sau ong ghep vao api nhe
     const { authState } = useContext(AuthContext);
 
     useEffect(() => {
@@ -181,10 +180,10 @@ const ProductDetail = () => {
                     <div className='list-price-name-sold'>
                         <h2>{dataProduct.product_name}</h2>
                         <h4>Đã bán: {dataProduct.quantity_sold}</h4>
-                        <h4 style={{marginTop:'36px',marginBottom:'-2px',fontWeight:'bold'}}>{formatVND(dataProduct.price - dataProduct.price * (discounts/100))} ₫</h4>
+                        <h4 style={{marginTop:'36px',marginBottom:'-2px',fontWeight:'bold'}}>{formatVND(dataProduct.price - dataProduct.price * (dataProduct.discount/100))} ₫</h4>
                         <div className='product-discount' style={{marginBottom:'16px'}}>
                             <h4 style={{ textDecoration: 'line-through', color: '#7c7c7c', fontWeight: '100', fontSize:'19px' }}>{formatVND(dataProduct.price)} ₫ </h4>
-                            <h4 style={{ color: 'red' }}>{discounts}%</h4>
+                            <h4 style={{ color: 'red' }}>{dataProduct.discount}%</h4>
                         </div>
                     </div>
                     <div className='list-size'>

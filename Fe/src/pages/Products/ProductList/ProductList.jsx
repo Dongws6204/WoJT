@@ -13,8 +13,6 @@ const ProductList = () => {
     const [listProducts, setListProducts] = useState([]);
     const [loadedCount, setLoadedCount] = useState(15); //phan trang
 
-    const discounts = 30;//sau ong ghep them vao api nhe
-
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -90,7 +88,7 @@ const ProductList = () => {
             <div className='product-list'>
                 {listProducts.map((item) => (
                     <ProductCard
-                        key={item.product_id} id={item.product_id} image={item.img} name={item.product_name} total={item.price} discount={discounts}
+                        key={item.product_id} id={item.product_id} image={item.img} name={item.product_name} total={item.price} discount={item.discount}
                     />
                 ))}
             </div>

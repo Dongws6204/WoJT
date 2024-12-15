@@ -5,7 +5,7 @@ import { createSlice } from "@reduxjs/toolkit";
 // tải giỏ hàng trên local
 const loadCartFromLocalStorage = (userId) => {
     try {
-        const cartKey = userId ? `CartArr_${userId}` : 'CartArr_guest'; 
+        const cartKey = userId ? `CartArr_${userId}` : 'CartArr_guest';
         const serializedCart = localStorage.getItem(cartKey);
         return serializedCart ? JSON.parse(serializedCart) : [];
     } catch (e) {
@@ -16,7 +16,7 @@ const loadCartFromLocalStorage = (userId) => {
 // lưu giỏ hàng vào local
 const saveCartToLocalStorage = (cart, userId) => {
     try {
-        const cartKey = userId ? `CartArr_${userId}` : 'CartArr_guest';  
+        const cartKey = userId ? `CartArr_${userId}` : 'CartArr_guest';
         const serializedCart = JSON.stringify(cart);
         localStorage.setItem(cartKey, serializedCart);
     } catch (e) {
@@ -27,7 +27,7 @@ const saveCartToLocalStorage = (cart, userId) => {
 const ProductCart = createSlice({
     name: 'product_cart',
     initialState: {
-        CartArr: [], 
+        CartArr: [],
         selectedSize: []
     },
     reducers: {
@@ -37,21 +37,23 @@ const ProductCart = createSlice({
         },
         addToCart: (state, action) => {
             const userId = action.payload.userId;
-            if(state.selectedSize.length === 0){
+            if (state.selectedSize.length === 0) {
                 alert('Vui lòng chọn size')
             } else {
                 const existingItem = state.CartArr.findIndex(
                     (p) => p.product_id === action.payload.product_id && p.id_prod === state.selectedSize[0]?.id_prod
                 );
-    
-                if (existingItem===-1) {
-                    const limitedPayload = Object.fromEntries(Object.entries(action.payload).slice(0, 4));
-                    state.CartArr.push({ ...limitedPayload,...state.selectedSize[0], quantity: 1 })
+
+                const discountedPrice = action.payload.price - action.payload.price * (action.payload.discount / 100);
+
+                if (existingItem === -1) {
+                    const limitedPayload = Object.fromEntries(Object.entries(action.payload).slice(0, 3));
+                    state.CartArr.push({ ...limitedPayload, price: discountedPrice, ...state.selectedSize[0], quantity: 1 })
                 } else {
                     state.CartArr[existingItem].quantity += 1;
                 }
                 state.selectedSize = [];
-    
+
                 saveCartToLocalStorage(state.CartArr, userId);
             }
         },
@@ -63,7 +65,7 @@ const ProductCart = createSlice({
             } else if (state.CartArr[itemIndex].quantity === 1) {
                 state.CartArr.splice(itemIndex, 1);
             }
-            saveCartToLocalStorage(state.CartArr,userId);
+            saveCartToLocalStorage(state.CartArr, userId);
         },
         addSize: (state, action) => {
             // Update selectedSize with id_prod and size
@@ -73,17 +75,17 @@ const ProductCart = createSlice({
             const userId = action.payload.userId;
             const itemIndex = state.CartArr.findIndex((p) => p.product_id === action.payload.product_id && p.id_prod === action.payload.id_prod);
             state.CartArr.splice(itemIndex, 1);
-            saveCartToLocalStorage(state.CartArr,userId);
+            saveCartToLocalStorage(state.CartArr, userId);
         },
-        addBtn: (state,action) => {
+        addBtn: (state, action) => {
             const userId = action.payload.userId;
             const itemIndex = state.CartArr.findIndex((p) => p.product_id === action.payload.product_id && p.id_prod === action.payload.id_prod);
             state.CartArr[itemIndex].quantity += 1;
-            saveCartToLocalStorage(state.CartArr,userId);
+            saveCartToLocalStorage(state.CartArr, userId);
         }
     },
 })
 
-export const { addToCart, DeleteFromCart, addSize ,DeleteBtn,addBtn, initializeCart} = ProductCart.actions
+export const { addToCart, DeleteFromCart, addSize, DeleteBtn, addBtn, initializeCart } = ProductCart.actions
 
 export default ProductCart.reducer
