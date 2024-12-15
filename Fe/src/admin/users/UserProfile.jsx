@@ -1,8 +1,8 @@
-import React,{useState,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import './userprofile.css'
 import axios from 'axios';
 
-const UserProfile = ({userID}) => {
+const UserProfile = ({ userID }) => {
 
     const [dataProfile, setdataProfile] = useState({
         name: 'Vo Quang Sang',
@@ -17,7 +17,7 @@ const UserProfile = ({userID}) => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(
-                    `http://127.0.0.1:8000/api/cutomers/${userID}`
+                    `http://127.0.0.1:8000/api/customers/${userID}`
                 );
                 //kiem tra neu response goi thanh cong
                 if (response.status === 200) {
@@ -40,19 +40,19 @@ const UserProfile = ({userID}) => {
             <h1>Thông tin khách hàng</h1>
             <div className='proflie_list'>
                 <p>Họ và tên</p>
-                <input type="text" value={dataProfile.name} name='name' readOnly/>
+                <input type="text" value={dataProfile.name} name='name' readOnly />
             </div>
             <div className='proflie_list'>
                 <p>Tên đăng nhập</p>
-                <input type="text" value={dataProfile.username} name='username' readOnly/>
+                <input type="text" value={dataProfile.username} name='username' readOnly />
             </div>
             <div className='proflie_list'>
                 <p>Số điện thoại</p>
-                <input type="text" value={dataProfile.phone} name='phone' readOnly/>
+                <input type="text" value={dataProfile.phone} name='phone' readOnly />
             </div>
             <div className='proflie_list'>
                 <p>Email</p>
-                <input type="text" value={dataProfile.email} name='email' readOnly/>
+                <input type="text" value={dataProfile.email} name='email' readOnly />
             </div>
             <div className='proflie_list'>
                 <p>Địa chỉ</p>

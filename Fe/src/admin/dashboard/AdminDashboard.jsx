@@ -1,5 +1,6 @@
-import React, {useEffect,useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import './dash.css'
+import axios from 'axios';
 
 const AdminDashboard = () => {
     const [stats, setStats] = useState({});
@@ -9,6 +10,22 @@ const AdminDashboard = () => {
     useEffect(() => {
         // Fake API Call
         const fetchDashboardData = async () => {
+            try {
+                const res = await axios.get('http://127.0.0.1:8000/api/admin/order');
+                const data = res.data.map(order => {
+                    if (order.total_amount === null) {
+                        order.total_amount = 0;
+                    }
+                    return order;
+                });
+                setRecentOrders(data);
+                console.log(data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                alert('Không thể lấy dữ liệu. Vui lòng thử lại sau!');
+            }
+
+
             // Fake statistics data
             const statsData = {
                 totalProducts: 150,
@@ -16,14 +33,14 @@ const AdminDashboard = () => {
                 totalRevenue: 54300000,
                 totalCustomers: 120,
             };
-            //chi lay 5 or 10 don
-            const ordersData = [
-                { order_id: 1,username: "Nguyễn Văn A", total_amount: 250000, status: 1 },
-                { order_id: 2,username: "Trần Thị B", total_amount: 320000, status: 2 },
-                { order_id: 3,username: "Lê Văn C", total_amount: 150000, status: 3 },
-                { order_id: 4,username: "Trần Thị B", total_amount: 320000, status: 2 },
-                { order_id: 5,username: "Lê Văn C", total_amount: 150000, status: 3 },
-            ];
+            // //chi lay 5 or 10 don
+            // const ordersData = [
+            //     { order_id: 1, username: "Nguyễn Văn A", total_amount: 250000, status: 1 },
+            //     { order_id: 2, username: "Trần Thị B", total_amount: 320000, status: 2 },
+            //     { order_id: 3, username: "Lê Văn C", total_amount: 150000, status: 3 },
+            //     { order_id: 4, username: "Trần Thị B", total_amount: 320000, status: 2 },
+            //     { order_id: 5, username: "Lê Văn C", total_amount: 150000, status: 3 },
+            // ];
             //chi lay 5 san pham ban chay nhat
             const productsData = [
                 { product_name: "Áo thun Nam", quantity_sold: 80, price: 200000 },
@@ -35,7 +52,7 @@ const AdminDashboard = () => {
 
             // Set data
             setStats(statsData);
-            setRecentOrders(ordersData);
+            // setRecentOrders(ordersData);
             setTopProducts(productsData);
         };
 
@@ -83,7 +100,7 @@ const AdminDashboard = () => {
                         {recentOrders.map((order) => (
                             <tr key={order.order_id}>
                                 <td>{order.order_id}</td>
-                                <td>{order.username}</td>
+                                <td>{order.customer_name}</td>
                                 <td>{order.total_amount.toLocaleString()} VND</td>
                                 <td>
                                     {order.status === 1

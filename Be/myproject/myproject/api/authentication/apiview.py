@@ -31,7 +31,8 @@ class LoginAPIView(APIView):
         try:
             # Tìm đối tượng `customer` trong model `Customers`
             customer = Customers.objects.get(user_name=username)
-            if check_password(password, customer.pass_word):
+            # if check_password(password, customer.pass_word):
+            if (password == customer.pass_word):
                 response_data = {
                     'success': True,
                     'customerId': customer.customer_id,
