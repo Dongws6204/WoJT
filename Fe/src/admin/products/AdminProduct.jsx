@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IoSearchOutline } from "react-icons/io5";
 import { CiCirclePlus } from "react-icons/ci";
 import { useNavigate } from 'react-router-dom';
@@ -14,21 +14,21 @@ const AdminProduct = () => {
 
     const [search, setSearch] = useState(null);
     const navigate = useNavigate();
-    const [showSizes, setShowSizes] = useState(false); 
+    const [showSizes, setShowSizes] = useState(false);
     const [selectProduct, setSelectProduct] = useState(null);
-    const [addProduct,setAddProduct] = useState(false);
-    const [fixProduct,setFixProduct] = useState(false);
-    const [productID,setProductID] = useState(null);
+    const [addProduct, setAddProduct] = useState(false);
+    const [fixProduct, setFixProduct] = useState(false);
+    const [productID, setProductID] = useState(null);
 
 
     const toggleSizes = (id) => {
         setSelectProduct(id);
-        setShowSizes(true); 
+        setShowSizes(true);
     };
 
-    const LeaveTogglesSize = () =>{
+    const LeaveTogglesSize = () => {
         setSelectProduct(null);
-        setShowSizes(false); 
+        setShowSizes(false);
     }
 
     const formatVND = (number) => {
@@ -37,69 +37,13 @@ const AdminProduct = () => {
     };
 
     const [data, setData] = useState([
-        {
-            product_id: 33,
-            img: "https://canifa.com/img/500/750/resize/8/t/8ts24a001-sb001-thumb.webp",
-            product_name: "Áo phông nam cổ tròn dáng suông",
-            price: 149000.00,
-            quantity_stock: 250,
-            quantity_sold: 0,
-            description: 'ao rat dep',
-            product_detail: [
-                {
-                    size: 'S',
-                    quantity_of_size: 50
-                },
-                {
-                    size: 'M',
-                    quantity_of_size: 50
-                },
-                {
-                    size: 'L',
-                    quantity_of_size: 50
-                },
-                {
-                    size: 'XL',
-                    quantity_of_size: 50
-                },
-                {
-                    size: '2XL',
-                    quantity_of_size: 50
-                },
-            ]
-        },
-        {
-            product_id: 34,
-            img: "https://canifa.com/img/500/750/resize/8/t/8tl24w007-se384-thumb.webp",
-            product_name: "Áo phông nam cổ tròn dáng suông",
-            price: 159000.00,
-            quantity_stock: 150,
-            quantity_sold: 0,
-            description: null,
-            product_detail: [
-                {
-                    size: 'S',
-                    quantity_of_size: 50
-                },
-                {
-                    size: 'M',
-                    quantity_of_size: 50
-                },
-                {
-                    size: 'L',
-                    quantity_of_size: 50
-                },
-            ]
-        }
     ]);
 
-    const OnlickSearch = async (e) => {
-        e.preventDefault();
-        console.log(search);
-        if (search) {
+    useEffect(() => {
+        const fetchData = async () => {
             try {
                 const response = await axios.get(
-                    `http://127.0.0.1:8000/api/search/products`
+                    `http://127.0.0.1:8000/api/admin/products/all`
                 );
                 //kiem tra neu response goi thanh cong
                 if (response.status === 200) {
@@ -110,8 +54,46 @@ const AdminProduct = () => {
             } catch (error) {
                 console.error("Lỗi khi lấy dữ liệu:", error);
             }
-        }
-    }
+        };
+
+        fetchData();
+    }, [search]);
+
+    const OnlickSearch = () => {
+        // console.log(search)
+        const searchTerm = search.toLowerCase(); // Giả sử searchInput là giá trị nhập vào của người dùng
+        const filteredProducts = data.filter(product => {
+            const portName = product.product_name || ''; // Đảm bảo port_name không phải là undefined
+            return portName.toLowerCase().includes(searchTerm);
+        });
+        setData(filteredProducts);
+        alert(`Đã tìm thấy ${filteredProducts.length} kết quả cho ${search}`);
+    };
+
+    const deleteProduct = (id) => {
+        // console.log(id);
+        const deleteData = async () => {
+            try {
+                // Sử dụng id trong URL thay vì body
+                const res = await axios.delete(
+                    `http://127.0.0.1:8000/api/admin/products/delete/${id}/`
+                );
+                if (res.status === 200) {
+                    alert(`Xoá thành công danh mục có id ${id}`);
+                    window.location.reload();
+                } else {
+                    alert('Xoá thất bại');
+                }
+            } catch (error) {
+                console.error("Lỗi khi xoá sản phẩm :", error);
+                alert('Đã có lỗi xảy ra');
+            }
+        };
+
+        deleteData();
+    };
+
+
 
     const onClickInsert = () => {
         setAddProduct(true);
@@ -164,7 +146,7 @@ const AdminProduct = () => {
                                 <tr key={product.product_id}>
                                     <td>{product.product_id}</td>
                                     <td>
-                                        {product.img ? (
+                                        {product.img_1 ? (
                                             <div style={{ display: 'flex', justifyContent: 'center' }}>
                                                 <img
                                                     src={product.img}
@@ -179,9 +161,9 @@ const AdminProduct = () => {
                                     <td>
                                         <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', cursor: 'pointer' }}>
                                             <p>{product.quantity_stock || 0}</p>
-                                            <IoEyeOutline onMouseEnter={()=>{toggleSizes(product.product_id)}} onMouseLeave={LeaveTogglesSize}/>
+                                            <IoEyeOutline onMouseEnter={() => { toggleSizes(product.product_id) }} onMouseLeave={LeaveTogglesSize} />
                                         </div>
-                                        {showSizes && selectProduct === product.product_id && ( 
+                                        {showSizes && selectProduct === product.product_id && (
                                             <div className='product-detail-admin'>
                                                 {product.product_detail.map((detail, index) => (
                                                     <p key={index} style={{ margin: "4px 0" }}>
@@ -195,8 +177,9 @@ const AdminProduct = () => {
                                     <td>{formatVND(product.price)} ₫</td>
                                     <td>{product.description || "Không có mô tả"}</td>
                                     <td>
-                                        <div style={{display:'flex',justifyContent:'center',cursor:'pointer'}}>
-                                            <IoMdSettings onClick={()=>{onClickFix(product.product_id)}}/><span style={{margin:'0px 5px'}}>|</span><MdDelete />
+                                        <div style={{ display: 'flex', justifyContent: 'center', cursor: 'pointer' }}>
+                                            <IoMdSettings onClick={() => { onClickFix(product.product_id) }} /><span style={{ margin: '0px 5px' }}>|</span>
+                                            <MdDelete onClick={() => deleteProduct(product.product_id)} />
                                         </div>
                                     </td>
                                 </tr>
@@ -211,42 +194,42 @@ const AdminProduct = () => {
                     </tbody>
                 </table>
                 {addProduct && (
-                <>
-                    <div
-                        onClick={closeWindos}
-                        style={{
-                            position: "absolute",
-                            zIndex: "10",
-                            width: '100vw',
-                            height: '168%',
-                            backgroundColor: 'rgba(76, 79, 77, 0.5)',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            top: 0,
-                            left: 0
-                        }}>
-                    </div>
-                    <AddProductForm/>
-                </>
+                    <>
+                        <div
+                            onClick={closeWindos}
+                            style={{
+                                position: "absolute",
+                                zIndex: "10",
+                                width: '100vw',
+                                height: '168%',
+                                backgroundColor: 'rgba(76, 79, 77, 0.5)',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                top: 0,
+                                left: 0
+                            }}>
+                        </div>
+                        <AddProductForm />
+                    </>
                 )}
                 {fixProduct && (
-                <>
-                    <div
-                        onClick={closeWindoss}
-                        style={{
-                            position: "absolute",
-                            zIndex: "10",
-                            width: '100vw',
-                            height: '168%',
-                            backgroundColor: 'rgba(76, 79, 77, 0.5)',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            top: 0,
-                            left: 0
-                        }}>
-                    </div>
-                    <FixProductForm productID = {productID}/>
-                </>
+                    <>
+                        <div
+                            onClick={closeWindoss}
+                            style={{
+                                position: "absolute",
+                                zIndex: "10",
+                                width: '100vw',
+                                height: '168%',
+                                backgroundColor: 'rgba(76, 79, 77, 0.5)',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                top: 0,
+                                left: 0
+                            }}>
+                        </div>
+                        <FixProductForm productID={productID} />
+                    </>
                 )}
             </div>
         </>

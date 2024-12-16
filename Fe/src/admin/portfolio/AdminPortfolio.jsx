@@ -8,6 +8,11 @@ import './port.css'
 import AddPortfolio from './AddPortfolio';
 import FixPortfolio from './FixPortfolio';
 
+
+// export const UpdateContext = createContext();
+
+
+
 const AdminPortfolio = () => {
 
     const [data, setData] = useState([])
@@ -16,7 +21,8 @@ const AdminPortfolio = () => {
     const [search, setSearch] = useState(null);
     const [addPort, setAddPort] = useState(false);
     const [fixPort, setFixPort] = useState(false);
-    const [portID,setPortID] = useState(null);
+    const [portID, setPortID] = useState(null);
+    const [update, setUpdate] = useState(false);
 
     const closeWindoss = () => {
         setFixPort(false);
@@ -53,7 +59,7 @@ const AdminPortfolio = () => {
         };
 
         fetchData();
-    }, []);
+    }, [search]);
 
     useEffect(() => {
         if (Number(selectedObjectId) === 0) {
@@ -85,25 +91,41 @@ const AdminPortfolio = () => {
         setSelectedObjectId(e.target.value);
     };
 
-    const OnlickSearch = async (e) => {
-        e.preventDefault();
-        console.log(search);
-        if (search) {
+    const deletePort = (id) => {
+        console.log(id);
+        const deleteData = async () => {
             try {
-                const response = await axios.post(
-                    `http://127.0.0.1:8000/api/search/portfolio`
+                // Sử dụng id trong URL thay vì body
+                const res = await axios.delete(
+                    `http://127.0.0.1:8000/api/admin/portfolios/delete/${id}`
                 );
-                //kiem tra neu response goi thanh cong
-                if (response.status === 200) {
-                    setData(response.data);
+                if (res.status === 200) {
+                    alert(`Xoá thành công danh mục có id ${id}`);
+                    window.location.reload();
                 } else {
-                    console.error("Lỗi khi truy cập:", response.status);
+                    alert('Xoá thất bại');
                 }
             } catch (error) {
-                console.error("Lỗi khi lấy dữ liệu:", error);
+                console.error("Lỗi khi xoá danh mục:", error);
+                alert('Đã có lỗi xảy ra');
             }
-        }
-    }
+        };
+
+        deleteData();
+    };
+
+
+    const OnlickSearch = () => {
+        // console.log()
+        const searchTerm = search.toLowerCase(); // Giả sử searchInput là giá trị nhập vào của người dùng
+        const filteredPortfolios = filteredPortfolio.filter(portfolio => {
+            const portName = portfolio.port_name || ''; // Đảm bảo port_name không phải là undefined
+            return portName.toLowerCase().includes(searchTerm);
+        });
+        setFilter(filteredPortfolios);
+        alert(`Đã tìm thấy ${filteredPortfolios.length} kết quả cho ${search}`);
+    };
+
 
 
     return (
@@ -150,7 +172,7 @@ const AdminPortfolio = () => {
                                     <div style={{ display: 'flex', justifyContent: 'center', cursor: 'pointer' }}>
                                         <IoMdSettings onClick={() => onClickFix(portfolio.id_port)} />
                                         <span style={{ margin: '0px 5px' }}>|</span>
-                                        <MdDelete />
+                                        <MdDelete onClick={() => deletePort(portfolio.id_port)} />
                                     </div>
                                 </td>
                             </tr>

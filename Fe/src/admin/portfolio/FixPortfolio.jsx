@@ -1,8 +1,8 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import './addport.css'
 
-const FixPortfolio = ({portID}) => {
+const FixPortfolio = ({ portID }) => {
 
     const [objects] = useState([
         { object_id: 1, object_name: "Nam" },
@@ -12,8 +12,8 @@ const FixPortfolio = ({portID}) => {
     ]);
 
     const [portfolio, setPortfolio] = useState({
-        object_id: '2',
-        port_name: 'Quan dui ao balo'
+        // object_id: '2',
+        // port_name: 'Quan dui ao balo'
     });
 
     const [selectedObject, setSelectedObject] = useState(portfolio.object_id);
@@ -24,11 +24,11 @@ const FixPortfolio = ({portID}) => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(
-                    `http://127.0.0.1:8000/api/product/portfolio/${portID}`
+                    `http://127.0.0.1:8000/api/admin/portfolios/delete/${portID}`
                 );
                 //kiem tra neu response goi thanh cong
                 if (response.status === 200) {
-                    
+
                     setPortfolio(response.data);
                 } else {
                     console.error("Lỗi khi truy cập:", response.status);
@@ -44,9 +44,32 @@ const FixPortfolio = ({portID}) => {
     }, [portID]);
 
 
-    const handleSubmit = (e) => {
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     console.log(portfolio)
+    // };
+    // Gửi yêu cầu cập nhật danh mục
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(portfolio)
+
+        try {
+            const response = await axios.put(
+                `http://127.0.0.1:8000/api/admin/portfolios/delete/${portfolio.id_port}`,
+                {
+                    port_name: portfolio.port_name,
+                    object: portfolio.object_id,
+                }
+            );
+
+            if (response.status === 200) {
+                alert("Cập nhật danh mục thành công!");
+            } else {
+                alert("Cập nhật thất bại. Vui lòng thử lại!");
+            }
+        } catch (error) {
+            console.error("Lỗi khi cập nhật danh mục:", error);
+            alert("Đã xảy ra lỗi trong quá trình cập nhật.");
+        }
     };
 
     const handleChange = (e) => {
@@ -61,7 +84,7 @@ const FixPortfolio = ({portID}) => {
         const objectId = e.target.value;
         setSelectedObject(objectId);
         setPortfolio(
-            {...portfolio,object_id : objectId}
+            { ...portfolio, object_id: objectId }
         );
     };
 
@@ -93,7 +116,7 @@ const FixPortfolio = ({portID}) => {
                         ))}
                     </select>
                 </div>
-                <button type="submit">Thêm</button>
+                <button type="submit">Cập nhật</button>
             </form>
         </div>
     );

@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { IoMdSettings } from "react-icons/io";
 import { IoSearchOutline } from "react-icons/io5";
 import './adminsale.css'
@@ -26,6 +26,8 @@ const AdminSales = () => {
         }
     ]);
 
+
+    //  API admin sales laf http://127.0.0.1:8000/api/admin/sales/
     const OnlickSearch = async (e) => {
         e.preventDefault();
         console.log(search);
@@ -95,7 +97,7 @@ const AdminSales = () => {
                                     <img src={sale.img} alt="Product" style={{ width: "68px", height: "86px" }} />
                                 </td>
                                 <td>{sale.product_name}</td>
-                                <td>{formatVND(sale.price - sale.price * (sale.discount/100))} ₫</td>
+                                <td>{formatVND(sale.price - sale.price * (sale.discount / 100))} ₫</td>
                                 <td>{sale.discount}%</td>
                                 <td>
                                     <div style={{ display: 'flex', justifyContent: 'center', cursor: 'pointer' }}>

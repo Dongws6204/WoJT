@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import './addport.css'
+import axios from 'axios';
 
 const AddPortfolio = () => {
 
@@ -16,9 +17,28 @@ const AddPortfolio = () => {
     });
 
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(portfolio)
+        console.log(portfolio);
+
+        const fetchData = async () => {
+            try {
+                const res = await axios.post('http://127.0.0.1:8000/api/admin/portfolios/', {
+                    port_name: portfolio.port_name,
+                    object: portfolio.object_id,
+                });
+
+                if (res.status === 201) { // HTTP status code for created resource is 201
+                    alert('Thêm danh mục thành công!');
+                } else {
+                    console.error("Lỗi");
+                }
+            } catch (error) {
+                console.error("Lỗi", error);
+            }
+        };
+
+        fetchData();
     };
 
     const handleChange = (e) => {

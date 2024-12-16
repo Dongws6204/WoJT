@@ -81,15 +81,39 @@ const AddProductForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log({ product, sizes })
+
+        console.log("Product:", product);
+        console.log("Sizes (Details):", sizes);
+
+        // Chuẩn bị dữ liệu để gửi lên API
+        const payload = {
+            product: {
+                product_name: product.product_name, // Tên sản phẩm
+                quantiy_stock: 100,
+                price: product.price, // Giá sản hẩm
+                img_1: product.img, // URL ảnh sản phẩm
+                img_2: product.img, // URL
+                quantity_sold: 0,
+                id_port: selectedObject, // ID của danh mục (Portfolio)
+                // description: product.description, // Mô tả sản phẩm
+            },
+            details: sizes.map((sizeX) => ({
+                // product: product.product_id,Sau khi theem thif nos tuwj thêm product_id à bạn 
+                size: sizeX.size, // Kích thước sản phẩm (ví dụ: S, M, L)
+                quantity_of_size: sizeX.quantity_of_size, // Số lượng tương ứng với kích thước
+            })),
+        };
+
         try {
-            const response = await fetch("/api/addproduct", {
+            const response = await fetch("http://127.0.0.1:8000//api/admin/products/add/", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ product, sizes }),
+                body: JSON.stringify(payload), // Gửi dữ liệu dưới dạng JSON
             });
+
             if (response.ok) {
                 alert("Thêm sản phẩm thành công!");
+                // Reset form sau khi thêm thành công
                 setProduct({
                     product_name: "",
                     id_port: "",
@@ -99,32 +123,36 @@ const AddProductForm = () => {
                 });
                 setSizes([]);
             } else {
+                const errorData = await response.json();
+                console.error("API Error:", errorData);
                 alert("Có lỗi xảy ra, vui lòng thử lại!");
             }
         } catch (error) {
             console.error("Error:", error);
+            alert("Lỗi kết nối tới server, vui lòng thử lại!");
         }
     };
 
     useEffect(() => {
         const fetchData = async () => {
-            try {
-                const response = await axios.get(
-                    `http://127.0.0.1:8000/api/productsss/${selectedObject}`
-                );
-                //kiem tra neu response goi thanh cong
-                if (response.status === 200) {
-                    setPortfolios(response.data)
-                } else {
-                    console.error("Lỗi khi truy cập:", response.status);
-                }
-            } catch (error) {
-                console.error("Lỗi khi lấy dữ liệu:", error);
-            }
-        };
+            console.log(selectedObject);
+            //     try {
+            //         const response = await axios.get(
+            //             `http://127.0.0.1:8000/api/products/${selectedObject}`
+            //         );
+            //         //kiem tra neu response goi thanh cong
+            //         if (response.status === 200) {
+            //             setPortfolios(response.data)
+            //         } else {
+            //             console.error("Lỗi khi truy cập:", response.status);
+            //         }
+            //     } catch (error) {
+            //         console.error("Lỗi khi lấy dữ liệu:", error);
+            //     }
+            // };
 
-        if (selectedObject) {
-            fetchData();
+            // if (selectedObject) {
+            //     fetchData();
         }
     }, [selectedObject]);
 
@@ -169,25 +197,25 @@ const AddProductForm = () => {
                         ))}
                     </select>
                 </div>
-                
+
                 {portfolios.length > 0 && (
-                <div style={{ display: 'flex', gap: '8px', alignItems: 'center', margin: '12px 0px' }}>
-                    <label style={{ fontSize: '16px', color: '#727272' }}>Danh mục sản phẩm:</label>
-                    <select
-                        id="portfolio"
-                        onChange={handlePortfolioChange}
-                        value={product.id_port || ""}
-                    >
-                        <option value="" disabled>---------------------------</option>
-                        {portfolios.map((port) => (
-                            <option key={port.id_port} value={port.id_port}>
-                                {port.port_name}
-                            </option>
-                        ))}
-                    </select>
-                </div>
+                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center', margin: '12px 0px' }}>
+                        <label style={{ fontSize: '16px', color: '#727272' }}>Danh mục sản phẩm:</label>
+                        <select
+                            id="portfolio"
+                            onChange={handlePortfolioChange}
+                            value={product.id_port || ""}
+                        >
+                            <option value="" disabled>---------------------------</option>
+                            {portfolios.map((port) => (
+                                <option key={port.id_port} value={port.id_port}>
+                                    {port.port_name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
                 )}
-                
+
             </div>
             <textarea
                 name="description"
