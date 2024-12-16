@@ -144,7 +144,7 @@ const AdminPortfolio = () => {
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <h1>Danh sách danh mục</h1>
                     <div>
-                        <select onChange={handleSelectChange} value={selectedObjectId}>
+                        <select onChange={handleSelectChange} value={selectedObjectId} style={{borderColor:'#ddd',color:'#5e5d5d'}}>
                             <option value="0">Tất cả</option>
                             <option value="1">Nam</option>
                             <option value="2">Nữ</option>
@@ -187,7 +187,7 @@ const AdminPortfolio = () => {
                                 position: "absolute",
                                 zIndex: "10",
                                 width: '100vw',
-                                height: '168%',
+                                height: '368%',
                                 backgroundColor: 'rgba(76, 79, 77, 0.5)',
                                 display: 'flex',
                                 justifyContent: 'center',
@@ -206,7 +206,7 @@ const AdminPortfolio = () => {
                                 position: "absolute",
                                 zIndex: "10",
                                 width: '100vw',
-                                height: '168%',
+                                height: '368%',
                                 backgroundColor: 'rgba(76, 79, 77, 0.5)',
                                 display: 'flex',
                                 justifyContent: 'center',

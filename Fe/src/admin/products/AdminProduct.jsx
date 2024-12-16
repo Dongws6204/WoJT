@@ -149,7 +149,7 @@ const AdminProduct = () => {
                                         {product.img_1 ? (
                                             <div style={{ display: 'flex', justifyContent: 'center' }}>
                                                 <img
-                                                    src={product.img}
+                                                    src={product.img_1}
                                                     style={{ width: "68px", height: "86px" }}
                                                 />
                                             </div>
@@ -201,7 +201,7 @@ const AdminProduct = () => {
                                 position: "absolute",
                                 zIndex: "10",
                                 width: '100vw',
-                                height: '168%',
+                                height: '368%',
                                 backgroundColor: 'rgba(76, 79, 77, 0.5)',
                                 display: 'flex',
                                 justifyContent: 'center',
@@ -220,7 +220,7 @@ const AdminProduct = () => {
                                 position: "absolute",
                                 zIndex: "10",
                                 width: '100vw',
-                                height: '168%',
+                                height: '368%',
                                 backgroundColor: 'rgba(76, 79, 77, 0.5)',
                                 display: 'flex',
                                 justifyContent: 'center',

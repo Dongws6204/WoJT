@@ -12,7 +12,7 @@ const AdminOrder = () => {
             order_id: 1,
             user_name: 'Sann',
             email: 'nguyenvana@gmail.com',
-            phone:'096868686',
+            phone: '096868686',
             order_date: '2024-12-01',
             total_amount: 1500000,
             status: 1, // Đã đặt
@@ -21,7 +21,7 @@ const AdminOrder = () => {
             order_id: 2,
             user_name: 'CuHuu',
             email: 'tranthib@gmail.com',
-            phone:'096868689',
+            phone: '096868689',
             order_date: '2024-12-03',
             total_amount: 205000,
             status: 2, // Đang giao
@@ -30,7 +30,7 @@ const AdminOrder = () => {
             order_id: 3,
             user_name: 'Levii',
             email: 'levanc@gmail.com',
-            phone:'096868612',
+            phone: '096868612',
             order_date: '2024-12-05',
             total_amount: 300000,
             status: 3, // Đã giao
@@ -41,8 +41,8 @@ const AdminOrder = () => {
     const [search, setSearch] = useState(null);
     const [orderStatus, setOrderStatus] = useState(0)
     const [filteredOrders, setFilteredOrders] = useState([]);
-    const [orderID,setOrderID] = useState(null)
-    const [isOrderDetail,setIsOrderDetail] = useState(false)
+    const [orderID, setOrderID] = useState(null)
+    const [isOrderDetail, setIsOrderDetail] = useState(false)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -67,11 +67,11 @@ const AdminOrder = () => {
 
     useEffect(() => {
         if (Number(orderStatus) === 0) {
-          setFilteredOrders(fakeOrders); 
+            setFilteredOrders(fakeOrders);
         } else {
-          setFilteredOrders(fakeOrders.filter((order) => order.status === Number(orderStatus)));
+            setFilteredOrders(fakeOrders.filter((order) => order.status === Number(orderStatus)));
         }
-      }, [orderStatus,orders]);
+    }, [orderStatus, orders]);
 
     const OnlickSearch = async (e) => {
         e.preventDefault();
@@ -93,6 +93,24 @@ const AdminOrder = () => {
         }
     }
 
+    const statusChange = async (orderId, newStatus) => {
+        try {
+            // Gọi API cập nhật status
+            const response = await axios.put(`http://127.0.0.1:8000/api/orders/update-status/${orderId}`, {
+                status: newStatus
+            });
+    
+            if (response.status === 200) {
+                console.log(`Cập nhật trạng thái thành công`);
+            } else {
+                console.error(`Cập nhật thất bại với mã lỗi: ${response.status}`);
+            }
+        } catch (error) {
+            console.error("Lỗi khi cập nhật trạng thái:", error);
+        }
+    };
+    
+
     const formatVND = (number) => {
         const price = parseFloat(number)
         return price.toLocaleString('vi-VN');
@@ -105,7 +123,7 @@ const AdminOrder = () => {
     const onClickEye = (id) => {
         setOrderID(id);
         setIsOrderDetail(true);
-    } 
+    }
 
     const closeWindos = () => {
         setIsOrderDetail(false);
@@ -126,7 +144,7 @@ const AdminOrder = () => {
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <h1>Danh sách đơn hàng</h1>
                     <div>
-                        <select onChange={handleSelectChange} value={orderStatus}>
+                        <select onChange={handleSelectChange} value={orderStatus} style={{borderColor:'#ddd',color:'#5e5d5d'}}>
                             <option value="0">Tất cả</option>
                             <option value="1">Đã đặt</option>
                             <option value="2">Đang giao</option>
@@ -134,7 +152,7 @@ const AdminOrder = () => {
                         </select>
                     </div>
                 </div>
-                
+
                 <table>
                     <thead>
                         <tr>
@@ -158,34 +176,38 @@ const AdminOrder = () => {
                                 <td>{order.order_date}</td>
                                 <td>{formatVND(order.total_amount)} ₫</td>
                                 <td>
-                                    {order.status === 1 && 'Đã đặt'}
-                                    {order.status === 2 && 'Đang giao'}
-                                    {order.status === 3 && 'Đã giao'}
+                                    <div>
+                                        <select onChange={(e) => statusChange(order.order_id, e.target.value)} value={order.status} style={{borderColor:'#ddd',color:'#5e5d5d'}}>
+                                            <option value="1">Đã đặt</option>
+                                            <option value="2">Đang giao</option>
+                                            <option value="3">Đã giao</option>
+                                        </select>
+                                    </div>
                                 </td>
-                                <td><div style={{display:'flex',justifyContent:'center',cursor:'pointer'}}><IoEyeOutline onClick={()=>{onClickEye(order.order_id)}}/></div></td>
+                                <td><div style={{ display: 'flex', justifyContent: 'center', cursor: 'pointer' }}><IoEyeOutline onClick={() => { onClickEye(order.order_id) }} /></div></td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
                 {isOrderDetail && (
-                <>
-                    <div
-                        onClick={closeWindos}
-                        style={{
-                            position: "absolute",
-                            zIndex: "10",
-                            width: '100vw',
-                            height: '200%',
-                            backgroundColor: 'rgba(76, 79, 77, 0.5)',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            top: 0,
-                            left: 0
-                        }}>
-                    </div>
-                    <OrderDetail orderID={orderID}/>
-                </>
-            )}
+                    <>
+                        <div
+                            onClick={closeWindos}
+                            style={{
+                                position: "absolute",
+                                zIndex: "10",
+                                width: '100vw',
+                                height: '368%',
+                                backgroundColor: 'rgba(76, 79, 77, 0.5)',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                top: 0,
+                                left: 0
+                            }}>
+                        </div>
+                        <OrderDetail orderID={orderID} />
+                    </>
+                )}
             </div>
         </>
     );

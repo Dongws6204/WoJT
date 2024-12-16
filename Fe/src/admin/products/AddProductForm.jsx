@@ -6,43 +6,37 @@ import axios from "axios";
 
 const AddProductForm = () => {
 
-    const dataFake = [
-        {
-            "id_port": 1,
-            "port_name": "Áo phông & Áo thun"
-        },
-        {
-            "id_port": 2,
-            "port_name": "Áo nỉ & Áo Hoodie"
-        },
-        {
-            "id_port": 3,
-            "port_name": "Áo khoác"
-        },
-        {
-            "id_port": 4,
-            "port_name": "Áo & Quần giữ nhiệt"
-        }
-    ]
-
-    const [objects] = useState([
-        { object_id: 1, object_name: "Nam" },
-        { object_id: 2, object_name: "Nữ" },
-        { object_id: 3, object_name: "Bé Trai" },
-        { object_id: 4, object_name: "Bé Gái" },
-    ]);
-
     const [selectedObject, setSelectedObject] = useState(null);
     const [portfolios, setPortfolios] = useState([]);
+    const [objects, setObjects] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(
+                    `http://127.0.0.1:8000/api/products/list-object`
+                );
+                //kiem tra neu response goi thanh cong
+                if (response.status === 200) {
+                    setObjects(response.data.products);
+                } else {
+                    console.error("Lỗi khi truy cập:", response.status);
+                }
+            } catch (error) {
+                console.error("Lỗi khi lấy dữ liệu:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
 
 
-    const handleObjectChange = async (e) => {
+    const handleObjectChange = (e) => {
         const objectId = e.target.value;
         setSelectedObject(objectId);
-        setPortfolios(dataFake);
+        const selectedObject = objects.find((obj) => obj.object_id === Number(objectId));
+        setPortfolios(selectedObject.portfolio);
     };
-
-
 
     const handlePortfolioChange = (e) => {
         setProduct({ ...product, id_port: e.target.value });
@@ -132,29 +126,6 @@ const AddProductForm = () => {
             alert("Lỗi kết nối tới server, vui lòng thử lại!");
         }
     };
-
-    useEffect(() => {
-        const fetchData = async () => {
-            console.log(selectedObject);
-            //     try {
-            //         const response = await axios.get(
-            //             `http://127.0.0.1:8000/api/products/${selectedObject}`
-            //         );
-            //         //kiem tra neu response goi thanh cong
-            //         if (response.status === 200) {
-            //             setPortfolios(response.data)
-            //         } else {
-            //             console.error("Lỗi khi truy cập:", response.status);
-            //         }
-            //     } catch (error) {
-            //         console.error("Lỗi khi lấy dữ liệu:", error);
-            //     }
-            // };
-
-            // if (selectedObject) {
-            //     fetchData();
-        }
-    }, [selectedObject]);
 
 
     return (

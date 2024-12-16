@@ -116,7 +116,7 @@ const AdminSales = () => {
                                 position: "absolute",
                                 zIndex: "10",
                                 width: '100vw',
-                                height: '168%',
+                                height: '368%',
                                 backgroundColor: 'rgba(76, 79, 77, 0.5)',
                                 display: 'flex',
                                 justifyContent: 'center',

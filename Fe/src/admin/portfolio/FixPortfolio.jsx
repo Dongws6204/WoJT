@@ -107,6 +107,7 @@ const FixPortfolio = ({ portID }) => {
                         onChange={handleObjectChange}
                         name="object_id"
                         value={selectedObject || ""}
+                        style={{borderColor:'#ddd',color:'#5e5d5d'}}
                     >
                         <option value="">-- Chọn Object --</option>
                         {objects.map((obj) => (

@@ -4,14 +4,7 @@ import axios from 'axios';
 
 const UserProfile = ({ userID }) => {
 
-    const [dataProfile, setdataProfile] = useState({
-        name: 'Vo Quang Sang',
-        email: 'sangv6548@gmail.com',
-        date: '2003-12-15',
-        phone: '0974583072',
-        address: 'nghi xuan ha tinh',
-        username: 'Sann525'
-    });
+    const [dataProfile, setdataProfile] = useState({})
 
     useEffect(() => {
         const fetchData = async () => {
@@ -44,7 +37,7 @@ const UserProfile = ({ userID }) => {
             </div>
             <div className='proflie_list'>
                 <p>Tên đăng nhập</p>
-                <input type="text" value={dataProfile.username} name='username' readOnly />
+                <input type="text" value={dataProfile.user_name} name='username' readOnly />
             </div>
             <div className='proflie_list'>
                 <p>Số điện thoại</p>
@@ -60,7 +53,7 @@ const UserProfile = ({ userID }) => {
             </div>
             <div className='proflie_list'>
                 <p>Sinh nhật</p>
-                <input type="text" name="bithday" value={dataProfile.date} readOnly />
+                <input type="text" name="bithday" value={dataProfile.birthday} readOnly />
             </div>
             <button className='delete-btn-admin'>Xóa Người Dùng</button>
         </div>

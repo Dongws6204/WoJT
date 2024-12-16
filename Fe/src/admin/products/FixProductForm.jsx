@@ -19,7 +19,7 @@ const FixProductForm = ({ productID }) => {
                 {
                     "id_prod": 1,
                     "size": "S",
-                    "quantity_of_size": 150
+                    "quantity_of_size": 50
                 },
                 {
                     "id_prod": 2,
@@ -72,38 +72,39 @@ const FixProductForm = ({ productID }) => {
 
 
     const [product, setProduct] = useState(dataFake[0]);
-
-    const [objects] = useState([
-        { object_id: 1, object_name: "Nam" },
-        { object_id: 2, object_name: "Nữ" },
-        { object_id: 3, object_name: "Bé Trai" },
-        { object_id: 4, object_name: "Bé Gái" },
-    ]);
-
     const [selectedObject, setSelectedObject] = useState(product.object_id);
-    const [portfolios, setPortfolios] = useState([
-        {
-            "id_port": 1,
-            "port_name": "Áo phông & Áo thun"
-        },
-        {
-            "id_port": 2,
-            "port_name": "Áo nỉ & Áo Hoodie"
-        },
-        {
-            "id_port": 3,
-            "port_name": "Áo khoác"
-        },
-        {
-            "id_port": 4,
-            "port_name": "Áo & Quần giữ nhiệt"
-        }
-    ]);
+    const [portfolios, setPortfolios] = useState([]);
+    const [objects, setObjects] = useState([]);
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(
+                    `http://127.0.0.1:8000/api/products/list-object`
+                );
+                //kiem tra neu response goi thanh cong
+                if (response.status === 200) {
+                    setObjects(response.data.products);
+                    const selectedObjected = response.data.products.find((obj) => obj.object_id === product.object_id);
+                    setPortfolios(selectedObjected.portfolio);
+                    
+                } else {
+                    console.error("Lỗi khi truy cập:", response.status);
+                }
+            } catch (error) {
+                console.error("Lỗi khi lấy dữ liệu:", error);
+            }
+        };
 
-    const handleObjectChange = async (e) => {
+        fetchData();
+    }, []);
+
+    
+    const handleObjectChange = (e) => {
         const objectId = e.target.value;
         setSelectedObject(objectId);
+        const selectedObjected = objects.find((obj) => obj.object_id === Number(objectId));
+        setPortfolios(selectedObjected.portfolio);
     };
 
     const handlePortfolioChange = (e) => {
@@ -193,29 +194,6 @@ const FixProductForm = ({ productID }) => {
             console.error("Error:", error);
         }
     };
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get(
-                    `http://127.0.0.1:8000/api/products/portfolio/${selectedObject}`
-                );
-                //kiem tra neu response goi thanh cong
-                if (response.status === 200) {
-                    // setPortfolios(response.data)
-                } else {
-                    console.error("Lỗi khi truy cập:", response.status);
-                }
-            } catch (error) {
-                console.error("Lỗi khi lấy dữ liệu:", error);
-            }
-        };
-
-        if (selectedObject) {
-            fetchData();
-        }
-    }, [selectedObject]);
-
 
     return (
         <form onSubmit={handleSubmit} className="product-add-form">

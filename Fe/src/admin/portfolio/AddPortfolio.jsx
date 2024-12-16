@@ -66,6 +66,7 @@ const AddPortfolio = () => {
                     <select
                         onChange={handleChange}
                         name="object_id"
+                        style={{borderColor:'#ddd',color:'#5e5d5d'}}
                     >
                         <option value="">-- Chọn đối tượng --</option>
                         {objects.map((obj) => (
