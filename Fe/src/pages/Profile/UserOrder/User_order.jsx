@@ -72,6 +72,7 @@ const User_order = () => {
                     orderdetail: details,
                     total_amount: order.total_amount,
                     order_date: order.order_date,
+                    status: order.status,
                 };
             });
 
@@ -123,14 +124,27 @@ const User_order = () => {
 
     useEffect(() => {
         if (active === 1) {
-            setData(orderInfo);
-            console.log(data)
+            // Lọc các đơn hàng có status === 11
+            const filteredOrders = orderInfo.filter(order => order.status === 1);
+            setData(filteredOrders);
+            console.log('Filtered Orders (status === 1):', filteredOrders);
         } else if (active === 2) {
-            setData(dang_van_chuyen);
+            // Lọc các đơn hàng có status === 22
+            const filteredOrders = orderInfo.filter(order => order.status === 2);
+            setData(filteredOrders);
+            console.log('Filtered Orders (status === 2):', filteredOrders);
+        } else if (active === 3) {
+            // Lọc các đơn hàng có status === 33
+            const filteredOrders = orderInfo.filter(order => order.status === 3);
+            setData(filteredOrders);
+            console.log('Filtered Orders (status === 3):', filteredOrders);
         } else {
+            // Không có điều kiện nào khớp, set data thành mảng rỗng
             setData([]);
+            console.log('No matching status, data cleared');
         }
     }, [active, orderInfo]);
+
 
     const handleClick = (name, id) => {
         // localStorage.setItem('product_id', id);

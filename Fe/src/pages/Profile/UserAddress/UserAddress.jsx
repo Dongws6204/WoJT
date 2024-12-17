@@ -72,31 +72,41 @@ const UserAddress = () => {
 
 
 
-    // Xóa địa chỉ
-    const handleDelete = async (customer_id, address_id, status) => {
-        console.log(dataAddress.length)
+    const handleDelete = async (address_id, status) => {
+        console.log("Số lượng địa chỉ hiện tại:", dataAddress.length);
+
+        // Kiểm tra điều kiện trước khi gửi request
         if (status === 1) {
-            alert('Vui lòng đổi địa chỉ mặc định để xóa !')
+            alert('Vui lòng đổi địa chỉ mặc định để xóa!');
+            return; // Dừng hàm tại đây
         }
+
         if (dataAddress.length === 1) {
-            alert('Vui lòng thêm địa chỉ!')
+            alert('Vui lòng thêm địa chỉ trước khi xóa địa chỉ này!');
+            return; // Dừng hàm tại đây
         }
+
         try {
-            await axios.post(`http://127.0.0.1:8000/api/ship/address/delete`, {
+            // Gửi yêu cầu xóa địa chỉ
+            const response = await axios.post(`http://127.0.0.1:8000/api/ship/address/delete`, {
                 address_id: address_id,
-                status: 1,
             });
-            setDataAddress((prevAddresses) =>
-                prevAddresses.filter((item) => item.address_id !== address_id)
-            );
-            alert('Xóa địa chỉ thành công');
+
+            // Kiểm tra phản hồi từ server
+            if (response.status === 200) {
+                setDataAddress((prevAddresses) =>
+                    prevAddresses.filter((item) => item.address_id !== address_id)
+                );
+                alert('Xóa địa chỉ thành công');
+            } else {
+                alert('Không thể xóa địa chỉ. Vui lòng thử lại!');
+            }
         } catch (error) {
             console.error('Error deleting address:', error);
-            alert('Không thể xóa địa chỉ. Vui lòng thử lại!');
+            alert('Vui lòng đổi địa chỉ mặc định để xóa!');
         }
-
-
     };
+
 
 
 

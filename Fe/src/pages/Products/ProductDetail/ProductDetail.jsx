@@ -75,10 +75,11 @@ const ProductDetail = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         if (authState.isAuthenticated) {
-            if ((!dataRate.comments.trim() && !dataRate.star)|| (dataRate.comments.trim() && !dataRate.star)) {
+            if ((!dataRate.comments.trim() && !dataRate.star) || (dataRate.comments.trim() && !dataRate.star)) {
                 alert('Đánh giá không hợp lệ: Vui lòng thêm sao hoặc bình luận!');
-            } else if((dataRate.star && !dataRate.comments.trim()) || (dataRate.star && dataRate.comments.trim())) {
+            } else if ((dataRate.star && !dataRate.comments.trim()) || (dataRate.star && dataRate.comments.trim())) {
                 alert('Đánh giá thành công')
                 console.log("formdata", dataRate);
             }
@@ -112,8 +113,57 @@ const ProductDetail = () => {
         }));
     };
 
-    const clickPopup = () => {
-        setIsPopupVisible(!isPopupVisible);
+    const clickPopup = async () => {
+        console.log(dataRate, authState.userId, product_Id);
+
+        // Lấy ngày hôm nay theo định dạng yyyy-mm-dd
+        const today = new Date();
+        const formattedDate = today.toISOString().split('T')[0]; // yyyy-mm-dd
+
+        // Chuẩn bị dữ liệu gửi đi
+        const payload = {
+            customer: authState.userId, // ID của user
+            product: product_Id,        // ID của sản phẩm
+            comments: dataRate.comments, // Nội dung bình luận
+            star: dataRate.star,        // Số sao
+            date_posted: formattedDate, // Ngày hiện tại
+        };
+
+        console.log("Payload gửi đi:", payload);
+        if (payload.comments === undefined) { alert('Vui lonfg theem binfh luaanj') } else {
+            try {
+                // Gửi POST request đến API
+                const response = await fetch('http://127.0.0.1:8000/api/reviews/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload),
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    alert('Bình luận đã được gửi thành công!');
+                    // Đóng popup
+                    setIsPopupVisible(false);
+                    console.log("Kết quả từ server:", result);
+                } else {
+                    setIsPopupVisible(false);
+                    alert('Vui lòng mua sản phẩm để được bình luận:>');
+                    console.error("Lỗi từ server:", result);
+                    // Đóng popup
+
+                }
+            } catch (error) {
+                console.error("Lỗi khi gửi yêu cầu:", error);
+                alert('Đã xảy ra lỗi khi gửi bình luận.');
+            }
+
+            // Đóng popup
+            // setIsPopupVisible(!isPopupVisible);
+        }
+
     };
 
     const formatVND = (number) => {
@@ -180,9 +230,9 @@ const ProductDetail = () => {
                     <div className='list-price-name-sold'>
                         <h2>{dataProduct.product_name}</h2>
                         <h4>Đã bán: {dataProduct.quantity_sold}</h4>
-                        <h4 style={{marginTop:'36px',marginBottom:'-2px',fontWeight:'bold'}}>{formatVND(dataProduct.price - dataProduct.price * (dataProduct.discount/100))} ₫</h4>
-                        <div className='product-discount' style={{marginBottom:'16px'}}>
-                            <h4 style={{ textDecoration: 'line-through', color: '#7c7c7c', fontWeight: '100', fontSize:'19px' }}>{formatVND(dataProduct.price)} ₫ </h4>
+                        <h4 style={{ marginTop: '36px', marginBottom: '-2px', fontWeight: 'bold' }}>{formatVND(dataProduct.price - dataProduct.price * (dataProduct.discount / 100))} ₫</h4>
+                        <div className='product-discount' style={{ marginBottom: '16px' }}>
+                            <h4 style={{ textDecoration: 'line-through', color: '#7c7c7c', fontWeight: '100', fontSize: '19px' }}>{formatVND(dataProduct.price)} ₫ </h4>
                             <h4 style={{ color: 'red' }}>{dataProduct.discount}%</h4>
                         </div>
                     </div>
@@ -204,7 +254,7 @@ const ProductDetail = () => {
                                 ))}
                             </div>
                         </div>
-                        <p onClick={clickBangSize}><img src={Ruller}/> Gợi ý tìm size</p>
+                        <p onClick={clickBangSize}><img src={Ruller} /> Gợi ý tìm size</p>
                     </div>
                     {isPopupVisible && (
                         <div className="popup-content">
@@ -231,7 +281,7 @@ const ProductDetail = () => {
                         </div>
                     )}
                     <div className='list-btn'>
-                        <button className='cart-btn' onClick={() => dispatch(addToCart({...dataProduct,userId : authState.userId}))}>
+                        <button className='cart-btn' onClick={() => dispatch(addToCart({ ...dataProduct, userId: authState.userId }))}>
                             Thêm giỏ hàng
                         </button>
                         <button className='rate-btn' onClick={clickPopup}>
@@ -308,15 +358,15 @@ const ProductDetail = () => {
                     </div>
                 </div>
             </div>
-            <div style={{display:'block',padding:'12px 168px',marginBottom:'36px'}}>
-                <h1 style={{fontFamily:'Montserrat',fontWeight:'bold',fontSize:'18px'}}>Sản Phẩm Đã Xem Gần Đây</h1>
+            <div style={{ display: 'block', padding: '12px 168px', marginBottom: '36px' }}>
+                <h1 style={{ fontFamily: 'Montserrat', fontWeight: 'bold', fontSize: '18px' }}>Sản Phẩm Đã Xem Gần Đây</h1>
                 <hr style={{ marginLeft: "0px" }} className="line" />
-                <ProductViewed/>
+                <ProductViewed />
             </div>
-            <div style={{display:'block',padding:'12px 168px',marginBottom:'36px'}}>
-                <h1 style={{fontFamily:'Montserrat',fontWeight:'bold',fontSize:'18px'}}>Gợi ý mua cùng</h1>
+            <div style={{ display: 'block', padding: '12px 168px', marginBottom: '36px' }}>
+                <h1 style={{ fontFamily: 'Montserrat', fontWeight: 'bold', fontSize: '18px' }}>Gợi ý mua cùng</h1>
                 <hr style={{ marginLeft: "0px" }} className="line" />
-                <ProductSuggestion/>
+                <ProductSuggestion />
             </div>
             <div className='product-detail-rate'>
                 <h1>Đánh Giá: {dataProduct.product_rate}/5 <img className='span-icon' src={Star} /></h1>
@@ -326,7 +376,7 @@ const ProductDetail = () => {
                         <div className='list-cmt'>
                             <img src={User_item} className='icon-rate' />
                             <div className='cmt-content'>
-                                <h1>{comments.customer}</h1> 
+                                <h1>{comments.customer}</h1>
                                 {/* thay id = ten nha */}
                                 <p>
                                     {[...Array(comments.star)].map(() => (

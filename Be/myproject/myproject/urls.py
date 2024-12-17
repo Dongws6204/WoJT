@@ -29,5 +29,6 @@ urlpatterns = [
     path('api/orders/', include('myproject.api.orders.urls')),
     path('api/ship/', include('myproject.api.shipAdress.urls')),
     path('api/admin/', include('myproject.api.admin.urls')),
+    path('api/reviews/',include('myproject.api.review.urls')),
 
 ]
