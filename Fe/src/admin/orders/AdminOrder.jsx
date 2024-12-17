@@ -61,14 +61,10 @@ const AdminOrder = () => {
         };
 
         fetchData();
-        console.log(filteredOrders);
     }, [update]);
 
-
-
-
     useEffect(() => {
-        console.log(orders.orders)
+        console.log(orders)
     }, [orders]);
 
 

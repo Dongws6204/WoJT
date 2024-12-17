@@ -38,7 +38,7 @@ const AdminSales = () => {
                 );
                 //kiem tra neu response goi thanh cong
                 if (response.status === 200) {
-                    setData(response.data);
+                    setSales(response.data);
                 } else {
                     console.error("Lỗi khi truy cập:", response.status);
                 }
@@ -53,12 +53,20 @@ const AdminSales = () => {
         return price.toLocaleString('vi-VN');
     };
 
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // Cuộn mượt mà
+        });
+    }
+
     const [isEditing, setIsEditing] = useState(false);
     const [search, setSearch] = useState(null);
     const [saleID, setSaleID] = useState(null);
 
     const onClickFix = (id) => {
         setSaleID(id);
+        scrollToTop();
         setIsEditing(true);
     }
 

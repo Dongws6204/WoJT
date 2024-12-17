@@ -2,68 +2,36 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import ProductCard from '../ProductCard/ProductCard';
+import axios from 'axios';
 
 const Search = () => {
 
     const location = useLocation();
     const search_content = location.state?.search;
 
-    const searchData = [
-        {
-            "product_id": 25,
-            "img": "https://canifa.com/img/500/750/resize/8/t/8ts25a002-se409-xl-1-u.webp",
-            "product_name": "Áo phông nam",
-            "price": "149000.00"
-        },
-        {
-            "product_id": 26,
-            "img": "https://canifa.com/img/500/750/resize/8/t/8tl24w002-sk010-thumb.webp",
-            "product_name": "Áo phông dài tay nam",
-            "price": "499000.00"
-        },
-        {
-            "product_id": 27,
-            "img": "https://canifa.com/img/500/750/resize/8/t/8tl24w005-sa815-xl-1-u.webp",
-            "product_name": "Áo phông active nam",
-            "price": "399000.00"
-        },
-        {
-            "product_id": 28,
-            "img": "https://canifa.com/img/500/750/resize/8/t/8ts24w004-se331-xl-1-u.webp",
-            "product_name": "Áo phông nam",
-            "price": "449000.00"
-        },
-        {
-            "product_id": 29,
-            "img": "https://canifa.com/img/500/750/resize/8/t/8ts24w002-sg650-thumb.webp",
-            "product_name": "Áo phông nam in chữ",
-            "price": "299000.00"
-        },
-        {
-            "product_id": 30,
-            "img": "https://canifa.com/img/500/750/resize/8/t/8ts24w002-sk010-thumb.webp",
-            "product_name": "Áo phông nam in chữ",
-            "price": "299000.00"
-        },
-        {
-            "product_id": 31,
-            "img": "https://canifa.com/img/500/750/resize/8/t/8ts24w001-sg650-thumb.webp",
-            "product_name": "Áo phông nam in chữ",
-            "price": "299000.00"
-        },
-        {
-            "product_id": 32,
-            "img": "https://canifa.com/img/500/750/resize/8/t/8tl24w007-se384-thumb.webp",
-            "product_name": "Áo phông dài tay nam",
-            "price": "499000.00"
-        },
-        {
-            "product_id": 33,
-            "img": "https://canifa.com/img/500/750/resize/8/t/8ts24a001-sb001-thumb.webp",
-            "product_name": "Áo phông nam cổ tròn dáng suông",
-            "price": "149000.00"
-        },
-    ]
+    const [searchData,setData] = useState([]);
+    
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(
+                    `http://127.0.0.1:8000/api/products/`
+                );
+                //kiem tra neu response goi thanh cong
+                if (response.status === 200) {
+                    const result = response.data.products.filter(product =>
+                        product.product_name.toLowerCase().includes(search_content.toLowerCase()));
+                    setData(result);
+                } else {
+                    console.error("Lỗi khi truy cập:", response.status);
+                }
+            } catch (error) {
+                console.error("Lỗi khi lấy dữ liệu:", error);
+            }
+        };
+
+        fetchData();
+    }, [search_content]);
 
     return (
         <>
@@ -73,7 +41,7 @@ const Search = () => {
             <div className='list-product-portfolio'>
             {searchData.map((item) => (
                     <ProductCard
-                    key={item.product_id} id={item.product_id} image={item.img} name={item.product_name} total={item.price}
+                    key={item.product_id} id={item.product_id} image={item.img} name={item.product_name} total={item.price} discount={item.discount}
                     />
                 ))}
             </div>

@@ -34,6 +34,7 @@ const AdminPortfolio = () => {
 
     const onClickFix = (id) => {
         setPortID(id);
+        scrollToTop();
         setFixPort(true);
     }
 
@@ -126,7 +127,12 @@ const AdminPortfolio = () => {
         alert(`Đã tìm thấy ${filteredPortfolios.length} kết quả cho ${search}`);
     };
 
-
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // Cuộn mượt mà
+        });
+    }
 
     return (
         <>

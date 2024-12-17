@@ -6,23 +6,6 @@ import axios from 'axios';
 
 const UserAddress = () => {
 
-    // const data_address = [
-    //     {
-    //         name: 'Vo quang sang',
-    //         phone: '0974583072',
-    //         address: 'Nghi Xuân, Hà Tĩnh',
-    //         status: 1,
-    //         address_id: 1,
-    //     },
-    //     {
-    //         name: 'Vo quang sang',
-    //         phone: '0974586892',
-    //         address: 'Số 18, Ngõ 63/5/36/37 Đường Lê Đức Thọ, Phường Mỹ Đình 2, Quận Nam Từ Liêm , Hà Nội',
-    //         status: 0,
-    //         address_id: 2,
-    //     }
-    // ]
-
     const [isAddressInsert, setIsAddressInsert] = useState(false);
     const { authState } = useContext(AuthContext);
     const userId = authState.userId;
@@ -72,6 +55,10 @@ const UserAddress = () => {
 
 
 
+<<<<<<< Updated upstream
+=======
+    // Xóa địa chỉ
+>>>>>>> Stashed changes
     const handleDelete = async (address_id, status) => {
         console.log("Số lượng địa chỉ hiện tại:", dataAddress.length);
 
@@ -171,7 +158,7 @@ const UserAddress = () => {
                         <div key={items.address_id} style={{ display: 'flex', justifyContent: 'space-between', }}>
                             <div style={{ display: 'block', width: '46%' }}>
                                 <p style={{ fontFamily: 'Montserrat', fontSize: "14px", marginBottom: '8px' }}><span style={{ color: 'rgba(0, 0, 0, .87)' }}>{items.name}</span> | <span style={{ color: 'rgba(0, 0, 0, .54)' }}>{items.phone}</span></p>
-                                <p style={{ fontFamily: 'Montserrat', fontSize: "14px", color: 'rgba(0, 0, 0, .54)' }}>{items.address}</p>
+                                <p style={{ fontFamily: 'Montserrat', fontSize: "14px", color: 'rgba(0, 0, 0, .54)' }}>{items.address_name}</p>
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'end', flexDirection: 'column' }}>
                                 {items.status === 1 ? (

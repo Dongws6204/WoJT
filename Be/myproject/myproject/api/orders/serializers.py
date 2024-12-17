@@ -63,5 +63,9 @@ class CreateOrderDetails(serializers.ModelSerializer):
 class getOrder(serializers.ModelSerializer):
     class Meta:
         model = Orders
+<<<<<<< Updated upstream
         fields = ['order_id', 'total_amount', 'order_date', 'status']
+=======
+        fields = ['order_id', 'total_amount', 'order_date','status']
+>>>>>>> Stashed changes
 

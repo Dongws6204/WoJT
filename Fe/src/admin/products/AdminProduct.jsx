@@ -102,6 +102,7 @@ const AdminProduct = () => {
 
     const onClickFix = (id) => {
         setProductID(id);
+        scrollToTop();
         setFixProduct(true);
     }
 
@@ -111,6 +112,13 @@ const AdminProduct = () => {
 
     const closeWindoss = () => {
         setFixProduct(false);
+    }
+
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // Cuộn mượt mà
+        });
     }
 
     return (

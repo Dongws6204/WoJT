@@ -72,15 +72,16 @@ const User_order = () => {
                     orderdetail: details,
                     total_amount: order.total_amount,
                     order_date: order.order_date,
+<<<<<<< Updated upstream
                     status: order.status,
+=======
+                    status:order.status
+>>>>>>> Stashed changes
                 };
             });
-
-
             // Cập nhật state
             setOrderInfo(mergedOrderInfo);
-            console.log('Merged Order Info:', mergedOrderInfo);
-            console.log('OrderInfo:', orderInfo);
+            
         } catch (error) {
             console.error('Error fetching order info:', error);
             alert('Không có đơn hàng nào! Vui lòng thêm đơn sản phẩm');
@@ -89,41 +90,11 @@ const User_order = () => {
 
     useEffect(() => {
         getOrderInfo();
-
     }, []);
-    useEffect(() => {
-        console.log('Updated OrderInfo:', orderInfo);
-    }, [orderInfo]);
-
-    const dang_van_chuyen = [
-        {
-            order_id: 1,
-            orderdetail: [
-                {
-                    product_id: 1,
-                    img: 'https://canifa.com/img/500/750/resize/8/t/8ts25a002-se409-xl-1-u.webp',
-                    product_name: 'Áo phông nam',
-                    quantity: 2,
-                    size: 'L',
-                    price: '14900000.00',
-                },
-                {
-                    product_id: 1,
-                    img: 'https://canifa.com/img/500/750/resize/8/t/8ts25a002-se409-xl-1-u.webp',
-                    product_name: 'Áo phông nam',
-                    quantity: 1,
-                    size: 'XL',
-                    price: '149000.00', // của bảng orderdetail không phải product_detail
-                }
-            ],
-            total_amount: '1000000.00',
-            order_date: '15/12/2025'
-        }
-    ];
-
 
     useEffect(() => {
         if (active === 1) {
+<<<<<<< Updated upstream
             // Lọc các đơn hàng có status === 11
             const filteredOrders = orderInfo.filter(order => order.status === 1);
             setData(filteredOrders);
@@ -142,6 +113,16 @@ const User_order = () => {
             // Không có điều kiện nào khớp, set data thành mảng rỗng
             setData([]);
             console.log('No matching status, data cleared');
+=======
+            const filteredData = orderInfo.filter(order => order.status === 1);
+            setData(filteredData);
+        } else if (active === 2) {
+            const filteredData2 = orderInfo.filter(order => order.status === 2);
+            setData(filteredData2);
+        } else {
+            const filteredData3 = orderInfo.filter(order => order.status === 3);
+            setData(filteredData3);
+>>>>>>> Stashed changes
         }
     }, [active, orderInfo]);
 

@@ -14,6 +14,7 @@ import { AuthContext } from "../../../ContextAPI/AuthContext";
 import ProductViewed from '../ProductViewed/ProductViewed';
 import ProductSuggestion from '../ProductSuggestion/ProductSuggestion';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { IoIosArrowDown } from "react-icons/io";
 
 const ProductDetail = () => {
 
@@ -35,6 +36,8 @@ const ProductDetail = () => {
     });
     const [dataProduct, setDataProduct] = useState({});
     const [data_rate, setData_rate] = useState([]);
+    const [listRate, setListRate] = useState([]);
+    const [loadedCount, setLoadedCount] = useState(5);
     const [dataProductDetail, setDataProductDetail] = useState([]);
     const { authState } = useContext(AuthContext);
 
@@ -54,7 +57,6 @@ const ProductDetail = () => {
                 //kiem tra neu response goi thanh cong
                 if (response.status === 200) {
                     setDataProduct(response.data.product);
-                    setData_rate(response.data.product.rate);
                     setDataProductDetail(response.data.product.product_detail);
                 } else {
                     console.error("Lỗi khi truy cập:", response.status);
@@ -70,8 +72,36 @@ const ProductDetail = () => {
     }, [product_Id]);
 
     useEffect(() => {
-        console.log(dataProduct);
-    }, [dataProduct]);
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(
+                    `http://127.0.0.1:8000/api/reviews/product/${product_Id}`
+                );
+                //kiem tra neu response goi thanh cong
+                if (response.status === 200) {
+                    setData_rate(response.data);
+                } else {
+                    console.error("Lỗi khi truy cập:", response.status);
+                }
+            } catch (error) {
+                console.error("Lỗi khi lấy dữ liệu:", error);
+            }
+        };
+
+        if (product_Id) {
+            fetchData();
+        }
+    }, [product_Id]);
+
+    useEffect(() => {
+        setListRate(data_rate.slice(0, 5));
+    }, [data_rate]);
+
+    const loadMore = () => {
+        const nextCount = loadedCount + 5;
+        setListRate(data_rate.slice(0, nextCount));
+        setLoadedCount(nextCount);
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -371,13 +401,12 @@ const ProductDetail = () => {
             <div className='product-detail-rate'>
                 <h1>Đánh Giá: {dataProduct.product_rate}/5 <img className='span-icon' src={Star} /></h1>
                 <hr style={{ marginLeft: "0px" }} className="line" />
-                {data_rate.map(comments => (
+                {listRate.map(comments => (
                     <div>
                         <div className='list-cmt'>
                             <img src={User_item} className='icon-rate' />
                             <div className='cmt-content'>
                                 <h1>{comments.customer}</h1>
-                                {/* thay id = ten nha */}
                                 <p>
                                     {[...Array(comments.star)].map(() => (
                                         <img src={Star} className='span-icon-rate' />
@@ -391,6 +420,12 @@ const ProductDetail = () => {
                     </div>
                 ))}
             </div>
+            {loadedCount < data_rate.length && (
+                <div className='load-btn' onClick={loadMore}>
+                    <button>Xem Thêm</button>
+                    <IoIosArrowDown style={{ color: 'rgb(170, 170, 170)' }} />
+                </div>
+            )}
         </div >
     );
 };
