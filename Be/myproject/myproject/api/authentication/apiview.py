@@ -7,7 +7,7 @@ from django.core.mail import send_mail
 from django.core.cache import cache
 import random
 import string
-from django.contrib.auth.hashers import check_password
+from django.contrib.auth.hashers import check_password, make_password
 from .serializers import (IsLoggedInSerializer, CheckAccountSerializer, CreateSuccessSerializer)
 
 
@@ -154,48 +154,90 @@ class GetInforCustomerRegisterAPIView(APIView):
 # from .models import Customers
 # from .utils import send_otp_email  # Giả sử bạn có hàm này để gửi email
 
-# class RequestOTPAPIView(APIView):
-#     def post(self, request):
-#         email = request.data.get('email')
-#         if not email:
-#             return Response({'error': 'Email is required'}, status=status.HTTP_400_BAD_REQUEST)
+class RequestOTPAPIView(APIView):
+    def post(self, request):
+        email = request.data.get('email')
+        if not email:
+            return Response({'error': 'Email is required'}, status=status.HTTP_400_BAD_REQUEST)
 
-#         try:
-#             customer = Customers.objects.get(email=email)
-#             otp = generate_otp()  # Giả sử bạn có hàm này để tạo OTP
-#             send_otp_email(email, otp)
-#             return Response({'success': True, 'message': 'OTP sent successfully'}, status=status.HTTP_200_OK)
-#         except Customers.DoesNotExist:
-#             return Response({'error': 'Email not found'}, status=status.HTTP_400_BAD_REQUEST)
-# # Xác minh 
-# class VerifyOTPAPIView(APIView):
-#     def post(self, request):
-#         email = request.data.get('email')
-#         otp = request.data.get('otp')
+        customer = Customers.objects.filter(email=email).first()
+        if not customer:
+            return Response({'error': 'Email not found'}, status=status.HTTP_404_NOT_FOUND)
+        otp = ''.join(random.choices(string.digits, k=4))  # Tạo OTP 4 chữ số
 
-#         if not email or not otp:
-#             return Response({'error': 'Email and OTP are required'}, status=status.HTTP_400_BAD_REQUEST)
+        # Lưu OTP vào cache với thời gian hết hạn là 5 phút
+        cache_key = f'otp_{email}'
+        cache.set(cache_key, otp, timeout=300)
 
-#         # Giả sử bạn có hàm để xác minh OTP
-#         if verify_otp(email, otp):
-#             return Response({'success': True, 'message': 'OTP verified successfully'}, status=status.HTTP_200_OK)
-#         else:
-#             return Response({'error': 'Invalid or expired OTP'}, status=status.HTTP_400_BAD_REQUEST)
-# ĐỔi mật khẩu: 
-# from django.contrib.auth.hashers import make_password
+        try:
+           send_mail(
+                'Your OTP Code',
+                f'Your OTP code is: {otp}',
+                EMAIL_HOST_USER, 
+                [email],
+                fail_silently=False,
+            )
+        except Exception as e:
+            return Response(
+                {'error': 'Failed to send email', 'details': str(e)}, 
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
-# class ResetPasswordAPIView(APIView):
-#     def post(self, request):
-#         email = request.data.get('email')
-#         new_password = request.data.get('new_password')
+        return Response({'message': 'OTP sent successfully.'}, status=status.HTTP_200_OK)
+    
 
-#         if not email or not new_password:
-#             return Response({'error': 'Email and new password are required'}, status=status.HTTP_400_BAD_REQUEST)
 
-#         try:
-#             customer = Customers.objects.get(email=email)
-#             customer.pass_word = make_password(new_password)
-#             customer.save()
-#             return Response({'success': True, 'message': 'Password reset successfully'}, status=status.HTTP_200_OK)
-#         except Customers.DoesNotExist:
-#             return Response({'error': 'Email not found'}, status=status.HTTP_400_BAD_REQUEST)
+class VerifyOTPAPIView(APIView):
+    def post(self, request):
+        email = request.data.get('email')
+        otp = request.data.get('otp')
+
+        if not email or not otp:
+            return Response({'error': 'Email and OTP are required'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Truy xuất OTP từ cache
+        cache_key = f'otp_{email}'
+        cached_otp = cache.get(cache_key)
+
+        if not cached_otp:
+            return Response({'error': 'OTP expired or not found'}, status=status.HTTP_400_BAD_REQUEST)
+
+        if cached_otp != otp:
+            return Response({'error': 'Invalid OTP'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # OTP khớp, xóa OTP trong cache để tránh lạm dụng
+        cache.delete(cache_key)
+
+        return Response({'message': 'OTP verified successfully'}, status=status.HTTP_200_OK)
+    
+
+class ResetPasswordAPIView(APIView):
+    def post(self, request):
+        email = request.data.get('email')
+        otp = request.data.get('otp')
+        new_password = request.data.get('new_password')
+
+        if not email or not otp or not new_password:
+            return Response({'error': 'Email, OTP, and new password are required'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Truy xuất OTP từ cache
+        cache_key = f'otp_{email}'
+        cached_otp = cache.get(cache_key)
+
+        if not cached_otp:
+            return Response({'error': 'OTP expired or not found'}, status=status.HTTP_400_BAD_REQUEST)
+
+        if cached_otp != otp:
+            return Response({'error': 'Invalid OTP'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # OTP hợp lệ, cập nhật mật khẩu mới
+        try:
+            customer = Customers.objects.get(email=email)
+            customer.pass_word = make_password(new_password)
+            customer.save()
+            # Xóa OTP khỏi cache sau khi thay đổi mật khẩu
+            cache.delete(cache_key)
+
+            return Response({'message': 'Password reset successfully'}, status=status.HTTP_200_OK)
+        except Customers.DoesNotExist:
+            return Response({'error': 'Email not found'}, status=status.HTTP_400_BAD_REQUEST)

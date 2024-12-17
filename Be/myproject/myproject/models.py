@@ -195,6 +195,7 @@ class Products(models.Model):
     img_1 = models.TextField(blank=True, null=True)
     ing_2 = models.TextField(blank=True, null=True)
     quantity_sold = models.IntegerField(blank=True, null=True)
+    description = models.TextField(blank=True, null=True) # Thêm trường description
 
     class Meta:
         managed = False

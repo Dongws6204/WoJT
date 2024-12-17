@@ -76,8 +76,7 @@ const AddProductForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        console.log("Product:", product);
-        console.log("Sizes (Details):", sizes);
+
 
         // Chuẩn bị dữ liệu để gửi lên API
         const payload = {
@@ -89,7 +88,7 @@ const AddProductForm = () => {
                 img_2: product.img, // URL
                 quantity_sold: 0,
                 id_port: selectedObject, // ID của danh mục (Portfolio)
-                // description: product.description, // Mô tả sản phẩm
+                description: product.description, // Mô tả sản phẩm
             },
             details: sizes.map((sizeX) => ({
                 // product: product.product_id,Sau khi theem thif nos tuwj thêm product_id à bạn 
@@ -99,7 +98,7 @@ const AddProductForm = () => {
         };
 
         try {
-            const response = await fetch("http://127.0.0.1:8000//api/admin/products/add/", {
+            const response = await fetch("http://127.0.0.1:8000/api/admin/products/add/", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload), // Gửi dữ liệu dưới dạng JSON

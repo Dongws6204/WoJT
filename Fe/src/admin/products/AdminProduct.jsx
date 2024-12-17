@@ -19,6 +19,7 @@ const AdminProduct = () => {
     const [addProduct, setAddProduct] = useState(false);
     const [fixProduct, setFixProduct] = useState(false);
     const [productID, setProductID] = useState(null);
+    const [update, setUpdate] = useState(false);
 
 
     const toggleSizes = (id) => {
@@ -57,7 +58,7 @@ const AdminProduct = () => {
         };
 
         fetchData();
-    }, [search]);
+    }, [search, update]);
 
     const OnlickSearch = () => {
         // console.log(search)
@@ -228,7 +229,7 @@ const AdminProduct = () => {
                                 left: 0
                             }}>
                         </div>
-                        <FixProductForm productID={productID} />
+                        <FixProductForm productID={productID} update={update} />
                     </>
                 )}
             </div>

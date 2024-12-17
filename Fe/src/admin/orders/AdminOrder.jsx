@@ -43,17 +43,15 @@ const AdminOrder = () => {
     const [filteredOrders, setFilteredOrders] = useState([]);
     const [orderID, setOrderID] = useState(null)
     const [isOrderDetail, setIsOrderDetail] = useState(false)
-
+    const [update, setUpdate] = useState(false)
     useEffect(() => {
         const fetchData = async () => {
-            setOrders(fakeOrders)
             try {
-                const response = await axios.get(
-                    `http://127.0.0.1:8000/api/productss/orders`
-                );
-                //kiem tra neu response goi thanh cong
+                const response = await axios.get(`http://127.0.0.1:8000/api/admin/orders/`);
                 if (response.status === 200) {
-                    setOrders(response.data);
+                    // Chuyển đổi dữ liệu theo cấu trúc yêu cầu
+                    setOrders(response.data.orders);
+
                 } else {
                     console.error("Lỗi khi truy cập:", response.status);
                 }
@@ -63,15 +61,25 @@ const AdminOrder = () => {
         };
 
         fetchData();
-    }, []);
+        console.log(filteredOrders);
+    }, [update]);
+
+
+
+
+    useEffect(() => {
+        console.log(orders.orders)
+    }, [orders]);
+
 
     useEffect(() => {
         if (Number(orderStatus) === 0) {
-            setFilteredOrders(fakeOrders);
+            setFilteredOrders(orders); // Không lọc theo trạng thái
         } else {
-            setFilteredOrders(fakeOrders.filter((order) => order.status === Number(orderStatus)));
+            setFilteredOrders(orders.filter((order) => order.status === Number(orderStatus)));
         }
     }, [orderStatus, orders]);
+
 
     const OnlickSearch = async (e) => {
         e.preventDefault();
@@ -94,14 +102,21 @@ const AdminOrder = () => {
     }
 
     const statusChange = async (orderId, newStatus) => {
+        // console.log(newStatus);
         try {
             // Gọi API cập nhật status
-            const response = await axios.put(`http://127.0.0.1:8000/api/orders/update-status/${orderId}`, {
+            const response = await axios.post(`http://127.0.0.1:8000/api/admin/orders/update/${orderId}/`, {
                 status: newStatus
             });
-    
+
             if (response.status === 200) {
                 console.log(`Cập nhật trạng thái thành công`);
+                if (update) {
+                    setUpdate(false);
+                } else {
+                    setUpdate(true);
+                }
+
             } else {
                 console.error(`Cập nhật thất bại với mã lỗi: ${response.status}`);
             }
@@ -109,7 +124,7 @@ const AdminOrder = () => {
             console.error("Lỗi khi cập nhật trạng thái:", error);
         }
     };
-    
+
 
     const formatVND = (number) => {
         const price = parseFloat(number)
@@ -144,7 +159,7 @@ const AdminOrder = () => {
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <h1>Danh sách đơn hàng</h1>
                     <div>
-                        <select onChange={handleSelectChange} value={orderStatus} style={{borderColor:'#ddd',color:'#5e5d5d'}}>
+                        <select onChange={handleSelectChange} value={orderStatus} style={{ borderColor: '#ddd', color: '#5e5d5d' }}>
                             <option value="0">Tất cả</option>
                             <option value="1">Đã đặt</option>
                             <option value="2">Đang giao</option>
@@ -177,7 +192,7 @@ const AdminOrder = () => {
                                 <td>{formatVND(order.total_amount)} ₫</td>
                                 <td>
                                     <div>
-                                        <select onChange={(e) => statusChange(order.order_id, e.target.value)} value={order.status} style={{borderColor:'#ddd',color:'#5e5d5d'}}>
+                                        <select onChange={(e) => statusChange(order.order_id, e.target.value)} value={order.status} style={{ borderColor: '#ddd', color: '#5e5d5d' }}>
                                             <option value="1">Đã đặt</option>
                                             <option value="2">Đang giao</option>
                                             <option value="3">Đã giao</option>
@@ -205,7 +220,7 @@ const AdminOrder = () => {
                                 left: 0
                             }}>
                         </div>
-                        <OrderDetail orderID={orderID} />
+                        <OrderDetail orderID={orderID} res={filteredOrders} />
                     </>
                 )}
             </div>

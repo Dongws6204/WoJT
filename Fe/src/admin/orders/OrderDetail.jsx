@@ -1,15 +1,15 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './ordersdetail.css'
 
-const OrderDetail = ({ orderID }) => {
+const OrderDetail = ({ orderID, res }) => {
 
     const fakeOrders = [
         {
-            name:'Nguyen quang sang',
-            phone:'0974583072',
-            address:'nghi xuan,ha tinh',
-            orderDetail: [
+            name: 'Nguyen quang sang',
+            phone: '0974583072',
+            address: 'nghi xuan,ha tinh',
+            order_detail: [
                 {
                     product_id: 1,
                     product_name: 'Quan jeans nam',
@@ -17,7 +17,7 @@ const OrderDetail = ({ orderID }) => {
                     size: 'M',
                     price: 2000000,
                 },
-                
+
                 {
                     product_id: 2,
                     product_name: 'Ao thun nam',
@@ -32,27 +32,20 @@ const OrderDetail = ({ orderID }) => {
     const [selectedOrder, setSelectedOrder] = useState(fakeOrders[0]);
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get(
-                    `http://127.0.0.1:8000/api/product/orderDetail/${orderID}`
-                );
-                //kiem tra neu response goi thanh cong
-                if (response.status === 200) {
-                    
-                    setSelectedOrder(response.data);
-                } else {
-                    console.error("Lỗi khi truy cập:", response.status);
-                }
-            } catch (error) {
-                console.error("Lỗi khi lấy dữ liệu:", error);
-            }
-        };
+        // Kiểm tra xem res có tồn tại và là một mảng hợp lệ
+        if (Array.isArray(res)) {
+            const order = res.find(order => order.order_id === orderID);
 
-        if (orderID) {
-            fetchData();
+            // Cập nhật selectedOrder nếu tìm thấy đơn hàng
+            if (order) {
+                setSelectedOrder(order);
+            } else {
+                console.error("Không tìm thấy đơn hàng với ID:", orderID);
+            }
+        } else {
+            console.error("Dữ liệu res không hợp lệ");
         }
-    }, [orderID]);
+    }, [orderID, res]);
 
 
     const formatVND = (number) => {
@@ -82,7 +75,7 @@ const OrderDetail = ({ orderID }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {selectedOrder.orderDetail.map((product) => (
+                    {selectedOrder.order_detail.map((product) => (
                         <tr key={product.product_id}>
                             <td>{product.product_id}</td>
                             <td>{product.product_name}</td>

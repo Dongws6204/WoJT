@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './forget.css'
-import VerifyUser from '../VerifyUsers/VerifyUser';
+import VerifyUserX from '../VerifyUsers/VerifyUser';
+import axios from 'axios';
 
 const ForgetPassword = () => {
 
@@ -25,12 +26,50 @@ const ForgetPassword = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (validateData()) {
-            setIsVerify(true);
-            console.log("data", dataForgetPass);
-        }
-        else {
-            console.log(formError)
+        // if (validateData()) {
+        //     setIsVerify(true);
+        //     console.log("data", dataForgetPass);
+        // }
+        // else {
+        //     console.log(formError)
+        // }
+        try {
+            const response = await axios.post('http://127.0.0.1:8000/api/authentication/request-otp/', {
+                email: dataForgetPass.email,
+            });
+
+
+
+            setMessage('Gửi thành công!');
+            console.log("API response:", response.status);
+            if (response.status === 200) {
+                setIsVerify(true);
+            }
+
+            // setIsVerify(true); // Hiện modal OTP hoặc xác minh nếu cần
+            // if (response.status === 400) {
+            //     alert('loi');
+            // }
+
+        } catch (error) {
+            console.error("Error during API call:", error);
+
+            // Kiểm tra phản hồi lỗi và trích xuất thông báo
+            const errorMessage = error.response?.data?.error || "Đã xảy ra lỗi không xác định.";
+
+            // Xử lý phần chi tiết lỗi
+            const errorDetailsObject = error.response?.data?.details;
+            alert('Vui lòng kiểm tra lại email');
+            let errorDetails = "";
+
+            if (errorDetailsObject) {
+                // Biến đổi đối tượng details thành chuỗi
+                errorDetails = Object.entries(errorDetailsObject)
+                    .map(([field, messages]) => `${field}: ${messages.join(", ")}`)
+                    .join("\n");
+
+
+            }
         }
     }
 
@@ -101,21 +140,21 @@ const ForgetPassword = () => {
             </div>
             {isVerify && (
                 <>
-                <div
-                    onClick={closeOtp}
-                    style={{
-                        position: "absolute",
-                        zIndex: "10",
-                        width: '100vw',
-                        height: '100vh',
-                        backgroundColor: 'rgba(76, 79, 77, 0.5)',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        top: 0,
-                        left: 0
-                    }}>
-                </div>
-                <VerifyUser />
+                    <div
+                        onClick={closeOtp}
+                        style={{
+                            position: "absolute",
+                            zIndex: "10",
+                            width: '100vw',
+                            height: '100vh',
+                            backgroundColor: 'rgba(76, 79, 77, 0.5)',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            top: 0,
+                            left: 0
+                        }}>
+                    </div>
+                    <VerifyUserX data={dataForgetPass} />
                 </>
             )}
         </div>
