@@ -55,10 +55,7 @@ const UserAddress = () => {
 
 
 
-<<<<<<< Updated upstream
-=======
     // Xóa địa chỉ
->>>>>>> Stashed changes
     const handleDelete = async (address_id, status) => {
         console.log("Số lượng địa chỉ hiện tại:", dataAddress.length);
 

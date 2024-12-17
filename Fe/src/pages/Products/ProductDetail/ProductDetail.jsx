@@ -103,19 +103,8 @@ const ProductDetail = () => {
         setLoadedCount(nextCount);
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        if (authState.isAuthenticated) {
-            if ((!dataRate.comments.trim() && !dataRate.star) || (dataRate.comments.trim() && !dataRate.star)) {
-                alert('Đánh giá không hợp lệ: Vui lòng thêm sao hoặc bình luận!');
-            } else if ((dataRate.star && !dataRate.comments.trim()) || (dataRate.star && dataRate.comments.trim())) {
-                alert('Đánh giá thành công')
-                console.log("formdata", dataRate);
-            }
-        } else {
-            alert('Vui lòng đăng nhập')
-        }
+    const clickPopup = async (e) => {
+        setIsPopupVisible(!isPopupVisible)
     }
 
     const dispatch = useDispatch();
@@ -143,7 +132,7 @@ const ProductDetail = () => {
         }));
     };
 
-    const clickPopup = async () => {
+    const handleSubmit = async () => {
         console.log(dataRate, authState.userId, product_Id);
 
         // Lấy ngày hôm nay theo định dạng yyyy-mm-dd
@@ -159,41 +148,41 @@ const ProductDetail = () => {
             date_posted: formattedDate, // Ngày hiện tại
         };
 
-        console.log("Payload gửi đi:", payload);
-        if (payload.comments === undefined) { alert('Vui lonfg theem binfh luaanj') } else {
-            try {
-                // Gửi POST request đến API
-                const response = await fetch('http://127.0.0.1:8000/api/reviews/', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(payload),
-                });
+        if (authState.isAuthenticated) {
+            if ((!dataRate.comments.trim() && !dataRate.star) || (dataRate.comments.trim() && !dataRate.star)) {
+                alert('Đánh giá không hợp lệ: Vui lòng thêm sao hoặc bình luận!');
+            } else {
+                try {
+                    // Gửi POST request đến API
+                    const response = await fetch('http://127.0.0.1:8000/api/reviews/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(payload),
+                    });
 
-                const result = await response.json();
+                    const result = await response.json();
 
-                if (response.ok) {
-                    alert('Bình luận đã được gửi thành công!');
-                    // Đóng popup
-                    setIsPopupVisible(false);
-                    console.log("Kết quả từ server:", result);
-                } else {
-                    setIsPopupVisible(false);
-                    alert('Vui lòng mua sản phẩm để được bình luận:>');
-                    console.error("Lỗi từ server:", result);
-                    // Đóng popup
-
+                    if (response.ok) {
+                        alert('Bình luận đã được gửi thành công!');
+                        // Đóng popup
+                        setIsPopupVisible(false);
+                        console.log("Kết quả từ server:", result);
+                        window.payload();
+                    } else {
+                        setIsPopupVisible(false);
+                        alert('Vui lòng mua sản phẩm để được bình luận');
+                        console.error("Lỗi từ server:", result);
+                    }
+                } catch (error) {
+                    console.error("Lỗi khi gửi yêu cầu:", error);
+                    alert('Đã xảy ra lỗi khi gửi bình luận.');
                 }
-            } catch (error) {
-                console.error("Lỗi khi gửi yêu cầu:", error);
-                alert('Đã xảy ra lỗi khi gửi bình luận.');
             }
-
-            // Đóng popup
-            // setIsPopupVisible(!isPopupVisible);
+        }else{
+            alert('Vui lòng đăng nhập')
         }
-
     };
 
     const formatVND = (number) => {

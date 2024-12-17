@@ -72,11 +72,7 @@ const User_order = () => {
                     orderdetail: details,
                     total_amount: order.total_amount,
                     order_date: order.order_date,
-<<<<<<< Updated upstream
-                    status: order.status,
-=======
                     status:order.status
->>>>>>> Stashed changes
                 };
             });
             // Cập nhật state
@@ -94,26 +90,6 @@ const User_order = () => {
 
     useEffect(() => {
         if (active === 1) {
-<<<<<<< Updated upstream
-            // Lọc các đơn hàng có status === 11
-            const filteredOrders = orderInfo.filter(order => order.status === 1);
-            setData(filteredOrders);
-            console.log('Filtered Orders (status === 1):', filteredOrders);
-        } else if (active === 2) {
-            // Lọc các đơn hàng có status === 22
-            const filteredOrders = orderInfo.filter(order => order.status === 2);
-            setData(filteredOrders);
-            console.log('Filtered Orders (status === 2):', filteredOrders);
-        } else if (active === 3) {
-            // Lọc các đơn hàng có status === 33
-            const filteredOrders = orderInfo.filter(order => order.status === 3);
-            setData(filteredOrders);
-            console.log('Filtered Orders (status === 3):', filteredOrders);
-        } else {
-            // Không có điều kiện nào khớp, set data thành mảng rỗng
-            setData([]);
-            console.log('No matching status, data cleared');
-=======
             const filteredData = orderInfo.filter(order => order.status === 1);
             setData(filteredData);
         } else if (active === 2) {
@@ -122,7 +98,6 @@ const User_order = () => {
         } else {
             const filteredData3 = orderInfo.filter(order => order.status === 3);
             setData(filteredData3);
->>>>>>> Stashed changes
         }
     }, [active, orderInfo]);
 

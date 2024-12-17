@@ -25,7 +25,6 @@ const NavbarUser = () => {
         <div className='nav-container'>
             <div className='nav-header'>
                 <img src={User_img} />
-                {/* <p>{Customers.name}</p> */}
             </div>
             <div className='nav-content'>
                 <div className='nav-list'>
