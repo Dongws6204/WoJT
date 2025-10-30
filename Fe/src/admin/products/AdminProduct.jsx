@@ -237,7 +237,7 @@ const AdminProduct = () => {
                                 left: 0
                             }}>
                         </div>
-                        <FixProductForm productID={productID} update={update} />
+                        <FixProductForm productID={productID} setFixProduct={setFixProduct}  />
                     </>
                 )}
             </div>

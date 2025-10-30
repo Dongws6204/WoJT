@@ -4,48 +4,15 @@ import { CiCirclePlus } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
 import axios from "axios";
 
-const FixProductForm = ({ productID, update }) => {
+const FixProductForm = ({ productID, setFixProduct  }) => {
 
-    const dataFake = [
-        {
-            "product_name": "Áo phông nữ cổ tim",
-            "price": "149000.00",
-            "img": "https://canifa.com/img/500/750/resize/6/t/6ts25a002-sg425-m-1-u.webp",
-            "description": 'ao dep',
-            "id_port": 1,
-            "portfolio": "Áo phông & Áo thun",//chỉ thêm vào để hiển thị lúc cập nhật data trong sql k cần quan tâm
-            "object_id": 2,//chỉ thêm vào để hiển thị lúc cập nhật data trong sql k cần quan tâm
-            "product_detail": [
-                {
-                    "id_prod": 1,
-                    "size": "S",
-                    "quantity_of_size": 50
-                },
-                {
-                    "id_prod": 2,
-                    "size": "M",
-                    "quantity_of_size": 50
-                },
-                {
-                    "id_prod": 3,
-                    "size": "L",
-                    "quantity_of_size": 50
-                },
-                {
-                    "id_prod": 4,
-                    "size": "XL",
-                    "quantity_of_size": 50
-                },
-                {
-                    "id_prod": 5,
-                    "size": "2XL",
-                    "quantity_of_size": 50
-                }
-            ]
-        }
-    ]
-
-    const [dataProduct, setDataProduct] = useState([])
+    const [product, setProduct] = useState([]);
+    const [selectedObject, setSelectedObject] = useState('');
+    const [portfolios, setPortfolios] = useState([]);
+    const [objects, setObjects] = useState([]);
+    const [done, setDone] = useState(false);
+    const [selectedObjectName, setSelectedObjectName] = useState('');
+    const [selectedPortName, setSelectedPortName] = useState('');
 
     useEffect(() => {
         const fetchData = async () => {
@@ -56,8 +23,9 @@ const FixProductForm = ({ productID, update }) => {
                 //kiem tra neu response goi thanh cong
                 if (response.status === 200) {
 
-                    setDataProduct(response.data);
-                    console.log(response.data);
+                    setProduct(response.data.product);
+                    setSelectedObject(response.data.product.object)
+                    setDone(true);
                 } else {
                     console.error("Lỗi khi truy cập:", response.status);
                 }
@@ -71,12 +39,6 @@ const FixProductForm = ({ productID, update }) => {
         }
     }, [productID]);
 
-
-    const [product, setProduct] = useState(dataFake);
-    const [selectedObject, setSelectedObject] = useState(product.object_id);
-    const [portfolios, setPortfolios] = useState([]);
-    const [objects, setObjects] = useState([]);
-
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -86,7 +48,10 @@ const FixProductForm = ({ productID, update }) => {
                 //kiem tra neu response goi thanh cong
                 if (response.status === 200) {
                     setObjects(response.data.products);
-                    const selectedObjected = response.data.products.find((obj) => obj.object_id === product.object_id);
+                    const selectedObjected = getObjectByPort(product.id_port,response.data.products);
+                    setSelectedObjectName(selectedObjected.object_name);
+                    const selectedPorted = selectedObjected.portfolio.find((port) => Number(port.id_port) === Number(product.id_port));
+                    setSelectedPortName(selectedPorted.port_name);
                     setPortfolios(selectedObjected.portfolio);
 
                 } else {
@@ -97,8 +62,10 @@ const FixProductForm = ({ productID, update }) => {
             }
         };
 
-        fetchData();
-    }, []);
+        if (done) {
+            fetchData();
+        }
+    }, [done]);
 
 
     const handleObjectChange = (e) => {
@@ -128,6 +95,15 @@ const FixProductForm = ({ productID, update }) => {
             idx === index ? { ...item, [key]: value } : item
         );
         setSizes(updatedSizes);
+    };
+
+    const getObjectByPort = (id_port,portfolioList) => {
+        for (const obj of portfolioList) {
+            if (obj.portfolio.some(port => port.id_port === id_port)) {
+                return obj;
+            }
+        }
+        return null;
     };
 
     const updateSizee = (index, key, value) => {
@@ -187,7 +163,7 @@ const FixProductForm = ({ productID, update }) => {
                 img_1: product.img, // URL ảnh sản phẩm
                 img_2: product.img, // URL ảnh sản phẩm (nếu có)
                 quantity_sold: product.quantity_sold || 0, // Số lượng đã bán (mặc định 0)
-                id_port: selectedObject, // ID của danh mục (Portfolio)
+                id_port: product.id_port,// ID của danh mục (Portfolio)
                 description: product.description, // Mô tả sản phẩm
             },
             details: sizes.map((sizeX) => ({
@@ -218,6 +194,7 @@ const FixProductForm = ({ productID, update }) => {
                     description: "",
                 });
                 setSizes([]);
+                setFixProduct(false)
             } else {
                 const errorData = await response.json();
                 console.error("API Error:", errorData);
@@ -261,7 +238,7 @@ const FixProductForm = ({ productID, update }) => {
                 <div style={{ display: 'flex', gap: '8px', alignItems: 'center', margin: '12px 0px' }}>
                     <p style={{ fontSize: '16px', color: '#727272' }}>Đối tượng:</p>
                     <select id="object" onChange={handleObjectChange} value={selectedObject || ""}>
-                        <option value="" disabled>---------</option>
+                        <option value="" disabled>{selectedObjectName ? selectedObjectName : '---------'}</option>
                         {objects.map((obj) => (
                             <option key={obj.object_id} value={obj.object_id}>
                                 {obj.object_name}
@@ -278,7 +255,7 @@ const FixProductForm = ({ productID, update }) => {
                             onChange={handlePortfolioChange}
                             value={product.id_port || ""}
                         >
-                            <option value="" disabled>{product.port_name}</option>
+                            <option value="" disabled>{selectedPortName}</option>
                             {portfolios.map((port) => (
                                 <option key={port.id_port} value={port.id_port}>
                                     {port.port_name}
