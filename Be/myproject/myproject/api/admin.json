@@ -1,0 +1,16 @@
+// Them san pham
+{
+    "product_name": "Áo sơ mi",
+    "quantity_stock": 100,
+    "id_port": 1,
+    "price": 20.00,
+    "img_1": "link_to_image_1",
+    "img_2": "link_to_image_2",
+    "quantity_sold": 50
+}
+
+{
+    "product": 1,
+    "size": "M",
+    "quantity_of_size": 40
+}

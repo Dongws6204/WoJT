@@ -1,0 +1,8 @@
+// Tạo bình luận 
+{
+    "customer": 13,
+    "product": 1,
+    "comments": "Hay đấy nhá",
+    "star": 5,
+    "date_posted": "2024-10-27"
+}
