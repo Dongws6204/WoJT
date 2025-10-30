@@ -11,11 +11,8 @@ const FixPortfolio = ({ portID }) => {
         { object_id: 4, object_name: "Bé Gái" },
     ]);
 
-    const [portfolio, setPortfolio] = useState({
-        // object_id: '2',
-        // port_name: 'Quan dui ao balo'
-    });
-
+    const [portfolio, setPortfolio] = useState({});
+    const [objectName,setObjectName] = useState('')
     const [selectedObject, setSelectedObject] = useState(portfolio.object_id);
 
     // const [portfolio, setPortfolio] = useState([])
@@ -28,8 +25,9 @@ const FixPortfolio = ({ portID }) => {
                 );
                 //kiem tra neu response goi thanh cong
                 if (response.status === 200) {
-
                     setPortfolio(response.data);
+                    const foundObject = objects.find((obj) => Number(obj.object_id) === Number(response.data.object));
+                    setObjectName(foundObject.object_name)
                 } else {
                     console.error("Lỗi khi truy cập:", response.status);
                 }
@@ -43,11 +41,6 @@ const FixPortfolio = ({ portID }) => {
         }
     }, [portID]);
 
-
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     console.log(portfolio)
-    // };
     // Gửi yêu cầu cập nhật danh mục
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -109,7 +102,7 @@ const FixPortfolio = ({ portID }) => {
                         value={selectedObject || ""}
                         style={{borderColor:'#ddd',color:'#5e5d5d'}}
                     >
-                        <option value="">-- Chọn Object --</option>
+                        <p value="">{objectName? objectName : "-- Chọn Object --"}</p>
                         {objects.map((obj) => (
                             <option key={obj.object_id} value={obj.object_id}>
                                 {obj.object_name}
