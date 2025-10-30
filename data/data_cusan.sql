@@ -33,7 +33,7 @@ CREATE TABLE `address` (
   KEY `fk_customer` (`customer_id`),
   CONSTRAINT `address_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`),
   CONSTRAINT `fk_customer` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,6 +42,7 @@ CREATE TABLE `address` (
 
 LOCK TABLES `address` WRITE;
 /*!40000 ALTER TABLE `address` DISABLE KEYS */;
+INSERT INTO `address` VALUES (4,15,'Nguyễn Lê Vy','Thanh Xuân , Hà Nội','0912345678',0),(5,15,'Vo Quang Sang','Thị Trấn Tiên Điền , Huyện Nghi Xuân , Tỉnh Hà Tĩnh','0974583072',0),(6,15,'Nguyen Hoang Diep','Sóc sơn , Hà Nội','0912345678',1);
 /*!40000 ALTER TABLE `address` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -94,7 +95,7 @@ CREATE TABLE `cart` (
   CONSTRAINT `cart_fk_1` FOREIGN KEY (`id_prod`) REFERENCES `product_detail` (`id_prod`),
   CONSTRAINT `customers_fk_3` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`),
   CONSTRAINT `products_fk_4` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -147,7 +148,7 @@ CREATE TABLE `clothes_evaluate` (
   `sum_rate` int DEFAULT '0',
   `sum_star` int DEFAULT '0',
   KEY `product_id` (`product_id`),
-  CONSTRAINT `clothes_evaluate_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`)
+  CONSTRAINT `clothes_evaluate_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -157,7 +158,7 @@ CREATE TABLE `clothes_evaluate` (
 
 LOCK TABLES `clothes_evaluate` WRITE;
 /*!40000 ALTER TABLE `clothes_evaluate` DISABLE KEYS */;
-INSERT INTO `clothes_evaluate` VALUES (1,0,0,0),(2,0,0,0),(3,0,0,0),(4,0,0,0),(5,0,0,0),(6,0,0,0),(7,0,0,0),(8,0,0,0),(9,0,0,0),(10,0,0,0),(11,0,0,0),(12,0,0,0),(13,0,0,0),(14,0,0,0),(15,0,0,0),(16,0,0,0),(17,0,0,0),(18,0,0,0),(19,0,0,0),(20,0,0,0),(21,0,0,0),(22,0,0,0),(23,0,0,0),(24,0,0,0),(25,0,0,0),(26,0,0,0),(27,0,0,0),(28,0,0,0),(29,0,0,0),(30,0,0,0),(31,0,0,0),(32,0,0,0),(33,0,0,0),(34,0,0,0),(35,0,0,0),(36,0,0,0),(37,0,0,0),(38,0,0,0),(39,0,0,0),(40,0,0,0),(41,0,0,0),(42,0,0,0),(43,0,0,0),(44,0,0,0),(45,0,0,0),(46,0,0,0),(47,0,0,0),(48,0,0,0),(49,0,0,0),(50,0,0,0),(51,0,0,0),(52,0,0,0),(53,0,0,0),(54,0,0,0),(55,0,0,0),(56,0,0,0),(57,0,0,0),(58,0,0,0),(59,0,0,0),(60,0,0,0),(61,0,0,0),(62,0,0,0),(63,0,0,0),(64,0,0,0),(65,0,0,0),(66,0,0,0),(67,0,0,0),(68,0,0,0),(69,0,0,0),(70,0,0,0),(71,0,0,0),(72,0,0,0),(73,0,0,0),(74,0,0,0),(75,0,0,0),(76,0,0,0),(77,0,0,0),(78,0,0,0),(79,0,0,0),(80,0,0,0),(81,0,0,0),(82,0,0,0),(83,0,0,0),(84,0,0,0),(85,0,0,0),(86,0,0,0),(87,0,0,0),(88,0,0,0),(89,0,0,0),(90,0,0,0),(91,0,0,0),(92,0,0,0),(93,0,0,0),(94,0,0,0),(95,0,0,0),(96,0,0,0);
+INSERT INTO `clothes_evaluate` VALUES (1,4.71429,6,29),(2,4.57143,6,27),(3,4.75,7,33),(4,4.85714,6,29),(5,4.71429,6,28),(6,0,0,0),(7,0,0,0),(8,0,0,0),(9,0,0,0),(10,0,0,0),(11,0,0,0),(12,5,1,5),(13,0,0,0),(14,0,0,0),(15,4.4,4,18),(16,0,0,0),(17,0,0,0),(18,0,0,0),(19,0,0,0),(20,0,0,0),(21,0,0,0),(22,0,0,0),(23,0,0,0),(24,0,0,0),(25,0,0,0),(26,0,0,0),(27,0,0,0),(28,0,0,0),(29,0,0,0),(30,0,0,0),(31,0,0,0),(32,0,0,0),(33,0,0,0),(34,0,0,0),(35,0,0,0),(36,0,0,0),(37,0,0,0),(38,0,0,0),(39,0,0,0),(40,0,0,0),(41,0,0,0),(42,0,0,0),(43,0,0,0),(44,0,0,0),(45,0,0,0),(46,0,0,0),(47,0,0,0),(48,0,0,0),(49,0,0,0),(50,0,0,0),(51,0,0,0),(52,0,0,0),(53,0,0,0),(54,0,0,0),(55,0,0,0),(56,0,0,0),(57,0,0,0),(58,0,0,0),(59,0,0,0),(60,0,0,0),(61,0,0,0),(62,0,0,0),(63,0,0,0),(64,0,0,0),(65,0,0,0),(66,0,0,0),(67,0,0,0),(68,0,0,0),(69,0,0,0),(70,0,0,0),(71,0,0,0),(72,0,0,0),(73,0,0,0),(74,0,0,0),(75,0,0,0),(76,0,0,0),(77,0,0,0),(78,0,0,0),(79,0,0,0),(80,0,0,0),(81,0,0,0),(82,0,0,0),(83,0,0,0),(84,0,0,0),(85,0,0,0),(86,0,0,0),(87,0,0,0),(88,0,0,0),(89,0,0,0),(90,0,0,0),(91,0,0,0),(92,0,0,0),(93,0,0,0),(94,0,0,0),(95,0,0,0),(96,0,0,0);
 /*!40000 ALTER TABLE `clothes_evaluate` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -188,7 +189,7 @@ CREATE TABLE `customers` (
 
 LOCK TABLES `customers` WRITE;
 /*!40000 ALTER TABLE `customers` DISABLE KEYS */;
-INSERT INTO `customers` VALUES (12,'Nguyễn Hữu Cứ','22026532@vnu.edu.vn','0342348237',NULL,'2024-11-14',2,'20004','abcxyz12'),(13,'sdfsdjkhfjk','dksfhsdjkhf@kgjkhsjk','239489',NULL,'2024-12-06',NULL,'2004','abcxyz'),(14,'Nguyễn Hữu Cứ','cucu0375726692@gmail.com','0375726692','Cầu giấy, Hà Nội','2024-12-24',1,'pbkdf2_sha256$390000$9AKWGddgfUawQ6VKx3Y3Zw$2iqW0Wka5Y6YSfygY14CyxyNYBVZFWE1TMa1LQejddo=','cuK67J204'),(15,'Vo Quang Sang','sangv6548@gmail.com','0974583072','Nghi Xuan Ha Tinh','2003-12-15',1,'pbkdf2_sha256$870000$gi26Xc4Tk03KDP3HG1IvNZ$vMYqsdPT53DVU4mtAlfz4Pj+nPnPnUFniz7hGZFl5X4=','San525');
+INSERT INTO `customers` VALUES (12,'Nguyễn Hữu Cứ','22026532@vnu.edu.vn','0342348237',NULL,'2024-11-14',2,'20004','abcxyz12'),(13,'sdfsdjkhfjk','dksfhsdjkhf@kgjkhsjk','239489',NULL,'2024-12-06',NULL,'2004','abcxyz'),(14,'Nguyễn Hữu Cứ','cucu0375726692@gmail.com','0375726692','Cầu giấy, Hà Nội','2024-12-24',1,'pbkdf2_sha256$390000$9AKWGddgfUawQ6VKx3Y3Zw$2iqW0Wka5Y6YSfygY14CyxyNYBVZFWE1TMa1LQejddo=','cuK67J204'),(15,'Vo Quang Sang','sangv6548@gmail.com','0974583072','Thị Trấn Tiên Điền , Huyện Nghi Xuân , Tỉnh Hà Tĩnh','2004-12-15',2,'pbkdf2_sha256$870000$gi26Xc4Tk03KDP3HG1IvNZ$vMYqsdPT53DVU4mtAlfz4Pj+nPnPnUFniz7hGZFl5X4=','San525');
 /*!40000 ALTER TABLE `customers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -200,18 +201,18 @@ DROP TABLE IF EXISTS `evaluate`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `evaluate` (
-  `customer_id` int DEFAULT NULL,
   `product_id` int DEFAULT NULL,
   `comments` varchar(200) DEFAULT NULL,
   `star` int DEFAULT NULL,
   `date_posted` date DEFAULT NULL,
   `id` int NOT NULL AUTO_INCREMENT,
+  `customer_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `customer_id` (`customer_id`),
   KEY `product_id` (`product_id`),
+  KEY `evaluate_ibfk_1` (`customer_id`),
   CONSTRAINT `evaluate_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`),
   CONSTRAINT `evaluate_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -220,9 +221,30 @@ CREATE TABLE `evaluate` (
 
 LOCK TABLES `evaluate` WRITE;
 /*!40000 ALTER TABLE `evaluate` DISABLE KEYS */;
-INSERT INTO `evaluate` VALUES (13,1,'Great product!',5,'2024-10-27',1),(13,2,'Good value for money',4,'2024-10-28',2),(13,3,'Satisfactory',3,'2024-10-29',3),(12,1,'Excellent quality!',5,'2024-11-01',4),(12,2,'Very comfortable',4,'2024-11-02',5),(12,3,'Could be better',3,'2024-11-03',6),(13,1,'Hay đấy nhá',5,'2024-10-27',7);
+INSERT INTO `evaluate` VALUES (1,'Sản phẩm rất tốt, tôi rất hài lòng!',5,'2024-12-17',8,14),(2,'Hàng đẹp và chất lượng, đúng mô tả.',5,'2024-12-17',9,15),(3,'Chất liệu ổn, tuy nhiên giao hàng hơi chậm.',4,'2024-12-17',10,14),(4,'Sản phẩm khá đẹp, tôi sẽ mua thêm.',4,'2024-12-17',11,15),(5,'Giao hàng nhanh, sản phẩm chất lượng.',5,'2024-12-17',12,14),(1,'Tôi rất thích sản phẩm này, dùng rất bền.',5,'2024-12-17',13,15),(2,'Hàng tốt nhưng cần cải thiện đóng gói.',4,'2024-12-17',14,14),(3,'Sản phẩm đúng như kỳ vọng, rất ưng ý.',5,'2024-12-17',15,15),(4,'Chất lượng sản phẩm rất tuyệt vời.',5,'2024-12-17',16,14),(5,'Giá cả hợp lý, chất lượng hơn mong đợi.',4,'2024-12-17',17,15),(1,'Sản phẩm vượt ngoài mong đợi, chất lượng rất tốt.',5,'2024-12-17',18,14),(2,'Hàng ổn nhưng cần cải thiện thời gian giao hàng.',4,'2024-12-17',19,15),(3,'Mẫu mã đẹp, giá cả phù hợp.',5,'2024-12-17',20,14),(4,'Giao hàng nhanh chóng, tôi rất hài lòng.',5,'2024-12-17',21,15),(5,'Chất liệu sản phẩm rất đẹp, đáng tiền.',5,'2024-12-17',22,14),(1,'Sản phẩm dùng tốt, bền, đúng mô tả.',5,'2024-12-17',23,15),(2,'Hàng rất đẹp nhưng cần chú ý đóng gói hơn.',4,'2024-12-17',24,14),(3,'Tôi rất hài lòng về chất lượng sản phẩm.',5,'2024-12-17',25,15),(4,'Mua lần đầu và khá ưng ý, sẽ ủng hộ tiếp.',5,'2024-12-17',26,14),(5,'Sản phẩm ổn nhưng hơi mắc một chút.',4,'2024-12-17',27,15),(1,'Dùng rất thích, sản phẩm đúng như kỳ vọng.',5,'2024-12-17',28,14),(2,'Giao hàng nhanh, đóng gói cẩn thận.',5,'2024-12-17',29,15),(3,'Chất lượng tốt nhưng giao hàng hơi lâu.',4,'2024-12-17',30,14),(4,'Hàng đẹp, phù hợp với giá tiền.',5,'2024-12-17',31,15),(5,'Rất hài lòng về sản phẩm này.',5,'2024-12-17',32,14),(1,'Mẫu mã đẹp, tôi sẽ mua thêm lần sau.',4,'2024-12-17',33,15),(2,'Giá cả hợp lý, chất lượng tốt.',5,'2024-12-17',34,14),(3,'Sản phẩm đẹp, rất đáng tiền.',5,'2024-12-17',35,15),(4,'Giao hàng nhanh, chất lượng sản phẩm tuyệt vời.',5,'2024-12-17',36,14),(5,'Hàng nhận được rất đẹp và đúng mô tả.',5,'2024-12-17',37,15),(3,'Nên mua cho người yêu nha mọi người',5,'2024-12-17',38,15),(12,'rất ưng nha',5,'2024-12-17',39,15),(15,'đẹp',5,'2024-12-17',40,15),(15,'',4,'2024-12-17',41,15),(15,'',5,'2024-12-17',42,15),(15,'',4,'2024-12-17',43,15);
 /*!40000 ALTER TABLE `evaluate` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `update_product_evaluate` AFTER INSERT ON `evaluate` FOR EACH ROW BEGIN
+    UPDATE clothes_evaluate
+    SET sum_rate = sum_rate + 1,
+        sum_star = sum_star + NEW.star,
+        product_rate = (sum_star + NEW.star) / (sum_rate + 1)
+    WHERE product_id = NEW.product_id;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `inventory`
@@ -293,7 +315,7 @@ CREATE TABLE `orderdetail` (
   KEY `orderdetail_fk3_id_prod` (`id_prod`),
   CONSTRAINT `orderdetail_fk3_id_prod` FOREIGN KEY (`id_prod`) REFERENCES `product_detail` (`id_prod`),
   CONSTRAINT `orders_fk_2` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -302,7 +324,7 @@ CREATE TABLE `orderdetail` (
 
 LOCK TABLES `orderdetail` WRITE;
 /*!40000 ALTER TABLE `orderdetail` DISABLE KEYS */;
-INSERT INTO `orderdetail` VALUES (1,3,2,100.00,1),(2,3,1,100.00,2),(3,6,1,499000.00,128),(4,7,1,299000.00,144),(5,7,1,499000.00,159),(6,8,2,498000.00,13),(7,8,1,279000.00,29);
+INSERT INTO `orderdetail` VALUES (24,17,1,309380.00,129),(25,17,1,209300.00,223),(26,18,1,227430.00,63),(27,18,1,144420.00,42),(31,21,2,390880.00,48),(32,21,1,309380.00,129);
 /*!40000 ALTER TABLE `orderdetail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -322,7 +344,7 @@ CREATE TABLE `orders` (
   PRIMARY KEY (`order_id`),
   KEY `orders_fk_1` (`customer_id`),
   CONSTRAINT `orders_fk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -331,7 +353,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (3,13,'2024-12-10',200.00,1),(4,13,'2024-12-10',NULL,1),(5,13,'2024-12-10',200.00,1),(6,15,'2024-12-14',499000.00,1),(7,15,'2024-12-14',798000.00,1),(8,15,'2024-12-14',777000.00,1);
+INSERT INTO `orders` VALUES (17,15,'2024-12-17',518680.00,3),(18,15,'2024-12-17',371850.00,2),(21,15,'2024-12-23',700260.00,1);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -378,7 +400,7 @@ CREATE TABLE `portfolio` (
   PRIMARY KEY (`id_port`),
   KEY `object_id` (`object_id`),
   CONSTRAINT `portfolio_ibfk_1` FOREIGN KEY (`object_id`) REFERENCES `object` (`object_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -405,8 +427,8 @@ CREATE TABLE `product_detail` (
   `quantity_of_size` int unsigned DEFAULT NULL,
   PRIMARY KEY (`id_prod`),
   KEY `products_fk_2` (`product_id`),
-  CONSTRAINT `products_fk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=481 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `products_fk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=484 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -429,16 +451,17 @@ DROP TABLE IF EXISTS `products`;
 CREATE TABLE `products` (
   `product_id` int NOT NULL AUTO_INCREMENT,
   `product_name` varchar(150) DEFAULT NULL,
-  `quantity_stock` int unsigned DEFAULT NULL,
+  `quantity_stock` int DEFAULT '0',
   `id_port` int DEFAULT NULL,
   `price` decimal(10,2) DEFAULT NULL,
   `img_1` text,
   `ing_2` text,
   `quantity_sold` int DEFAULT '0',
+  `description` text,
   PRIMARY KEY (`product_id`),
   KEY `portfolio_fk_1` (`id_port`),
   CONSTRAINT `portfolio_fk_1` FOREIGN KEY (`id_port`) REFERENCES `portfolio` (`id_port`)
-) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -447,7 +470,7 @@ CREATE TABLE `products` (
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (1,'Áo phông nữ cổ tim',150,17,149000.00,'https://canifa.com/img/500/750/resize/6/t/6ts25a002-sg425-m-1-u.webp',NULL,0),(2,'Áo phông nữ cổ tròn',150,17,149000.00,'https://canifa.com/img/500/750/resize/6/t/6ts25a001-sn010-m-1-u.webp',NULL,0),(3,'Áo phông nữ',150,17,249000.00,'https://canifa.com/img/500/750/resize/6/t/6ts24w001-sn014-thumb.webp',NULL,0),(4,'Áo body nữ cổ lửng',150,17,279000.00,'https://canifa.com/img/500/750/resize/6/i/6it24w004-sa191-l-1-u.webp',NULL,0),(5,'Áo phông nữ dài tay',150,17,249000.00,'https://canifa.com/img/500/750/resize/6/t/6tl24w006-sb508-thumb.webp',NULL,0),(6,'Áo body nữ cổ tròn',150,17,279000.00,'https://canifa.com/img/500/750/resize/6/i/6it24w003-se136-thumb.webp',NULL,0),(7,'Áo phông dài tay nữ',150,17,299000.00,'https://canifa.com/img/500/750/resize/6/t/6tl24w002-sa702-l-1-u.webp',NULL,0),(8,'Áo giữ nhiệt nữ cổ tròn',150,17,279000.00,'https://canifa.com/img/500/750/resize/6/i/6it24w005-se068-thumb.webp',NULL,0),(9,'Áo phông nữ cổ vuống dáng ôm',150,17,249000.00,'https://canifa.com/img/500/750/resize/6/t/6tl24w007-sb508-m-1-u.webp',NULL,0),(10,'Áo phông dài tay nữ',150,17,349000.00,'https://canifa.com/img/500/750/resize/6/t/6tl24w008-sk010-thumb.webp',NULL,0),(11,'Áo phông dài tay nữ cổ cao',150,17,349000.00,'https://canifa.com/img/500/750/resize/6/t/6tl24w003-sk010-thumb.webp',NULL,0),(12,'Áo phông nữ cotton USA dáng oversize',150,17,399000.00,'https://canifa.com/img/500/750/resize/6/t/6ts24w004-sp141-thumb.webp',NULL,0),(13,'Áo phông nữ cotton USA dáng oversize',150,17,399000.00,'https://canifa.com/img/500/750/resize/6/t/6ts24w004-sk010-thumb.webp',NULL,0),(14,'Áo phông nữ cotton USA dáng oversize',150,17,399000.00,'https://canifa.com/img/500/750/resize/6/t/6ts24w004-sa130-thumb.webp',NULL,0),(15,'Áo phông nữ cotton USA dáng oversize',150,17,399000.00,'https://canifa.com/img/500/750/resize/6/t/6ts24w004-sw001-thumb.webp',NULL,0),(16,'Áo phông dài tay nữ',150,17,299000.00,'https://canifa.com/img/500/750/resize/6/t/6tl24w010-sw113-thumb.webp',NULL,0),(17,'Áo phông dài tay nữ',150,17,299000.00,'https://canifa.com/img/500/750/resize/6/t/6tl24w010-se097-thumb.webp',NULL,0),(18,'Áo phông nữ in hình công chúa',150,17,399000.00,'https://canifa.com/img/500/750/resize/6/t/6ts24w006-sp141-thumb.webp',NULL,0),(19,'Áo phông nữ in hình công chúa',150,17,399000.00,'https://canifa.com/img/500/750/resize/6/t/6ts24w006-sw001-thumb.webp',NULL,0),(20,'Áo phông nữ in hình công chúa',150,17,399000.00,'https://canifa.com/img/500/750/resize/6/t/6ts24w006-sk010-thumb.webp',NULL,0),(21,'Áo phông nữ',150,17,249000.00,'https://canifa.com/img/500/750/resize/6/t/6ts24w005-sg541-l-1-u-a.webp',NULL,0),(22,'Áo phông nữ cổ cao phối khoá',150,17,349000.00,'https://canifa.com/img/500/750/resize/6/t/6ts24w002-sa873-thumb.webp',NULL,0),(23,'Áo phông dài tay nữ active',150,17,349000.00,'https://canifa.com/img/500/750/resize/6/t/6tl24w009-sg541-l-1-u.webp',NULL,0),(24,'Áo phông nữ cotton dáng rộng',150,17,299000.00,'https://canifa.com/img/500/750/resize/6/t/6ts24w003-sk010-thumb.webp',NULL,0),(25,'Áo phông nam',150,1,149000.00,'https://canifa.com/img/500/750/resize/8/t/8ts25a002-se409-xl-1-u.webp',NULL,0),(26,'Áo phông dài tay nam',150,1,499000.00,'https://canifa.com/img/500/750/resize/8/t/8tl24w002-sk010-thumb.webp',NULL,0),(27,'Áo phông active nam',150,1,399000.00,'https://canifa.com/img/500/750/resize/8/t/8tl24w005-sa815-xl-1-u.webp',NULL,0),(28,'Áo phông nam',150,1,449000.00,'https://canifa.com/img/500/750/resize/8/t/8ts24w004-se331-xl-1-u.webp',NULL,0),(29,'Áo phông nam in chữ',150,1,299000.00,'https://canifa.com/img/500/750/resize/8/t/8ts24w002-sg650-thumb.webp',NULL,0),(30,'Áo phông nam in chữ',150,1,299000.00,'https://canifa.com/img/500/750/resize/8/t/8ts24w002-sk010-thumb.webp',NULL,0),(31,'Áo phông nam in chữ',150,1,299000.00,'https://canifa.com/img/500/750/resize/8/t/8ts24w001-sg650-thumb.webp',NULL,0),(32,'Áo phông dài tay nam',150,1,499000.00,'https://canifa.com/img/500/750/resize/8/t/8tl24w007-se384-thumb.webp',NULL,0),(33,'Áo phông nam cổ tròn dáng suông',150,1,149000.00,'https://canifa.com/img/500/750/resize/8/t/8ts24a001-sb001-thumb.webp',NULL,0),(34,'Áo phông nam cotton cổ tròn dáng suông',150,1,149000.00,'https://canifa.com/img/500/750/resize/8/t/8ts24a005-sl178-l-1-u.webp',NULL,0),(35,'Áo phông nam cổ tim dáng suông',150,1,149000.00,'https://canifa.com/img/500/750/resize/8/t/8ts24a002-sb001-thumb.webp',NULL,0),(36,'Áo phông nam cổ tròn dáng suông',150,1,149000.00,'https://canifa.com/img/500/750/resize/8/t/8ts24a004-sa050-thumb.webp',NULL,0),(37,'Áo phông nam in chữ',150,1,399000.00,'https://canifa.com/img/500/750/resize/8/t/8ts24c005-sw001-thumb.webp',NULL,0),(38,'Áo phông nam in chữ',150,1,399000.00,'https://canifa.com/img/500/750/resize/8/t/8ts24c005-sb001-thumb.webp',NULL,0),(39,'Áo phông nam in chữ',150,1,399000.00,'https://canifa.com/img/500/750/resize/8/t/8ts24c005-sa096-thumb.webp',NULL,0),(40,'Áo phông nam có túi ngực',150,1,315000.00,'https://canifa.com/img/500/750/resize/8/t/8ts24c003-sk010-thumb.webp',NULL,0),(41,'Áo phông nam có hình in',150,1,399000.00,'https://canifa.com/img/500/750/resize/8/t/8ts24c001-sg498-thumb.webp',NULL,0),(42,'Áo phông nam cotton USA dáng oversize',150,1,399000.00,'https://canifa.com/img/500/750/resize/8/t/8ts24c004-se346-1-thumb.webp',NULL,0),(43,'Áo phông nam có hình in',150,1,279000.00,'https://canifa.com/img/500/750/resize/8/t/8ts24c001-sw012-thumb.webp',NULL,0),(44,'Áo phông nam có hình in',150,1,399000.00,'https://canifa.com/img/500/750/resize/8/t/8ts24c001-sb001-thumb.webp',NULL,0),(45,'Áo phông nam có hình in',150,1,299000.00,'https://canifa.com/img/500/750/resize/8/t/8ts24s001-sb001-thumb.webp',NULL,0),(46,'Áo phông unisex người lớn cotton dáng boxy',150,1,209000.00,'https://canifa.com/img/500/750/resize/5/t/5ts24s011-sw386-thumb.webp',NULL,0),(47,'Áo phông nam hoạ tiết kẻ',150,1,399000.00,'https://canifa.com/img/500/750/resize/8/t/8ts24s011-pb441-thumb.webp',NULL,0),(48,'Áo phông nam có hình in',150,1,195000.00,'https://canifa.com/img/500/750/resize/8/t/8ts24s003-sw001-thumb.webp',NULL,0),(49,'Áo body unisex trẻ em cotton',150,50,159000.00,'https://canifa.com/img/500/750/resize/3/i/3it24w001-fb473-thumb.webp',NULL,0),(50,'Áo body bé gái cổ lửng',150,50,159000.00,'https://canifa.com/img/500/750/resize/1/i/1it24w003-sw011-thumb.webp',NULL,0),(51,'Áo phông dài tay bé gái in hình Wolfoo',150,50,219000.00,'https://canifa.com/img/500/750/resize/1/t/1tl24w002-sm128-thumb.webp',NULL,0),(52,'Áo phông dài tay bé gái cotton USA hình Wolfoo',150,50,219000.00,'https://canifa.com/img/500/750/resize/1/t/1tl24w002-sw001-thumb.webp',NULL,0),(53,'Áo phông dài tay bé gái cotton USA hình Wolfoo',150,50,219000.00,'https://canifa.com/img/500/750/resize/1/t/1tl24w002-sp020-thumb.webp',NULL,0),(54,'Áo phông bé gái cotton USA có hình in',150,50,199000.00,'https://canifa.com/img/500/750/resize/1/t/1ts24w004-sm192-thumb.webp',NULL,0),(55,'Áo phông bé gái cotton USA có hình in',150,50,199000.00,'https://canifa.com/img/500/750/resize/1/t/1ts24w004-sg570-thumb.webp',NULL,0),(56,'Áo phông bé gái đính patch trang trí',150,50,199000.00,'https://canifa.com/img/500/750/resize/1/t/1tl24w001-sm085-128-1-u.webp',NULL,0),(57,'Áo phông bé gái in hình Minnie',150,50,249000.00,'https://canifa.com/img/500/750/resize/1/t/1tl24w004-fm295-128-1-u.webp',NULL,0),(58,'Áo phông bé gái thêu nơ',150,50,149000.00,'https://canifa.com/img/500/750/resize/1/t/1ts24w001-sm085-128-1-u.webp',NULL,0),(59,'Áo phông dài tay bé gái',150,50,299000.00,'https://canifa.com/img/500/750/resize/1/t/1tl24w007-se293-134-1-u.webp',NULL,0),(60,'Áo phông bé gái cotton USA in hình mèo Marie',150,50,199000.00,'https://canifa.com/img/500/750/resize/1/t/1ts24w002-sw001-122-1-u.webp',NULL,0),(61,'Áo phông bé gái cotton USA in hình mèo Marie',150,50,199000.00,'https://canifa.com/img/500/750/resize/1/t/1ts24w002-sm133-thumb.webp',NULL,0),(62,'Áo phông bé gái cotton USA in hình mèo Marie',150,50,199000.00,'https://canifa.com/img/500/750/resize/1/t/1ts24w002-sp260-thumb.webp',NULL,0),(63,'Áo phông bé gái cotton USA có hình in',150,50,249000.00,'	https://canifa.com/img/500/750/resize/1/t/1ts24c001-sw001-thumb.webp',NULL,0),(64,'Áo phông bé gái cotton USA có hình in',150,50,175000.00,'https://canifa.com/img/500/750/resize/1/t/1ts24c001-sp091-thumb.webp',NULL,0),(65,'Áo phông bé gái cotton USA dáng ngắn đính patch',150,50,188000.00,'https://canifa.com/img/500/750/resize/1/t/1ts24c005-sm052-thumb.webp',NULL,0),(66,'Áo phông bé gái cotton USA có hình in',150,50,209000.00,'https://canifa.com/img/500/750/resize/1/t/1ts24c004-se068-thumb.webp',NULL,0),(67,'Áo phông bé gái cotton USA có hình in',150,50,299000.00,'https://canifa.com/img/500/750/resize/1/t/1ts24c004-sk010-thumb.webp',NULL,0),(68,'Áo phông bé gái cotton dáng oversize có hình in',150,50,299000.00,'https://canifa.com/img/500/750/resize/1/t/1ts24c002-fm285-thumb.webp',NULL,0),(69,'Áo phông bé gái cotton dáng oversize có hình in',150,50,299000.00,'https://canifa.com/img/500/750/resize/1/t/1ts24c002-sw001-thumb.webp',NULL,0),(70,'Áo phông bé gái cotton dáng oversize có hình in',150,50,299000.00,'https://canifa.com/img/500/750/resize/1/t/1ts24c002-sw001-thumb.webp',NULL,0),(71,'Áo phông unisex trẻ em có hình in',150,50,118000.00,'https://canifa.com/img/500/750/resize/3/t/3ts24s005-sw001-thumb.webp',NULL,0),(72,'Áo phông unisex trẻ em có hình in',150,50,118000.00,'https://canifa.com/img/500/750/resize/3/t/3ts24s005-sy284-thumb.webp',NULL,0),(73,'Áo body unisex trẻ em cotton',150,34,159000.00,'https://canifa.com/img/500/750/resize/3/i/3it24w001-fb473-thumb.webp',NULL,0),(74,'Áo phông bé trai cotton USA có hình in',150,34,149000.00,'https://canifa.com/img/500/750/resize/2/t/2ts24w001-sy029-128-1-u.webp',NULL,0),(75,'Áo phông bé trai cotton USA có hình in',150,34,149000.00,'https://canifa.com/img/500/750/resize/2/t/2ts24w001-sr304-1-thumb.webp',NULL,0),(76,'Áo phông bé trai cotton USA có hình in',150,34,149000.00,'https://canifa.com/img/500/750/resize/2/t/2ts24w001-sk010-128-1-u.webp',NULL,0),(77,'Áo phông bé trai cotton USA có hình in',150,34,149000.00,'https://canifa.com/img/500/750/resize/2/t/2ts24w001-sb004-128-1-u.webp',NULL,0),(78,'Áo phông bé trai cotton dài tay',150,34,299000.00,'https://canifa.com/img/500/750/resize/2/t/2tl24w005-pg115-1-thumb.webp',NULL,0),(79,'Áo phông bé trai có hình in',150,34,199000.00,'https://canifa.com/img/500/750/resize/2/t/2ts24w002-sw001-thumb.webp',NULL,0),(80,'Áo phông bé trai có hình in',150,34,199000.00,'https://canifa.com/img/500/750/resize/2/t/2ts24w002-sb148-thumb.webp',NULL,0),(81,'Áo phông bé trai có hình in',150,34,199000.00,'https://canifa.com/img/500/750/resize/2/t/2ts24w002-sk010-thumb.webp',NULL,0),(82,'Áo phông bé trai in hình Spiderman',150,34,249000.00,'https://canifa.com/img/500/750/resize/2/t/2ts24w003-sw001-thumb.webp',NULL,0),(83,'Áo phông dài tay bé trai in Avenger',150,34,249000.00,'https://canifa.com/img/500/750/resize/2/t/2tl24w008-sw001-128-1-u.webp',NULL,0),(84,'Áo phông dài tay bé trai in Avenger',150,34,249000.00,'https://canifa.com/img/500/750/resize/2/t/2tl24w008-sk010-thumb.webp',NULL,0),(85,'Áo phông dài tay bé trai in Avenger',150,34,249000.00,'https://canifa.com/img/500/750/resize/2/t/2tl24w008-sg313-128-1-u.webp',NULL,0),(86,'Áo phông dài tay bé trai in Avenger',150,34,249000.00,'https://canifa.com/img/500/750/resize/2/t/2tl24w008-sb148-thumb.webp',NULL,0),(87,'Áo body bé trai',150,34,159000.00,'https://canifa.com/img/500/750/resize/2/i/2it24w001-sa014-thumb.webp',NULL,0),(88,'Áo phông dài tay bé trai có hình in',150,34,299000.00,'https://canifa.com/img/500/750/resize/2/t/2tl24w013-se477-128-1-u.webp',NULL,0),(89,'Áo phông dài tay bé trai in hình Mickey & Friends',150,34,249000.00,'https://canifa.com/img/500/750/resize/2/t/2tl24w003-sb511-thumb.webp',NULL,0),(90,'Áo phông dài tay bé trai in hình Mickey & Friends',150,34,249000.00,'https://canifa.com/img/500/750/resize/2/t/2tl24w003-sw001-thumb.webp',NULL,0),(91,'Áo phông dài tay bé trai in hình Mickey & Friends',150,34,249000.00,'https://canifa.com/img/500/750/resize/2/t/2tl24w003-sk010-thumb.webp',NULL,0),(92,'Áo phông active bé trai có hình in',150,34,269000.00,'https://canifa.com/img/500/750/resize/2/t/2tl24w006-sw001-128-1-u.webp',NULL,0),(93,'Áo phông bé trai in hình Spiderman',150,34,249000.00,'https://canifa.com/img/500/750/resize/2/t/2ts24w003-sk010-thumb.webp',NULL,0),(94,'Áo phông dài tay bé trai in chữ',150,34,199000.00,'https://canifa.com/img/500/750/resize/2/t/2tl24w004-sa423-thumb.webp',NULL,0),(95,'Áo phông dài tay bé trai in chữ',150,34,199000.00,'https://canifa.com/img/500/750/resize/2/t/2tl24w004-sw142-thumb.webp',NULL,0),(96,'Áo phông dài tay bé trai in chữ',150,34,199000.00,'https://canifa.com/img/500/750/resize/2/t/2tl24w004-sr074-thumb.webp',NULL,0);
+INSERT INTO `products` VALUES (1,'Áo phông nữ cổ tim',150,17,149000.00,'https://canifa.com/img/500/750/resize/6/t/6ts25a002-sg425-m-1-u.webp',NULL,0,NULL),(2,'Áo phông nữ cổ tròn',150,17,149000.00,'https://canifa.com/img/500/750/resize/6/t/6ts25a001-sn010-m-1-u.webp',NULL,0,NULL),(3,'Áo phông nữ',150,17,249000.00,'https://canifa.com/img/500/750/resize/6/t/6ts24w001-sn014-thumb.webp',NULL,0,NULL),(4,'Áo body nữ cổ lửng',150,17,279000.00,'https://canifa.com/img/500/750/resize/6/i/6it24w004-sa191-l-1-u.webp',NULL,0,NULL),(5,'Áo phông nữ dài tay',150,17,249000.00,'https://canifa.com/img/500/750/resize/6/t/6tl24w006-sb508-thumb.webp',NULL,0,NULL),(6,'Áo body nữ cổ tròn',150,17,279000.00,'https://canifa.com/img/500/750/resize/6/i/6it24w003-se136-thumb.webp',NULL,0,NULL),(7,'Áo phông dài tay nữ',150,17,299000.00,'https://canifa.com/img/500/750/resize/6/t/6tl24w002-sa702-l-1-u.webp',NULL,0,NULL),(8,'Áo giữ nhiệt nữ cổ tròn',150,17,279000.00,'https://canifa.com/img/500/750/resize/6/i/6it24w005-se068-thumb.webp',NULL,0,NULL),(9,'Áo phông nữ cổ vuống dáng ôm',150,17,249000.00,'https://canifa.com/img/500/750/resize/6/t/6tl24w007-sb508-m-1-u.webp',NULL,0,NULL),(10,'Áo phông dài tay nữ',150,17,349000.00,'https://canifa.com/img/500/750/resize/6/t/6tl24w008-sk010-thumb.webp',NULL,0,NULL),(11,'Áo phông dài tay nữ cổ cao',150,17,349000.00,'https://canifa.com/img/500/750/resize/6/t/6tl24w003-sk010-thumb.webp',NULL,0,NULL),(12,'Áo phông nữ cotton USA dáng oversize',150,17,399000.00,'https://canifa.com/img/500/750/resize/6/t/6ts24w004-sp141-thumb.webp',NULL,0,NULL),(13,'Áo phông nữ cotton USA dáng oversize',150,17,399000.00,'https://canifa.com/img/500/750/resize/6/t/6ts24w004-sk010-thumb.webp',NULL,0,NULL),(14,'Áo phông nữ cotton USA dáng oversize',150,17,399000.00,'https://canifa.com/img/500/750/resize/6/t/6ts24w004-sa130-thumb.webp',NULL,0,NULL),(15,'Áo phông nữ cotton USA dáng oversize',150,17,399000.00,'https://canifa.com/img/500/750/resize/6/t/6ts24w004-sw001-thumb.webp',NULL,0,NULL),(16,'Áo phông dài tay nữ',150,17,299000.00,'https://canifa.com/img/500/750/resize/6/t/6tl24w010-sw113-thumb.webp',NULL,0,NULL),(17,'Áo phông dài tay nữ',150,17,299000.00,'https://canifa.com/img/500/750/resize/6/t/6tl24w010-se097-thumb.webp',NULL,0,NULL),(18,'Áo phông nữ in hình công chúa',150,17,399000.00,'https://canifa.com/img/500/750/resize/6/t/6ts24w006-sp141-thumb.webp',NULL,0,NULL),(19,'Áo phông nữ in hình công chúa',150,17,399000.00,'https://canifa.com/img/500/750/resize/6/t/6ts24w006-sw001-thumb.webp',NULL,0,NULL),(20,'Áo phông nữ in hình công chúa',150,17,399000.00,'https://canifa.com/img/500/750/resize/6/t/6ts24w006-sk010-thumb.webp',NULL,0,NULL),(21,'Áo phông nữ',150,17,249000.00,'https://canifa.com/img/500/750/resize/6/t/6ts24w005-sg541-l-1-u-a.webp',NULL,0,NULL),(22,'Áo phông nữ cổ cao phối khoá',150,17,349000.00,'https://canifa.com/img/500/750/resize/6/t/6ts24w002-sa873-thumb.webp',NULL,0,NULL),(23,'Áo phông dài tay nữ active',150,17,349000.00,'https://canifa.com/img/500/750/resize/6/t/6tl24w009-sg541-l-1-u.webp',NULL,0,NULL),(24,'Áo phông nữ cotton dáng rộng',150,17,299000.00,'https://canifa.com/img/500/750/resize/6/t/6ts24w003-sk010-thumb.webp',NULL,0,NULL),(25,'Áo phông nam',150,1,149000.00,'https://canifa.com/img/500/750/resize/8/t/8ts25a002-se409-xl-1-u.webp',NULL,0,NULL),(26,'Áo phông dài tay nam',150,1,499000.00,'https://canifa.com/img/500/750/resize/8/t/8tl24w002-sk010-thumb.webp',NULL,0,NULL),(27,'Áo phông active nam',150,1,399000.00,'https://canifa.com/img/500/750/resize/8/t/8tl24w005-sa815-xl-1-u.webp',NULL,0,NULL),(28,'Áo phông nam',150,1,449000.00,'https://canifa.com/img/500/750/resize/8/t/8ts24w004-se331-xl-1-u.webp',NULL,0,NULL),(29,'Áo phông nam in chữ',150,1,299000.00,'https://canifa.com/img/500/750/resize/8/t/8ts24w002-sg650-thumb.webp',NULL,0,NULL),(30,'Áo phông nam in chữ',150,1,299000.00,'https://canifa.com/img/500/750/resize/8/t/8ts24w002-sk010-thumb.webp',NULL,0,NULL),(31,'Áo phông nam in chữ',150,1,299000.00,'https://canifa.com/img/500/750/resize/8/t/8ts24w001-sg650-thumb.webp',NULL,0,NULL),(32,'Áo phông dài tay nam',150,1,499000.00,'https://canifa.com/img/500/750/resize/8/t/8tl24w007-se384-thumb.webp',NULL,0,NULL),(33,'Áo phông nam cổ tròn dáng suông',150,1,149000.00,'https://canifa.com/img/500/750/resize/8/t/8ts24a001-sb001-thumb.webp',NULL,0,NULL),(34,'Áo phông nam cotton cổ tròn dáng suông',150,1,149000.00,'https://canifa.com/img/500/750/resize/8/t/8ts24a005-sl178-l-1-u.webp',NULL,0,NULL),(35,'Áo phông nam cổ tim dáng suông',150,1,149000.00,'https://canifa.com/img/500/750/resize/8/t/8ts24a002-sb001-thumb.webp',NULL,0,NULL),(36,'Áo phông nam cổ tròn dáng suông',150,1,149000.00,'https://canifa.com/img/500/750/resize/8/t/8ts24a004-sa050-thumb.webp',NULL,0,NULL),(37,'Áo phông nam in chữ',150,1,399000.00,'https://canifa.com/img/500/750/resize/8/t/8ts24c005-sw001-thumb.webp',NULL,0,NULL),(38,'Áo phông nam in chữ',150,1,399000.00,'https://canifa.com/img/500/750/resize/8/t/8ts24c005-sb001-thumb.webp',NULL,0,NULL),(39,'Áo phông nam in chữ',150,1,399000.00,'https://canifa.com/img/500/750/resize/8/t/8ts24c005-sa096-thumb.webp',NULL,0,NULL),(40,'Áo phông nam có túi ngực',150,1,315000.00,'https://canifa.com/img/500/750/resize/8/t/8ts24c003-sk010-thumb.webp',NULL,0,NULL),(41,'Áo phông nam có hình in',150,1,399000.00,'https://canifa.com/img/500/750/resize/8/t/8ts24c001-sg498-thumb.webp',NULL,0,NULL),(42,'Áo phông nam cotton USA dáng oversize',150,1,399000.00,'https://canifa.com/img/500/750/resize/8/t/8ts24c004-se346-1-thumb.webp',NULL,0,NULL),(43,'Áo phông nam có hình in',150,1,279000.00,'https://canifa.com/img/500/750/resize/8/t/8ts24c001-sw012-thumb.webp',NULL,0,NULL),(44,'Áo phông nam có hình in',150,1,399000.00,'https://canifa.com/img/500/750/resize/8/t/8ts24c001-sb001-thumb.webp',NULL,0,NULL),(45,'Áo phông nam có hình in',150,1,299000.00,'https://canifa.com/img/500/750/resize/8/t/8ts24s001-sb001-thumb.webp',NULL,0,NULL),(46,'Áo phông unisex người lớn cotton dáng boxy',150,1,209000.00,'https://canifa.com/img/500/750/resize/5/t/5ts24s011-sw386-thumb.webp',NULL,0,NULL),(47,'Áo phông nam hoạ tiết kẻ',150,1,399000.00,'https://canifa.com/img/500/750/resize/8/t/8ts24s011-pb441-thumb.webp',NULL,0,NULL),(48,'Áo phông nam có hình in',150,1,195000.00,'https://canifa.com/img/500/750/resize/8/t/8ts24s003-sw001-thumb.webp',NULL,0,NULL),(49,'Áo body unisex trẻ em cotton',150,50,159000.00,'https://canifa.com/img/500/750/resize/3/i/3it24w001-fb473-thumb.webp',NULL,0,NULL),(50,'Áo body bé gái cổ lửng',150,50,159000.00,'https://canifa.com/img/500/750/resize/1/i/1it24w003-sw011-thumb.webp',NULL,0,NULL),(51,'Áo phông dài tay bé gái in hình Wolfoo',150,50,219000.00,'https://canifa.com/img/500/750/resize/1/t/1tl24w002-sm128-thumb.webp',NULL,0,NULL),(52,'Áo phông dài tay bé gái cotton USA hình Wolfoo',150,50,219000.00,'https://canifa.com/img/500/750/resize/1/t/1tl24w002-sw001-thumb.webp',NULL,0,NULL),(53,'Áo phông dài tay bé gái cotton USA hình Wolfoo',150,50,219000.00,'https://canifa.com/img/500/750/resize/1/t/1tl24w002-sp020-thumb.webp',NULL,0,NULL),(54,'Áo phông bé gái cotton USA có hình in',150,50,199000.00,'https://canifa.com/img/500/750/resize/1/t/1ts24w004-sm192-thumb.webp',NULL,0,NULL),(55,'Áo phông bé gái cotton USA có hình in',150,50,199000.00,'https://canifa.com/img/500/750/resize/1/t/1ts24w004-sg570-thumb.webp',NULL,0,NULL),(56,'Áo phông bé gái đính patch trang trí',150,50,199000.00,'https://canifa.com/img/500/750/resize/1/t/1tl24w001-sm085-128-1-u.webp',NULL,0,NULL),(57,'Áo phông bé gái in hình Minnie',150,50,249000.00,'https://canifa.com/img/500/750/resize/1/t/1tl24w004-fm295-128-1-u.webp',NULL,0,NULL),(58,'Áo phông bé gái thêu nơ',150,50,149000.00,'https://canifa.com/img/500/750/resize/1/t/1ts24w001-sm085-128-1-u.webp',NULL,0,NULL),(59,'Áo phông dài tay bé gái',150,50,299000.00,'https://canifa.com/img/500/750/resize/1/t/1tl24w007-se293-134-1-u.webp',NULL,0,NULL),(60,'Áo phông bé gái cotton USA in hình mèo Marie',150,50,199000.00,'https://canifa.com/img/500/750/resize/1/t/1ts24w002-sw001-122-1-u.webp',NULL,0,NULL),(61,'Áo phông bé gái cotton USA in hình mèo Marie',150,50,199000.00,'https://canifa.com/img/500/750/resize/1/t/1ts24w002-sm133-thumb.webp',NULL,0,NULL),(62,'Áo phông bé gái cotton USA in hình mèo Marie',150,50,199000.00,'https://canifa.com/img/500/750/resize/1/t/1ts24w002-sp260-thumb.webp',NULL,0,NULL),(63,'Áo phông bé gái cotton USA có hình in',150,50,249000.00,'	https://canifa.com/img/500/750/resize/1/t/1ts24c001-sw001-thumb.webp',NULL,0,NULL),(64,'Áo phông bé gái cotton USA có hình in',150,50,175000.00,'https://canifa.com/img/500/750/resize/1/t/1ts24c001-sp091-thumb.webp',NULL,0,NULL),(65,'Áo phông bé gái cotton USA dáng ngắn đính patch',150,50,188000.00,'https://canifa.com/img/500/750/resize/1/t/1ts24c005-sm052-thumb.webp',NULL,0,NULL),(66,'Áo phông bé gái cotton USA có hình in',150,50,209000.00,'https://canifa.com/img/500/750/resize/1/t/1ts24c004-se068-thumb.webp',NULL,0,NULL),(67,'Áo phông bé gái cotton USA có hình in',150,50,299000.00,'https://canifa.com/img/500/750/resize/1/t/1ts24c004-sk010-thumb.webp',NULL,0,NULL),(68,'Áo phông bé gái cotton dáng oversize có hình in',150,50,299000.00,'https://canifa.com/img/500/750/resize/1/t/1ts24c002-fm285-thumb.webp',NULL,0,NULL),(69,'Áo phông bé gái cotton dáng oversize có hình in',150,50,299000.00,'https://canifa.com/img/500/750/resize/1/t/1ts24c002-sw001-thumb.webp',NULL,0,NULL),(70,'Áo phông bé gái cotton dáng oversize có hình in',150,50,299000.00,'https://canifa.com/img/500/750/resize/1/t/1ts24c002-sw001-thumb.webp',NULL,0,NULL),(71,'Áo phông unisex trẻ em có hình in',150,50,118000.00,'https://canifa.com/img/500/750/resize/3/t/3ts24s005-sw001-thumb.webp',NULL,0,NULL),(72,'Áo phông unisex trẻ em có hình in',150,50,118000.00,'https://canifa.com/img/500/750/resize/3/t/3ts24s005-sy284-thumb.webp',NULL,0,NULL),(73,'Áo body unisex trẻ em cotton',150,34,159000.00,'https://canifa.com/img/500/750/resize/3/i/3it24w001-fb473-thumb.webp',NULL,0,NULL),(74,'Áo phông bé trai cotton USA có hình in',150,34,149000.00,'https://canifa.com/img/500/750/resize/2/t/2ts24w001-sy029-128-1-u.webp',NULL,0,NULL),(75,'Áo phông bé trai cotton USA có hình in',150,34,149000.00,'https://canifa.com/img/500/750/resize/2/t/2ts24w001-sr304-1-thumb.webp',NULL,0,NULL),(76,'Áo phông bé trai cotton USA có hình in',150,34,149000.00,'https://canifa.com/img/500/750/resize/2/t/2ts24w001-sk010-128-1-u.webp',NULL,0,NULL),(77,'Áo phông bé trai cotton USA có hình in',150,34,149000.00,'https://canifa.com/img/500/750/resize/2/t/2ts24w001-sb004-128-1-u.webp',NULL,0,NULL),(78,'Áo phông bé trai cotton dài tay',150,34,299000.00,'https://canifa.com/img/500/750/resize/2/t/2tl24w005-pg115-1-thumb.webp',NULL,0,NULL),(79,'Áo phông bé trai có hình in',150,34,199000.00,'https://canifa.com/img/500/750/resize/2/t/2ts24w002-sw001-thumb.webp',NULL,0,NULL),(80,'Áo phông bé trai có hình in',150,34,199000.00,'https://canifa.com/img/500/750/resize/2/t/2ts24w002-sb148-thumb.webp',NULL,0,NULL),(81,'Áo phông bé trai có hình in',150,34,199000.00,'https://canifa.com/img/500/750/resize/2/t/2ts24w002-sk010-thumb.webp',NULL,0,NULL),(82,'Áo phông bé trai in hình Spiderman',150,34,249000.00,'https://canifa.com/img/500/750/resize/2/t/2ts24w003-sw001-thumb.webp',NULL,0,NULL),(83,'Áo phông dài tay bé trai in Avenger',150,34,249000.00,'https://canifa.com/img/500/750/resize/2/t/2tl24w008-sw001-128-1-u.webp',NULL,0,NULL),(84,'Áo phông dài tay bé trai in Avenger',150,34,249000.00,'https://canifa.com/img/500/750/resize/2/t/2tl24w008-sk010-thumb.webp',NULL,0,NULL),(85,'Áo phông dài tay bé trai in Avenger',150,34,249000.00,'https://canifa.com/img/500/750/resize/2/t/2tl24w008-sg313-128-1-u.webp',NULL,0,NULL),(86,'Áo phông dài tay bé trai in Avenger',150,34,249000.00,'https://canifa.com/img/500/750/resize/2/t/2tl24w008-sb148-thumb.webp',NULL,0,NULL),(87,'Áo body bé trai',150,34,159000.00,'https://canifa.com/img/500/750/resize/2/i/2it24w001-sa014-thumb.webp',NULL,0,NULL),(88,'Áo phông dài tay bé trai có hình in',150,34,299000.00,'https://canifa.com/img/500/750/resize/2/t/2tl24w013-se477-128-1-u.webp',NULL,0,NULL),(89,'Áo phông dài tay bé trai in hình Mickey & Friends',150,34,249000.00,'https://canifa.com/img/500/750/resize/2/t/2tl24w003-sb511-thumb.webp',NULL,0,NULL),(90,'Áo phông dài tay bé trai in hình Mickey & Friends',150,34,249000.00,'https://canifa.com/img/500/750/resize/2/t/2tl24w003-sw001-thumb.webp',NULL,0,NULL),(91,'Áo phông dài tay bé trai in hình Mickey & Friends',150,34,249000.00,'https://canifa.com/img/500/750/resize/2/t/2tl24w003-sk010-thumb.webp',NULL,0,NULL),(92,'Áo phông active bé trai có hình in',150,34,269000.00,'https://canifa.com/img/500/750/resize/2/t/2tl24w006-sw001-128-1-u.webp',NULL,0,NULL),(93,'Áo phông bé trai in hình Spiderman',150,34,249000.00,'https://canifa.com/img/500/750/resize/2/t/2ts24w003-sk010-thumb.webp',NULL,0,NULL),(94,'Áo phông dài tay bé trai in chữ',150,34,199000.00,'https://canifa.com/img/500/750/resize/2/t/2tl24w004-sa423-thumb.webp',NULL,0,NULL),(95,'Áo phông dài tay bé trai in chữ',150,34,199000.00,'https://canifa.com/img/500/750/resize/2/t/2tl24w004-sw142-thumb.webp',NULL,0,NULL),(96,'Áo phông dài tay bé trai in chữ',150,34,199000.00,'https://canifa.com/img/500/750/resize/2/t/2tl24w004-sr074-thumb.webp',NULL,0,NULL);
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -460,11 +483,11 @@ DROP TABLE IF EXISTS `sales`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sales` (
   `sale_id` int NOT NULL AUTO_INCREMENT,
-  `product` int DEFAULT NULL,
+  `product_id` int DEFAULT NULL,
   `discount` int DEFAULT NULL,
   PRIMARY KEY (`sale_id`),
-  KEY `products_fk_3` (`product`),
-  CONSTRAINT `products_fk_3` FOREIGN KEY (`product`) REFERENCES `products` (`product_id`)
+  KEY `products_fk_3` (`product_id`),
+  CONSTRAINT `products_fk_3` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -539,6 +562,39 @@ UNLOCK TABLES;
 --
 -- Dumping routines for database 'web_cusan'
 --
+/*!50003 DROP PROCEDURE IF EXISTS `update_address_status` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_address_status`(
+    IN address INT,   -- ID của địa chỉ
+    IN customer INT,  -- ID của khách hàng
+    IN new_status INT -- Trạng thái mới
+)
+BEGIN
+    IF new_status = 1 THEN
+        -- Đặt các địa chỉ khác của cùng một người dùng về 0
+        UPDATE address
+        SET status = 0
+        WHERE customer_id = customer AND address_id != address;
+    END IF;
+
+    -- Cập nhật địa chỉ hiện tại
+    UPDATE address
+    SET status = new_status
+    WHERE address_id = address AND customer_id = customer;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -549,4 +605,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-12-14 20:55:24
+-- Dump completed on 2024-12-26 20:56:38
