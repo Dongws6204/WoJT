@@ -217,8 +217,8 @@ const AdminProduct = () => {
                                 top: 0,
                                 left: 0
                             }}>
+                                 <AddProductForm />
                         </div>
-                        <AddProductForm />
                     </>
                 )}
                 {fixProduct && (
@@ -236,8 +236,8 @@ const AdminProduct = () => {
                                 top: 0,
                                 left: 0
                             }}>
+                                <FixProductForm productID={productID} setFixProduct={setFixProduct}/>
                         </div>
-                        <FixProductForm productID={productID} setFixProduct={setFixProduct}  />
                     </>
                 )}
             </div>

@@ -14,8 +14,7 @@ const FixPortfolio = ({ portID }) => {
     const [portfolio, setPortfolio] = useState({});
     const [objectName,setObjectName] = useState('')
     const [selectedObject, setSelectedObject] = useState(portfolio.object_id);
-
-    // const [portfolio, setPortfolio] = useState([])
+    const [isDropdownOpen,setIsDropdownOpen] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -97,12 +96,14 @@ const FixPortfolio = ({ portID }) => {
                 </div>
                 <div className="form-group">
                     <select
+                        onFocus={() => setIsDropdownOpen(true)}
+                        onBlur={() => setIsDropdownOpen(false)}
                         onChange={handleObjectChange}
                         name="object_id"
                         value={selectedObject || ""}
                         style={{borderColor:'#ddd',color:'#5e5d5d'}}
                     >
-                        <p value="">{objectName? objectName : "-- Chọn Object --"}</p>
+                        {!isDropdownOpen && <option value="">{objectName? objectName : "-- Chọn Object --"}</option>}
                         {objects.map((obj) => (
                             <option key={obj.object_id} value={obj.object_id}>
                                 {obj.object_name}

@@ -91,28 +91,24 @@ const ProductViewed = () => {
     };
 
     return (
-        <>
-            <div className='viewed-btn'>
-                <button onClick={handlePrev} disabled={leftCount <= 0}>
-                    <IoIosArrowBack/>
-                </button>
-                <div className='viewed-product'>
-                    {listViewed.map((item) => (
-                        <ProductCard
-                            key={item.product_id} id={item.product_id} image={item.img} name={item.product_name} total={item.price} discount={discounts}
-                        />
-                    ))}
-                </div>
-                <button
-                    onClick={handleNext}
-                    disabled={rightCount >= viewData.length}
-                >
-                    <IoIosArrowForward />
-                </button>
+        <div className='viewed-btn'>
+            <button onClick={handlePrev} disabled={leftCount <= 0}>
+                <IoIosArrowBack />
+            </button>
+            <div className='viewed-product'>
+                {listViewed.map((item) => (
+                    <ProductCard
+                        key={item.product_id} id={item.product_id} image={item.img} name={item.product_name} total={item.price} discount={discounts}
+                    />
+                ))}
             </div>
-        </>
-
-
+            <button
+                onClick={handleNext}
+                disabled={rightCount >= viewData.length}
+            >
+                <IoIosArrowForward />
+            </button>
+        </div>
     );
 };
 

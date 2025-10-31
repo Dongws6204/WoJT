@@ -190,18 +190,18 @@ const AdminPortfolio = () => {
                         <div
                             onClick={closeWindos}
                             style={{
-                                position: "absolute",
+                                position: "fixed",
                                 zIndex: "10",
                                 width: '100vw',
-                                height: '368%',
+                                height: '100vh',
                                 backgroundColor: 'rgba(76, 79, 77, 0.5)',
                                 display: 'flex',
                                 justifyContent: 'center',
                                 top: 0,
                                 left: 0
                             }}>
+                                <AddPortfolio />
                         </div>
-                        <AddPortfolio />
                     </>
                 )}
                 {fixPort && (
@@ -209,18 +209,18 @@ const AdminPortfolio = () => {
                         <div
                             onClick={closeWindoss}
                             style={{
-                                position: "absolute",
+                                position: "fixed",
                                 zIndex: "10",
                                 width: '100vw',
-                                height: '368%',
+                                height: '100vh',
                                 backgroundColor: 'rgba(76, 79, 77, 0.5)',
                                 display: 'flex',
                                 justifyContent: 'center',
                                 top: 0,
                                 left: 0
                             }}>
+                                <FixPortfolio portID={portID} />
                         </div>
-                        <FixPortfolio portID={portID} />
                     </>
                 )}
             </div>

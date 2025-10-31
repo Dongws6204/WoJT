@@ -15,7 +15,7 @@ const AddPortfolio = () => {
         object_id: '',
         port_name: ''
     });
-
+    const [isDropdownOpen,setIsDropdownOpen] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -64,11 +64,13 @@ const AddPortfolio = () => {
                 </div>
                 <div className="form-group">
                     <select
+                        onFocus={() => setIsDropdownOpen(true)}
+                        onBlur={() => setIsDropdownOpen(false)}
                         onChange={handleChange}
                         name="object_id"
                         style={{borderColor:'#ddd',color:'#5e5d5d'}}
                     >
-                        <option value="">-- Chọn đối tượng --</option>
+                        {!isDropdownOpen && <option value="">-- Chọn Object --</option>}
                         {objects.map((obj) => (
                             <option key={obj.object_id} value={obj.object_id}>
                                 {obj.object_name}
