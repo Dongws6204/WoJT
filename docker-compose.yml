@@ -1,0 +1,53 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:8.1.0
+    container_name: mysql-data
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 5ang15122003
+      MYSQL_DATABASE: web_cusan
+      MYSQL_USER: user
+      MYSQL_PASSWORD: test123
+    ports:
+      - "3333:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p5ang15122003"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./Be/myproject
+      dockerfile: Dockerfile
+    container_name: django-backend
+    restart: always
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./Be/myproject:/app
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: user
+      MYSQL_PASSWORD: test123
+      MYSQL_DB: web_cusan
+      MYSQL_PORT: 3306
+      DJANGO_SETTINGS_MODULE: myproject.settings
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - app-network
+
+volumes:
+  mysql-data:
+
+networks:
+  app-network:
+    driver: bridge
