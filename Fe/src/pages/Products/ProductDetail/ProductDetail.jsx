@@ -154,7 +154,7 @@ const ProductDetail = () => {
             } else {
                 try {
                     // Gửi POST request đến API
-                    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/reviews/`, {
+                    const response = await fetch(`${import.meta.env.VITE_API_URL}/reviews/`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
