@@ -44,7 +44,7 @@ const Cart = () => {
             } else {
                 try {
                     // Gửi yêu cầu tạo đơn hàng
-                    const res = await axios.post('http://127.0.0.1:8000/api/orders/create', {
+                    const res = await axios.post(`${import.meta.env.VITE_API_URL}/orders/create`, {
                         customer_id: authState.userId,
                         order_date: getCurrentDate(),
                         total_amount: TotalPrice(CartProduct),
@@ -64,7 +64,7 @@ const Cart = () => {
                             id_prod: product.id_prod
                         }));
 
-                        await axios.post('http://127.0.0.1:8000/api/orders/create-detail', orderDetails);
+                        await axios.post(`${import.meta.env.VITE_API_URL}/orders/create-detail`, orderDetails);
 
                         alert('Đơn hàng đã được tạo thành công');
                         navigate('/profile/don_hang')

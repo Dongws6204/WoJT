@@ -11,7 +11,7 @@ const AdminDashboard = () => {
         // Fake API Call
         const fetchDashboardData = async () => {
             try {
-                const res = await axios.get('http://127.0.0.1:8000/api/admin/order');
+                const res = await axios.get(`${import.meta.env.VITE_API_URL}/admin/order`);
                 const data = res.data.map(order => {
                     if (order.total_amount === null) {
                         order.total_amount = 0;

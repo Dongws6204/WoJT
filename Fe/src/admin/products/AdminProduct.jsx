@@ -44,7 +44,7 @@ const AdminProduct = () => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(
-                    `http://127.0.0.1:8000/api/admin/products/all`
+                    `${import.meta.env.VITE_API_URL}/admin/products/all`
                 );
                 //kiem tra neu response goi thanh cong
                 if (response.status === 200) {
@@ -77,7 +77,7 @@ const AdminProduct = () => {
             try {
                 // Sử dụng id trong URL thay vì body
                 const res = await axios.delete(
-                    `http://127.0.0.1:8000/api/admin/products/delete/${id}/`
+                    `${import.meta.env.VITE_API_URL}/admin/products/delete/${id}/`
                 );
                 if (res.status === 200) {
                     alert(`Xoá thành công danh mục có id ${id}`);

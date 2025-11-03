@@ -16,7 +16,7 @@ const User_order = () => {
     const getOrderInfo = async () => {
         try {
             // Lấy danh sách order_id từ API 1
-            const response = await axios.get(`http://127.0.0.1:8000/api/orders/get/${userId}`, {
+            const response = await axios.get(`${import.meta.env.VITE_API_URL}/orders/get/${userId}`, {
                 headers: {
                     'Access-Control-Allow-Origin': 'http://localhost:3000',
                 },
@@ -30,7 +30,7 @@ const User_order = () => {
             const orderIds = orders.map(order => order.order_id);
 
             // Lấy chi tiết các order từ API 2
-            const res2 = await axios.post('http://127.0.0.1:8000/api/orders/get-detail', {
+            const res2 = await axios.post(`${import.meta.env.VITE_API_URL}/orders/get-detail`, {
                 order_id: orderIds,
             });
             const orderDetails = res2.data; // Mảng [{ order, quantity, total_amount, id_prod }]
@@ -42,7 +42,7 @@ const User_order = () => {
             const productIds = orderDetails.map(detail => detail.id_prod);
 
             // Lấy thông tin sản phẩm từ API 3
-            const res3 = await axios.post('http://127.0.0.1:8000/api/orders/get-productdetail', {
+            const res3 = await axios.post(`${import.meta.env.VITE_API_URL}/orders/get-productdetail`, {
                 id_prod: productIds,
             });
             const products = res3.data; // Mảng sản phẩm [{ product_id, product_name, img, price, size }]
@@ -132,7 +132,7 @@ const User_order = () => {
         try {
             console.log(`Deleting order with ID: ${orderId}`);
             // Gọi API để hủy đơn hàng
-            await axios.post(`http://127.0.0.1:8000/api/orders/delete/${orderId}`, {
+            await axios.post(`${import.meta.env.VITE_API_URL}/orders/delete/${orderId}`, {
                 headers: {
                     'Access-Control-Allow-Origin': 'http://localhost:3000',
                 },

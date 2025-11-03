@@ -46,7 +46,7 @@ const AdminPortfolio = () => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(
-                    `http://127.0.0.1:8000/api/products/list-object`
+                    `${import.meta.env.VITE_API_URL}/products/list-object`
                 );
                 //kiem tra neu response goi thanh cong
                 if (response.status === 200) {
@@ -98,7 +98,7 @@ const AdminPortfolio = () => {
             try {
                 // Sử dụng id trong URL thay vì body
                 const res = await axios.delete(
-                    `http://127.0.0.1:8000/api/admin/portfolios/delete/${id}`
+                    `${import.meta.env.VITE_API_URL}/admin/portfolios/delete/${id}`
                 );
                 if (res.status === 200) {
                     alert(`Xoá thành công danh mục có id ${id}`);

@@ -20,7 +20,7 @@ const FixPortfolio = ({ portID }) => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(
-                    `http://127.0.0.1:8000/api/admin/portfolios/delete/${portID}`
+                    `${import.meta.env.VITE_API_URL}/admin/portfolios/delete/${portID}`
                 );
                 //kiem tra neu response goi thanh cong
                 if (response.status === 200) {
@@ -46,7 +46,7 @@ const FixPortfolio = ({ portID }) => {
 
         try {
             const response = await axios.put(
-                `http://127.0.0.1:8000/api/admin/portfolios/delete/${portfolio.id_port}`,
+                `${import.meta.env.VITE_API_URL}/admin/portfolios/delete/${portfolio.id_port}`,
                 {
                     port_name: portfolio.port_name,
                     object: portfolio.object_id,

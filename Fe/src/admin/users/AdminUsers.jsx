@@ -20,7 +20,7 @@ const AdminUsers = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get('http://127.0.0.1:8000/api/admin/customer');
+                const res = await axios.get(`${import.meta.env.VITE_API_URL}/admin/customer`);
                 setUsers(res.data);
             }
             catch (error) {
@@ -46,7 +46,7 @@ const AdminUsers = () => {
         if (search) {
             try {
                 const response = await axios.post(
-                    `http://127.0.0.1:8000/api/customers/${customerId}`
+                    `${import.meta.env.VITE_API_URL}/customers/${customerId}`
                 );
                 //kiem tra neu response goi thanh cong
                 if (response.status === 200) {

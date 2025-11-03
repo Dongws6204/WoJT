@@ -106,7 +106,7 @@ const Register = () => {
         e.preventDefault();
         if (validateData()) {
             try {
-                const response = axios.post('http://127.0.0.1:8000/api/authentication/register', {
+                const response = axios.post(`${import.meta.env.VITE_API_URL}/authentication/register`, {
                     user_name: dataRegister.username,
                     email: dataRegister.email,
                 });

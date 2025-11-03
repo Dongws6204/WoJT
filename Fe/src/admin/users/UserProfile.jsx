@@ -10,7 +10,7 @@ const UserProfile = ({ userID }) => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(
-                    `http://127.0.0.1:8000/api/customers/${userID}`
+                    `${import.meta.env.VITE_API_URL}/customers/${userID}`
                 );
                 //kiem tra neu response goi thanh cong
                 if (response.status === 200) {

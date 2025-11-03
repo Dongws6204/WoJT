@@ -23,7 +23,7 @@ const AddPortfolio = () => {
 
         const fetchData = async () => {
             try {
-                const res = await axios.post('http://127.0.0.1:8000/api/admin/portfolios/', {
+                const res = await axios.post(`${import.meta.env.VITE_API_URL}/admin/portfolios/`, {
                     port_name: portfolio.port_name,
                     object: portfolio.object_id,
                 });

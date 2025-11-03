@@ -19,7 +19,7 @@ const ListPortfolio = () => {
             if (port_id) {
                 try {
                     const response = await axios.get(
-                        `http://127.0.0.1:8000/api/products/portfolio/${port_id}`
+                        `${import.meta.env.VITE_API_URL}/products/portfolio/${port_id}`
                     );
                     //kiem tra neu response goi thanh cong
                     if (response.status === 200) {

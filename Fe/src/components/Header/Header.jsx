@@ -36,7 +36,7 @@ const Header = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get(`http://127.0.0.1:8000/api/customers/${userId}`);
+                const res = await axios.get(`${import.meta.env.VITE_API_URL}/customers/${userId}`);
                 setCustomer(res.data);
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -44,7 +44,7 @@ const Header = () => {
 
             try {
                 const response = await axios.get(
-                    `http://127.0.0.1:8000/api/products/list-object`
+                    `${import.meta.env.VITE_API_URL}/products/list-object`
                 );
                 //kiem tra neu response goi thanh cong
                 if (response.status === 200) {

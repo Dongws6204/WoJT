@@ -14,7 +14,7 @@ const AddProductForm = () => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(
-                    `http://127.0.0.1:8000/api/products/list-object`
+                    `${import.meta.env.VITE_API_URL}/products/list-object`
                 );
                 //kiem tra neu response goi thanh cong
                 if (response.status === 200) {
@@ -98,7 +98,7 @@ const AddProductForm = () => {
         };
 
         try {
-            const response = await fetch("http://127.0.0.1:8000/api/admin/products/add/", {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/admin/products/add/`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload), // Gửi dữ liệu dưới dạng JSON

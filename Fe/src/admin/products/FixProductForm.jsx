@@ -18,7 +18,7 @@ const FixProductForm = ({ productID, setFixProduct  }) => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(
-                    `http://127.0.0.1:8000/api/admin/products/delete/${productID}/`
+                    `${import.meta.env.VITE_API_URL}/admin/products/delete/${productID}/`
                 );
                 //kiem tra neu response goi thanh cong
                 if (response.status === 200) {
@@ -43,7 +43,7 @@ const FixProductForm = ({ productID, setFixProduct  }) => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(
-                    `http://127.0.0.1:8000/api/products/list-object`
+                    `${import.meta.env.VITE_API_URL}/products/list-object`
                 );
                 //kiem tra neu response goi thanh cong
                 if (response.status === 200) {
@@ -124,7 +124,7 @@ const FixProductForm = ({ productID, setFixProduct  }) => {
     const removeSizee = async (index, id) => {
         try {
             const response = await axios.get(
-                `http://127.0.0.1:8000/api/products/deleteSize`, { id }
+                `${import.meta.env.VITE_API_URL}/products/deleteSize`, { id }
             );
             if (response.status === 200) {
                 setProduct((prevProduct) => {
@@ -175,7 +175,7 @@ const FixProductForm = ({ productID, setFixProduct  }) => {
         try {
             // Gửi yêu cầu lên API sửa sản phẩm
             const response = await fetch(
-                `http://127.0.0.1:8000/api/admin/products/update/${productID}/`,
+                `${import.meta.env.VITE_API_URL}/admin/products/update/${productID}/`,
                 {
                     method: "PUT",
                     headers: { "Content-Type": "application/json" },

@@ -19,7 +19,7 @@ const FixSale = ({saleID}) => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(
-                    `http://127.0.0.1:8000/api/product/sale/${saleID}`
+                    `${import.meta.env.VITE_API_URL}/product/sale/${saleID}`
                 );
                 //kiem tra neu response goi thanh cong
                 if (response.status === 200) {

@@ -29,7 +29,7 @@ const Profile = () => {
 
     const getDataProfile = async () => {
         try {
-            const res = await axios.get(`http://127.0.0.1:8000/api/customers/${userId}`);
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/customers/${userId}`);
             setDataProfile(res.data);
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -71,7 +71,7 @@ const Profile = () => {
         e.preventDefault();
 
         try {
-            const res = await axios.post(`http://127.0.0.1:8000/api/customers/${userId}`, {
+            const res = await axios.post(`${import.meta.env.VITE_API_URL}/customers/${userId}`, {
                 phone: dataProfile.phone,
                 name: dataProfile.name,
                 birthday: dataProfile.birthday,

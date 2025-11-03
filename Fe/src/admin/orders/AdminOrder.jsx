@@ -47,7 +47,7 @@ const AdminOrder = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://127.0.0.1:8000/api/admin/orders/`);
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/admin/orders/`);
                 if (response.status === 200) {
                     // Chuyển đổi dữ liệu theo cấu trúc yêu cầu
                     setOrders(response.data.orders);
@@ -83,7 +83,7 @@ const AdminOrder = () => {
         if (search) {
             try {
                 const response = await axios.get(
-                    `http://127.0.0.1:8000/api/search/orders`
+                    `${import.meta.env.VITE_API_URL}/search/orders`
                 );
                 //kiem tra neu response goi thanh cong
                 if (response.status === 200) {
@@ -101,7 +101,7 @@ const AdminOrder = () => {
         // console.log(newStatus);
         try {
             // Gọi API cập nhật status
-            const response = await axios.post(`http://127.0.0.1:8000/api/admin/orders/update/${orderId}/`, {
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/admin/orders/update/${orderId}/`, {
                 status: newStatus
             });
 

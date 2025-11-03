@@ -20,7 +20,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post('http://127.0.0.1:8000/api/authentication/login', {
+            const res = await axios.post(`${import.meta.env.VITE_API_URL}/authentication/login`, {
                 user_name: dataLogin.username,
                 pass_word: dataLogin.password,
 

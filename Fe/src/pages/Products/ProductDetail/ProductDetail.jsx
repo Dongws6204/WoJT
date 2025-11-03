@@ -52,7 +52,7 @@ const ProductDetail = () => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(
-                    `http://127.0.0.1:8000/api/products/${product_Id}`
+                    `${import.meta.env.VITE_API_URL}/products/${product_Id}`
                 );
                 //kiem tra neu response goi thanh cong
                 if (response.status === 200) {
@@ -75,7 +75,7 @@ const ProductDetail = () => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(
-                    `http://127.0.0.1:8000/api/reviews/product/${product_Id}`
+                    `${import.meta.env.VITE_API_URL}/reviews/product/${product_Id}`
                 );
                 //kiem tra neu response goi thanh cong
                 if (response.status === 200) {
@@ -154,7 +154,7 @@ const ProductDetail = () => {
             } else {
                 try {
                     // Gửi POST request đến API
-                    const response = await fetch('http://127.0.0.1:8000/api/reviews/', {
+                    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/reviews/`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

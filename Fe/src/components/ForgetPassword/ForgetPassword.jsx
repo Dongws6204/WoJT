@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './forget.css'
-import VerifyUserX from '../VerifyUsers/VerifyUser';
+import {VerifyUserX} from '../VerifyUsers/VerifyUser';
 import axios from 'axios';
 
 const ForgetPassword = () => {
@@ -34,7 +34,7 @@ const ForgetPassword = () => {
         //     console.log(formError)
         // }
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/authentication/request-otp/', {
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/authentication/request-otp/`, {
                 email: dataForgetPass.email,
             });
 
@@ -43,7 +43,9 @@ const ForgetPassword = () => {
             setMessage('Gửi thành công!');
             console.log("API response:", response.status);
             if (response.status === 200) {
-                setIsVerify(true);
+                setTimeout(() => {
+                    setIsVerify(true);
+                }, 0);
             }
 
             // setIsVerify(true); // Hiện modal OTP hoặc xác minh nếu cần

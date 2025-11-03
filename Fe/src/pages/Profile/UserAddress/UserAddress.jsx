@@ -22,7 +22,7 @@ const UserAddress = () => {
 
     const fetchAddresses = async () => {
         try {
-            const response = await axios.get(`http://127.0.0.1:8000/api/ship/address/${userId}`);
+            const response = await axios.get(`${import.meta.env.VITE_API_URL}/ship/address/${userId}`);
             if (response.data.length === 0) {
                 alert('Không có địa chỉ nào được tìm thấy!');
             }
@@ -35,7 +35,7 @@ const UserAddress = () => {
 
     const handleSetDefault = async (id) => {
         try {
-            await axios.post(`http://127.0.0.1:8000/api/ship/address/${userId}`, {
+            await axios.post(`${import.meta.env.VITE_API_URL}/ship/address/${userId}`, {
                 address_id: id,
                 status: 1
             });
@@ -72,7 +72,7 @@ const UserAddress = () => {
 
         try {
             // Gửi yêu cầu xóa địa chỉ
-            const response = await axios.post(`http://127.0.0.1:8000/api/ship/address/delete`, {
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/ship/address/delete`, {
                 address_id: address_id,
             });
 
@@ -111,7 +111,7 @@ const UserAddress = () => {
         e.preventDefault();
         if (authState.isAuthenticated) {
             try {
-                const response = await axios.post('http://127.0.0.1:8000/api/ship/address/add', {
+                const response = await axios.post(`${import.meta.env.VITE_API_URL}/ship/address/add`, {
                     customer: userId,
                     name: address.name,
                     address_name: address.address,

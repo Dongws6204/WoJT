@@ -60,7 +60,7 @@ const VerifyUser = ({ dataRegisterArr }) => {
     // Xử lý xác thực OTP
     const saveAccount = async (data) => { // Thêm async
         try {
-            const res = await axios.post('http://127.0.0.1:8000/api/authentication/register/save', {
+            const res = await axios.post(`${import.meta.env.VITE_API_URL}/authentication/register/save`, {
                 name: data.name,
                 email: data.email,
                 phone: data.phone,
@@ -84,7 +84,7 @@ const VerifyUser = ({ dataRegisterArr }) => {
         setOtp(otp);
 
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/authentication/register/status', {
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/authentication/register/status`, {
                 email: dataRegisterArr?.email || '', // Kiểm tra email trước khi gửi
                 otp: otp,
             },
@@ -170,7 +170,6 @@ const VerifyUser = ({ dataRegisterArr }) => {
 };
 
 export const VerifyUserX = ({ data }) => {
-
     const navigate = useNavigate();
     const [timeLeft, setTimeLeft] = useState(120); // 180 giây = 3 phút
     const [code, setCode] = useState(["", "", "", ""]);
@@ -216,15 +215,10 @@ export const VerifyUserX = ({ data }) => {
         return `${minutes.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
     };
 
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     setOtp(Number(code.join("")));
-    // }
-
     // Xử lý xác thực OTP
     const savepass = async (data) => { // Thêm async
         try {
-            const res = await axios.post('http://127.0.0.1:8000/api/authentication/reset-password/', {
+            const res = await axios.post(`${import.meta.env.VITE_API_URL}/authentication/reset-password/`, {
                 email: data.email,
                 otp: otp,
                 new_password: data.newPasswod,
@@ -245,7 +239,7 @@ export const VerifyUserX = ({ data }) => {
         setOtp(otp);
 
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/authentication/verify-otp', {
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/authentication/verify-otp`, {
                 email: data?.email || '', // Kiểm tra email trước khi gửi
                 otp: otp,
             },
@@ -296,12 +290,6 @@ export const VerifyUserX = ({ data }) => {
         }
     };
 
-
-    useEffect(() => {
-        if (otp) {
-            console.log("Updated otp:", otp);
-        }
-    }, [otp]);
 
     return (
 

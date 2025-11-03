@@ -15,7 +15,7 @@ const Search = () => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(
-                    `http://127.0.0.1:8000/api/products/`
+                    `${import.meta.env.VITE_API_URL}/products/`
                 );
                 //kiem tra neu response goi thanh cong
                 if (response.status === 200) {
